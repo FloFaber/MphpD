@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+env:
+  INCLUDE: "./mphpd/ ./LICENSE.md ./README.md ./CHANGELOG.md"
+  TAGNAME: "${{ github.ref_name }}"
+  OUTFILE: "mphpd-${{ github.ref_name }}"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: rename src
+      run: mv ./src ./mphpd
+    - name: parse changelog
+      run: |
+        echo "# Changelog" > CHANGES.md
+        sed -e "/^## ${{ env.TAGNAME }}/,/^## / ! d" CHANGELOG.md | head -n -2 | tail -n +2 >> CHANGES.md
+    - name: Zip Folder
+      run: zip -r "${{ env.OUTFILE }}.zip" ${{ env.INCLUDE }}
+    - name: Tar Folder
+      run: tar -cvzf "${{ env.OUTFILE }}.tar.gz" ${{ env.INCLUDE }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: ./CHANGES.md
+        files: |
+          ${{ env.OUTFILE }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

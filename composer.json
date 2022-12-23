@@ -1,0 +1,11 @@
+{
+  "name": "flofaber/mphpd",
+  "description": "A PHP library for the Music Player Daemon",
+  "require": {
+    "php": ">=7.4",
+    "ext-sockets": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.5.27"
+  }
+}
