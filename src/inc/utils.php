@@ -86,7 +86,7 @@ function error(MPDException $e, int $errormode): bool
  * Parse an array of lines returned by MPD into a PHP array.
  * @param array $lines Given lines
  * @param int $flag Refer to `cmd()`'s documentation.
- * @return array|MPDException
+ * @return array|true|MPDException
  */
 function parse(array $lines, int $flag = MPD_CMD_READ_NORMAL)
 {
@@ -131,6 +131,10 @@ function parse(array $lines, int $flag = MPD_CMD_READ_NORMAL)
       $first_key = $k;
     }
     $tmp[$k] = $v;
+  }
+
+  if($flag === MPD_CMD_READ_BOOL){
+    return true;
   }
 
   return ($flag === MPD_CMD_READ_LIST || $flag === MPD_CMD_READ_LIST_SINGLE ? $b : $tmp);

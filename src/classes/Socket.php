@@ -78,16 +78,20 @@ class Socket
    *                                               If a key already existed its value gets overwritten.
    *                                               Used for commands like "status" where only unique keys are given.
    *
-   *                  * MPD_CMD_READ_LIST          - Parses the answer as a list of "key=>value" arrays.
+   *                  * MPD_CMD_READ_LIST        - Parses the answer as a list of "key=>value" arrays.
    *                                               Used for commands like "listplaylists" where keys are not unique.
    *
    *                  * MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple "indexed" array.
    *                                               Used for commands like "idle" where there is
    *                                               only a single possible "key".
    *
-   *                  * MPD_CMD_READ_RAW         - @ToDo: Reads the raw response.
-   * @return array|false False on failure.
+   *                  * MPD_CMD_READ_BOOL        - Parses the answer into `true` on OK and list_OK and `false` on `ACK`.
+   *                                               Used for commands which do not return anything but OK or ACK.
+   *
+   *
+   * @return array|bool  False on failure.
    *                     Array on success.
+   *                     True on success if $mode is MPD_CMD_READ_BOOL
    * @throws MPDException
    * @link https://mphpd.org/doc/methods/cmd
    */
@@ -119,6 +123,7 @@ class Socket
     if($parsed instanceof MPDException){
       return $this->setError($parsed);
     }
+
     return $parsed;
 
   }
@@ -180,10 +185,16 @@ class Socket
     $f_err = false;
     foreach($this->bulk_list as $b){
       $parsed = parse($this->readls(), $b["mode"]);
-      $ret[] = $parsed;
+
+      if($parsed instanceof MPDException AND $b["mode"] === MPD_CMD_READ_BOOL){
+        $ret[] = false;
+      }else{
+        $ret[] = $parsed;
+      }
 
       // if there is an error -> stop
       if($parsed instanceof MPDException){
+        $this->setError($parsed);
         $f_err = true;
         break;
       }

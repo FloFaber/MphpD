@@ -22,6 +22,7 @@ const MPD_CMD_READ_NORMAL      = 0x02;
 const MPD_CMD_READ_LIST        = 0x04;
 const MPD_CMD_READ_LIST_SINGLE = 0x08;
 const MPD_CMD_READ_NONE        = 0x16;
+const MPD_CMD_READ_BOOL        = 0x32;
 
 const MPD_ESCAPE_DOUBLE_QUOTES = 0x02;
 const MPD_ESCAPE_PREFIX_SPACE  = 0x04;
