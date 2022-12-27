@@ -10,26 +10,41 @@ namespace FloFaber;
 class Filter
 {
 
-  private string $tag;
-  private string $operator;
-  private string $value;
+  private string $f;
 
 
   /**
-   * Creates a filter
+   * Creates a new filter
    * @param string $tag Tag to be searched for. Like artist, title,...
    * @param string $operator Comparison operator. Like ==, contains, ~=,...
-   * @param string $value The value to be search for. Unescaped. Gets escaped automatically
+   * @param string $value The value to search for. Unescaped.
    */
   public function __construct(string $tag, string $operator, string $value)
   {
-    $this->tag = $tag;
-    $this->operator = $operator;
-    $this->value = $value;
-
-    $this->value = escape_params([ $this->value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    $this->f = "\"($tag $operator $value)\"";
   }
 
+
+  /**
+   * Used to chain multiple filters with AND
+   * @param string $tag
+   * @param string $operator
+   * @param string $value
+   * @return $this
+   */
+  public function and(string $tag, string $operator, string $value): Filter
+  {
+    $this->f = "(".$this->f." AND ".$this->make_str($tag, $operator, $value).")";
+    return $this;
+  }
+
+
+  private function make_str(string $tag, string $operator, string $value): string
+  {
+    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    return "\"($tag $operator $value)\"";
+  }
 
   /**
    * Returns the generated Filter string.
@@ -37,7 +52,7 @@ class Filter
    */
   public function __toString()
   {
-    return "\"($this->tag $this->operator $this->value)\"";
+    return $this->f;
   }
 
 } // End MPDFilter
