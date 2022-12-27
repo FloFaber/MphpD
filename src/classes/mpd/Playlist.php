@@ -94,6 +94,27 @@ class Playlist
 
 
   /**
+   * Same as `search()` but adds the songs into the Playlist $playlist at position $pos.
+   * @see DB::search()
+   * @param Filter $filter
+   * @param string $sort
+   * @param array $window
+   * @param int $position
+   * @return bool
+   * @throws MPDException
+   */
+  public function searchadd(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
+  {
+    $name = escape_params([ $this->name ]);
+    return $this->mphpd->cmd("searchaddpl $name $filter", [
+        ($sort ? "sort" : ""), ($sort ?: ""),
+        ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
+        ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
+      ]) !== false;
+  }
+
+
+  /**
    * Removes all songs from the specified playlist.
    * @return bool Returns true on success and false on failure.
    * @throws MPDException

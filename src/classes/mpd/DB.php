@@ -79,7 +79,7 @@ class DB
 
   /**
    * Search for songs matching Filter and return an array of associative array of found songs.
-   * case-sensitive!
+   * Case-sensitive!
    * @param Filter $filter
    * @param string $sort Tag name to sort by. Like artist. If prefixed with `-` it will be sorted descending.
    *
@@ -93,26 +93,6 @@ class DB
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
       ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
-    ], MPD_CMD_READ_LIST);
-  }
-
-
-  /**
-   * Same as `find()` but this adds the matching song to the Queue.
-   * @see DB::find()
-   * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $pos Optional. If specified the matched songs will be added to this position in the Queue.
-   * @return array|bool
-   * @throws MPDException
-   */
-  public function findadd(Filter $filter, string $sort = "", array $window = [], int $pos = -1)
-  {
-    return $this->mphpd->cmd("find $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
-      ($pos !== -1 ? "position" : ""), ($pos !== -1 ? $pos : "")
     ], MPD_CMD_READ_LIST);
   }
 
@@ -262,7 +242,7 @@ class DB
 
   /**
    * Searches for matching songs and returns an array of associative arrays containing song information.
-   * NOT case-sensitive.
+   * NOT case-sensitive!
    * @see DB::find()
    * @param Filter $filter
    * @param string $sort
@@ -276,48 +256,6 @@ class DB
       ($sort ? "sort" : ""), ($sort ?: ""),
       ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
-  }
-
-
-  /**
-   * Same as `search()` but adds the songs into the Queue at position $pos.
-   * @see DB::search()
-   * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $position
-   * @return bool
-   * @throws MPDException
-   */
-  public function searchadd(Filter $filter, string $sort, array $window = [], int $position = -1) : bool
-  {
-    return $this->mphpd->cmd("searchadd $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
-      ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
-    ]) !== false;
-  }
-
-
-  /**
-   * Same as `search()` but adds the songs into the Playlist $playlist at position $pos.
-   * @see DB::search()
-   * @param string $name Name of the playlist. If playlist does not exist it will be created.
-   * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $position
-   * @return bool
-   * @throws MPDException
-   */
-  public function searchaddpl(string $name, Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
-  {
-    $name = escape_params([ $name ]);
-    return $this->mphpd->cmd("searchaddpl $name $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
-      ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
-    ]) !== false;
   }
 
 
