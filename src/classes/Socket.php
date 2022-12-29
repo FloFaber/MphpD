@@ -159,7 +159,7 @@ class Socket
   /**
    * Function to end a command-list and execute its commands
    * The command list is stopped in case an error occurs.
-   * @return array|false Returns an array containing the command's response.
+   * @return array|false Returns an array containing the commands responses.
    * @throws MPDException
    */
   public function bulk_end(): array
@@ -200,7 +200,7 @@ class Socket
       }
     }
 
-    // There is a remaining "OK\n" in the socket buffer if all command in the command list succeeded.
+    // There is a remaining "OK\n" in the socket buffer if all commands in the command list succeeded.
     // We need to read that before sending other commands. If we would not do that the next commands response
     // would be empty as there was still an "OK\n" in the buffer.
     // We only need to do this if the command list did NOT fail!
@@ -235,7 +235,7 @@ class Socket
    * @param int $mode
    * @return bool
    */
-  public function bulk_add(string $cmd, array $params = [], int $mode = MPD_CMD_READ_NORMAL) : bool
+  public function bulk_add(string $cmd, array $params = [], int $mode = MPD_CMD_READ_BOOL) : bool
   {
     // return false if bulk is not enabled
     if(!$this->in_bulk) {
