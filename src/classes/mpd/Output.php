@@ -24,7 +24,7 @@ class Output
    */
   public function disable() : bool
   {
-    return $this->mphpd->cmd("disableoutput", [ $this->id ]) !== false;
+    return $this->mphpd->cmd("disableoutput", [ $this->id ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -35,7 +35,7 @@ class Output
    */
   public function enable(): bool
   {
-    return $this->mphpd->cmd("enableoutput", [ $this->id ]) !== false;
+    return $this->mphpd->cmd("enableoutput", [ $this->id ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -46,7 +46,7 @@ class Output
    */
   public function toggle(): bool
   {
-    return $this->mphpd->cmd("toggleoutput", [ $this->id ]) !== false;
+    return $this->mphpd->cmd("toggleoutput", [ $this->id ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -59,7 +59,7 @@ class Output
    */
   public function set(string $name, string $value): bool
   {
-    return $this->mphpd->cmd("outputset", [ $this->id, $name, $value ]) !== false;
+    return $this->mphpd->cmd("outputset", [ $this->id, $name, $value ], MPD_CMD_READ_BOOL);
   }
 
 

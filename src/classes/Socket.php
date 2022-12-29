@@ -307,7 +307,7 @@ class Socket
    */
   private function set_binarylimit(int $limit) : bool
   {
-    return $this->cmd("binarylimit", [$limit]) !== false;
+    return $this->cmd("binarylimit", [$limit], MPD_CMD_READ_BOOL);
   }
 
   /**

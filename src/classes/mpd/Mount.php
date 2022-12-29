@@ -17,7 +17,7 @@ class Mount
 
   public function mount(string $uri) : bool
   {
-    return $this->mphpd->cmd("mount", [ $this->path, $uri ]) !== false;
+    return $this->mphpd->cmd("mount", [ $this->path, $uri ], MPD_CMD_READ_BOOL);
   }
 
 

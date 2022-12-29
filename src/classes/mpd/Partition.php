@@ -21,7 +21,7 @@ class Partition
    */
   public function switch(): bool
   {
-    return $this->mphpd->cmd("partition", [ $this->name ]) !== false;
+    return $this->mphpd->cmd("partition", [ $this->name ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -32,7 +32,7 @@ class Partition
    */
   public function create(): bool
   {
-    return $this->mphpd->cmd("newpartition", [ $this->name ]) !== false;
+    return $this->mphpd->cmd("newpartition", [ $this->name ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -43,7 +43,7 @@ class Partition
    */
   public function delete(): bool
   {
-    return $this->mphpd->cmd("delpartition", [ $this->name ]) !== false;
+    return $this->mphpd->cmd("delpartition", [ $this->name ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -57,7 +57,7 @@ class Partition
    */
   public function moveoutput(string $name): bool
   {
-    return $this->mphpd->cmd("moveoutput", [ $name ]) !== false;
+    return $this->mphpd->cmd("moveoutput", [ $name ], MPD_CMD_READ_BOOL);
   }
 
 }

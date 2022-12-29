@@ -75,7 +75,7 @@ class Playlist
    */
   public function load(array $range = [], $pos = "") : bool
   {
-    return $this->mphpd->cmd("load", [ $this->name, pos_or_range($range), $pos ]) !== false;
+    return $this->mphpd->cmd("load", [ $this->name, pos_or_range($range), $pos ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -89,7 +89,7 @@ class Playlist
    */
   public function add(string $uri, $pos = "") : bool
   {
-    return $this->mphpd->cmd("playlistadd", [$this->name, $uri, $pos]) !== false;
+    return $this->mphpd->cmd("playlistadd", [$this->name, $uri, $pos], MPD_CMD_READ_BOOL);
   }
 
 
@@ -110,7 +110,7 @@ class Playlist
         ($sort ? "sort" : ""), ($sort ?: ""),
         ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
         ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
-      ]) !== false;
+      ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -121,7 +121,7 @@ class Playlist
    */
   public function clear() : bool
   {
-    return $this->mphpd->cmd("playlistclear", [$this->name]) !== false;
+    return $this->mphpd->cmd("playlistclear", [$this->name], MPD_CMD_READ_BOOL);
   }
 
 
@@ -133,7 +133,7 @@ class Playlist
    */
   public function removeSong($songpos = -1) : bool
   {
-    return $this->mphpd->cmd("playlistdelete", [ $this->name, pos_or_range($songpos) ]) !== false;
+    return $this->mphpd->cmd("playlistdelete", [ $this->name, pos_or_range($songpos) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -146,7 +146,7 @@ class Playlist
    */
   public function moveSong(int $from, int $to) : bool
   {
-    return $this->mphpd->cmd("playlistmove", [$this->name, $from, $to]) !== false;
+    return $this->mphpd->cmd("playlistmove", [$this->name, $from, $to], MPD_CMD_READ_BOOL);
   }
 
 
@@ -158,7 +158,7 @@ class Playlist
    */
   public function rename(string $new_name) : array
   {
-    return $this->mphpd->cmd("rename", [$this->name, $new_name]) !== false;
+    return $this->mphpd->cmd("rename", [$this->name, $new_name], MPD_CMD_READ_BOOL);
   }
 
 
@@ -169,7 +169,7 @@ class Playlist
    */
   public function delete() : bool
   {
-    return $this->mphpd->cmd("rm", [$this->name]) !== false;
+    return $this->mphpd->cmd("rm", [$this->name], MPD_CMD_READ_BOOL);
   }
 
 
@@ -204,7 +204,7 @@ class Playlist
       $m = "";
     }
 
-    return $this->mphpd->cmd("save", [$this->name, $m]) !== false;
+    return $this->mphpd->cmd("save", [$this->name, $m], MPD_CMD_READ_BOOL);
   }
 
 }

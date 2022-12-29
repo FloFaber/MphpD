@@ -40,7 +40,7 @@ class Player
       return $this->mphpd->setError(new MPDException("Unsupported state: oneshot."));
     }
 
-    return $this->mphpd->cmd("consume", [ $state ]) !== false;
+    return $this->mphpd->cmd("consume", [ $state ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -52,7 +52,7 @@ class Player
    */
   public function crossfade(int $seconds) : bool
   {
-    return $this->mphpd->cmd("crossfade", [$seconds]) !== false;
+    return $this->mphpd->cmd("crossfade", [$seconds], MPD_CMD_READ_BOOL);
   }
 
 
@@ -65,7 +65,7 @@ class Player
    */
   public function mixrampdb(int $dB) : bool
   {
-    return $this->mphpd->cmd("mixrampdb", [$dB]) !== false;
+    return $this->mphpd->cmd("mixrampdb", [$dB], MPD_CMD_READ_BOOL);
   }
 
 
@@ -76,7 +76,7 @@ class Player
    */
   public function mixrampdelay(float $seconds) : bool
   {
-    return $this->mphpd->cmd("mixrampdelay", [$seconds]) !== false;
+    return $this->mphpd->cmd("mixrampdelay", [$seconds], MPD_CMD_READ_BOOL);
   }
 
 
@@ -88,7 +88,7 @@ class Player
    */
   public function random(int $state) : bool
   {
-    return $this->mphpd->cmd("random", [$state]) !== false;
+    return $this->mphpd->cmd("random", [$state], MPD_CMD_READ_BOOL);
   }
 
 
@@ -100,7 +100,7 @@ class Player
    */
   public function repeat(int $state) : bool
   {
-    return $this->mphpd->cmd("repeat", [$state]) !== false;
+    return $this->mphpd->cmd("repeat", [$state], MPD_CMD_READ_BOOL);
   }
 
 
@@ -128,7 +128,7 @@ class Player
       return ($v !== false AND $v !== NULL) ? $v : -1;
 
     }
-    return $this->mphpd->cmd("setvol", [$volume]) !== false;
+    return $this->mphpd->cmd("setvol", [$volume], MPD_CMD_READ_BOOL);
   }
 
 
@@ -153,7 +153,7 @@ class Player
       return $this->mphpd->setError(new MPDException("Unsupported state: oneshot."));
     }
 
-    return $this->mphpd->cmd("single", [$state]) !== false;
+    return $this->mphpd->cmd("single", [$state], MPD_CMD_READ_BOOL);
   }
 
 
@@ -165,7 +165,7 @@ class Player
    */
   public function replay_gain_mode(string $mode): bool
   {
-    return $this->mphpd->cmd("replay_gain_mode", [$mode]) !== false;
+    return $this->mphpd->cmd("replay_gain_mode", [$mode], MPD_CMD_READ_BOOL);
   }
 
 
@@ -195,7 +195,7 @@ class Player
    */
   public function next() : bool
   {
-    return $this->mphpd->cmd("next") !== false;
+    return $this->mphpd->cmd("next", [], MPD_CMD_READ_BOOL);
   }
 
 
@@ -214,7 +214,7 @@ class Player
   public function pause(int $state = -1) : bool
   {
 
-    return $this->mphpd->cmd("pause", [($state !== -1 ? $state : "")]) !== false;
+    return $this->mphpd->cmd("pause", [($state !== -1 ? $state : "")], MPD_CMD_READ_BOOL);
   }
 
 
@@ -235,11 +235,11 @@ class Player
 
       // if no position is given and the player is paused -> unpause
     }elseif($pos === -1 AND $state === "pause"){
-      return $this->pause(0) !== false;
+      return $this->pause(0);
     }
 
     // otherwise play the given song
-    return $this->mphpd->cmd("play", [ $pos !== -1 ? $pos : 0 ]) !== false;
+    return $this->mphpd->cmd("play", [ $pos !== -1 ? $pos : 0 ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -251,7 +251,7 @@ class Player
    */
   public function playid(int $id) : bool
   {
-    return $this->mphpd->cmd("playid", [$id]) !== false;
+    return $this->mphpd->cmd("playid", [$id], MPD_CMD_READ_BOOL);
   }
 
 
@@ -261,7 +261,7 @@ class Player
    */
   public function previous() : bool
   {
-    return $this->mphpd->cmd("previous") !== false;
+    return $this->mphpd->cmd("previous", [], MPD_CMD_READ_BOOL);
   }
 
 
@@ -274,7 +274,7 @@ class Player
    */
   public function seek(int $songpos, $time) : bool
   {
-    return $this->mphpd->cmd("seek", [ $songpos, $time ]) !== false;
+    return $this->mphpd->cmd("seek", [ $songpos, $time ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -287,7 +287,7 @@ class Player
    */
   public function seekid(int $songid, float $time) : bool
   {
-    return $this->mphpd->cmd("seekid", [ $songid, $time ]) !== false;
+    return $this->mphpd->cmd("seekid", [ $songid, $time ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -299,7 +299,7 @@ class Player
    */
   public function seekcur($time) : bool
   {
-    return $this->mphpd->cmd("seekcur", [$time]) !== false;
+    return $this->mphpd->cmd("seekcur", [$time], MPD_CMD_READ_BOOL);
   }
 
 
@@ -310,7 +310,7 @@ class Player
    */
   public function stop() : bool
   {
-    return $this->mphpd->cmd("stop") !== false;
+    return $this->mphpd->cmd("stop", MPD_CMD_READ_BOOL);
   }
 
 

@@ -54,7 +54,7 @@ class Sticker
    */
   public function set(string $name, string $value) : bool
   {
-    return $this->mphpd->cmd("sticker set", [ $this->type, $this->uri, $name, $value ]) !== false;
+    return $this->mphpd->cmd("sticker set", [ $this->type, $this->uri, $name, $value ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -66,7 +66,7 @@ class Sticker
    */
   public function delete(string $name = ""): bool
   {
-    return $this->mphpd->cmd("sticker delete", [ $this->type, $this->uri, $name ]) !== false;
+    return $this->mphpd->cmd("sticker delete", [ $this->type, $this->uri, $name ], MPD_CMD_READ_BOOL);
   }
 
 

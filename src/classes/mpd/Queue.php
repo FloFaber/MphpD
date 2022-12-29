@@ -24,7 +24,7 @@ class Queue
    */
   public function add(string $uri, $pos = -1) : bool
   {
-    return $this->mphpd->cmd("add", [ $uri, ($pos !== -1 ? $pos : "") ]) !== false;
+    return $this->mphpd->cmd("add", [ $uri, ($pos !== -1 ? $pos : "") ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -61,7 +61,7 @@ class Queue
         ($sort ? "sort" : ""), ($sort ?: ""),
         ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
         ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
-      ]) !== false;
+      ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -92,7 +92,7 @@ class Queue
    */
   public function clear() : bool
   {
-    return $this->mphpd->cmd("clear") !== false;
+    return $this->mphpd->cmd("clear", [], MPD_CMD_READ_BOOL);
   }
 
 
@@ -104,7 +104,7 @@ class Queue
    */
   public function delete($p) : bool
   {
-    return $this->mphpd->cmd("delete", [ pos_or_range($p) ]) !== false;
+    return $this->mphpd->cmd("delete", [ pos_or_range($p) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -116,7 +116,7 @@ class Queue
    */
   public function deleteid(int $songid) : bool
   {
-    return $this->mphpd->cmd("deleteid", [$songid]) !== false;
+    return $this->mphpd->cmd("deleteid", [$songid], MPD_CMD_READ_BOOL);
   }
 
 
@@ -134,7 +134,7 @@ class Queue
     if(!is_numeric($to))
       $this->mphpd->setError(new MPDException("\$to is not numeric.", 400));
 
-    return $this->mphpd->cmd("move", [pos_or_range($from), $to]) !== false;
+    return $this->mphpd->cmd("move", [pos_or_range($from), $to], MPD_CMD_READ_BOOL);
   }
 
 
@@ -151,7 +151,7 @@ class Queue
   {
     if(!is_numeric($to))
       $this->mphpd->setError(new MPDException("\$to is not numeric.", 400));
-    return $this->mphpd->cmd("moveid", [$from, $to]) !== false;
+    return $this->mphpd->cmd("moveid", [$from, $to], MPD_CMD_READ_BOOL);
   }
 
 
@@ -244,7 +244,7 @@ class Queue
    */
   public function prio(int $priority, $range = -1) : bool
   {
-    return $this->mphpd->cmd("prio", [ $priority, pos_or_range($range) ]) !== false;
+    return $this->mphpd->cmd("prio", [ $priority, pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -259,7 +259,7 @@ class Queue
    */
   public function prioid(int $priority, int $id) : bool
   {
-    return $this->mphpd->cmd("prioid", [ $priority, $id ]) !== false;
+    return $this->mphpd->cmd("prioid", [ $priority, $id ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -273,7 +273,7 @@ class Queue
    */
   public function rangeid(int $songid, array $range = []) : bool
   {
-    return $this->mphpd->cmd("rangeid", [ $songid, pos_or_range($range) ]) !== false;
+    return $this->mphpd->cmd("rangeid", [ $songid, pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -285,7 +285,7 @@ class Queue
    */
   public function shuffle(array $range = []) : bool
   {
-    return $this->mphpd->cmd("shuffle", [pos_or_range($range)]) !== false;
+    return $this->mphpd->cmd("shuffle", [pos_or_range($range)], MPD_CMD_READ_BOOL);
   }
 
 
@@ -298,7 +298,7 @@ class Queue
    */
   public function swap(int $songpos_1, int $songpos_2) : bool
   {
-    return $this->mphpd->cmd("swap", [$songpos_1, $songpos_2]) !== false;
+    return $this->mphpd->cmd("swap", [$songpos_1, $songpos_2], MPD_CMD_READ_BOOL);
   }
 
 
@@ -311,7 +311,7 @@ class Queue
    */
   public function swapid(int $songid_1, int $songid_2) : bool
   {
-    return $this->mphpd->cmd("swapid", [$songid_1, $songid_2]) !== false;
+    return $this->mphpd->cmd("swapid", [$songid_1, $songid_2], MPD_CMD_READ_BOOL);
   }
 
 
@@ -325,7 +325,7 @@ class Queue
    */
   public function addtagid(int $songid, string $tag, string $value) : bool
   {
-    return $this->mphpd->cmd("addtagid", [$songid, $tag, $value]) !== false;
+    return $this->mphpd->cmd("addtagid", [$songid, $tag, $value], MPD_CMD_READ_BOOL);
   }
 
 
@@ -338,7 +338,7 @@ class Queue
    */
   public function cleartagid(int $songid, string $tag) : bool
   {
-    return $this->mphpd->cmd("cleartagid", [$songid, $tag]) !== false;
+    return $this->mphpd->cmd("cleartagid", [$songid, $tag], MPD_CMD_READ_BOOL);
   }
 
 

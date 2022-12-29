@@ -28,7 +28,7 @@ class Channel
    */
   public function subscribe(): bool
   {
-    return $this->mphpd->cmd("subscribe", [ $this->name ]) !== false;
+    return $this->mphpd->cmd("subscribe", [ $this->name ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -39,7 +39,7 @@ class Channel
    */
   public function unsubscribe(): bool
   {
-    return $this->mphpd->cmd("unsubscribe", [ $this->name ]) !== false;
+    return $this->mphpd->cmd("unsubscribe", [ $this->name ], MPD_CMD_READ_BOOL);
   }
 
 
