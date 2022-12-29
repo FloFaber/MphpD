@@ -10,7 +10,9 @@ namespace FloFaber;
 class Filter
 {
 
-  private string $f;
+  private array $tags = [];
+  private array $operators = [];
+  private array $values = [];
 
 
   /**
@@ -21,8 +23,7 @@ class Filter
    */
   public function __construct(string $tag, string $operator, string $value)
   {
-    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
-    $this->f = "\"($tag $operator $value)\"";
+    $this->and($tag, $operator, $value);
   }
 
 
@@ -35,24 +36,44 @@ class Filter
    */
   public function and(string $tag, string $operator, string $value): Filter
   {
-    $this->f = "(".$this->f." AND ".$this->make_str($tag, $operator, $value).")";
+    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    $this->tags[] = $tag;
+    $this->operators[] = $operator;
+    $this->values[] = $value;
     return $this;
   }
 
 
-  private function make_str(string $tag, string $operator, string $value): string
-  {
-    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
-    return "\"($tag $operator $value)\"";
-  }
-
   /**
-   * Returns the generated Filter string.
+   * Generate and return the Filter string.
    * @return string
    */
   public function __toString()
   {
-    return $this->f;
+    $s = "\"";
+    if(count($this->tags) > 1){
+      $s .= "(";
+    }
+
+    for($i = 0; $i < count($this->tags); $i++){
+
+      $t = $this->tags[$i];
+      $o = $this->operators[$i];
+      $v = $this->values[$i];
+
+      if($i > 0){
+        $s .= " AND ";
+      }
+
+      $s .= "($t $o $v)";
+
+    }
+
+    if(count($this->tags) > 1){
+      $s .= ")";
+    }
+
+    return $s."\"";
   }
 
 } // End MPDFilter
