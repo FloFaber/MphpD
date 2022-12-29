@@ -3,6 +3,7 @@
 
 require_once __DIR__ . "/../src/mphpd.php";
 
+use FloFaber\MPDException;
 use FloFaber\MphpD;
 use PHPUnit\Framework\TestCase;
 
@@ -69,40 +70,51 @@ abstract class mphpdTest extends TestCase
 
   public function testUpdate()
   {
+
+    $offset = 0;
+    if($this->mpd->status()->get([ "updating_db" ]) !== NULL){
+      $offset = 1;
+    }
+
     $job = $this->mpd->db()->update("", true, true);
     $this->assertIsInt($job);
     $this->assertIsInt($this->mpd->status()->get([ "updating_db" ]));
 
-    $this->assertSame($job, $this->mpd->db()->update());
+    $this->assertSame($job, $this->mpd->db()->update() + $offset);
+  }
+
+
+  public function testBulkFail()
+  {
+
+    $this->mpd->bulk_start();
+
+    $this->mpd->bulk_add("add", [ "Eisregen/02 - Kaltwassergrab.mp3"]);
+    $this->mpd->bulk_add("status", [], MPD_CMD_READ_NORMAL);
+    $this->mpd->bulk_add("add", [ "nonexistant/asdf.mp3"]);
+
+    $this->expectException(MPDException::class);
+    $this->mpd->bulk_end();
   }
 
 
   public function testBulk()
   {
-
     $this->mpd->bulk_start();
 
-    $this->mpd->status()->get();
-    $this->mpd->playlists();
-    $this->mpd->status()->stats();
-    $this->mpd->cmd("invalidcommand");
-    $this->mpd->queue()->get();
+    $this->mpd->bulk_add("add", [ "Eisregen/02 - Kaltwassergrab.mp3"]);
+    $this->mpd->bulk_add("status", [], MPD_CMD_READ_NORMAL);
 
-    $ret = $this->mpd->bulk_end(true);
+    $ret = $this->mpd->bulk_end();
 
-    $this->assertSame(count($ret), 4);
+    $this->assertIsArray($ret);
+    $this->assertSame(count($ret), 2);
 
-    $this->assertArrayHasKey("state", $ret[0]);
-    $this->assertNotNull($ret[0]);
 
-    $this->assertArrayHasKey("playlist", $ret[1][0]);
-    $this->assertNotNull($ret[1][0]["playlist"]);
+    $this->assertTrue($ret[0]);
 
-    $this->assertArrayHasKey("artists", $ret[2]);
-    $this->assertNotNull($ret[2]["artists"]);
-
-    $this->assertInstanceOf(\FloFaber\MPDException::class, $ret[3]);
-
+    $this->assertNotFalse($ret[1]);
+    $this->assertArrayHasKey("state", $ret[1]);
   }
 
 
