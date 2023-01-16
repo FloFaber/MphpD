@@ -90,22 +90,22 @@ function error(MPDException $e, int $errormode): bool
  */
 function parse(array $lines, int $flag = MPD_CMD_READ_NORMAL)
 {
+
   $b = [];
   $tmp = [];
   $first_key = NULL;
 
-  foreach($lines as $line){
+  $lines_parsed = [];
 
+  // parse lines first so we can look ahead later
+  foreach($lines as $line){
     if(str_starts_with($line, "ACK")){
       return parse_error($line);
     }
-
     $ls = explode(":", $line, 2);
-
     if(count($ls) < 2){
       continue;
     }
-
     if($ls[0] === "binary_data"){
       $k = "binary_data";
       $v = $ls[1];
@@ -116,21 +116,41 @@ function parse(array $lines, int $flag = MPD_CMD_READ_NORMAL)
         $v = (int)$v;
       }
     }
+    $lines_parsed[] = [ "k" => $k, "v" => $v ];
+  }
 
-    // if we are parsing a list and the first encountered key is the current key,
-    // we push the current item into the list and start over again
-    if($flag === MPD_CMD_READ_LIST && $first_key === $k){
-      $b[] = $tmp;
-      $tmp = [];
-    }elseif($flag === MPD_CMD_READ_LIST_SINGLE && $first_key === $k){
-      $b[] = $v;
+  // now loop through the parsed lines
+  for($i = 0; $i < count($lines_parsed); $i++){
+
+    $line = $lines_parsed[$i];
+    $k = $line["k"];
+    $v = $line["v"];
+
+    $tmp[$k] = $v;
+
+    // on the last key (the one after the first key) we push the stored data to the result array
+    // Example:
+    // channel: test    <- First key
+    // message: hi      <- The last key
+    // channel: test    <- Also the "first" key
+    // message: hello
+    // channel: test
+    // message: goodbye
+    // OK
+    if($first_key !== NULL && (isset($lines_parsed[$i+1]) && ($lines_parsed[$i+1]["k"] === $first_key)) || !isset($lines_parsed[$i+1])){
+      if($flag === MPD_CMD_READ_LIST){
+        $b[] = $tmp;
+        $tmp = [];
+      }elseif($flag === MPD_CMD_READ_LIST_SINGLE){
+        $b[] = $v;
+      }
     }
 
     // set the first encountered key if there isn't already one
     if(($flag === MPD_CMD_READ_LIST || $flag === MPD_CMD_READ_LIST_SINGLE) && $first_key === NULL){
       $first_key = $k;
     }
-    $tmp[$k] = $v;
+
   }
 
   if($flag === MPD_CMD_READ_BOOL){
