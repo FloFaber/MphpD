@@ -2,7 +2,14 @@
 
 namespace FloFaber;
 
-// https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices
+//
+
+/**
+ * This subclass is used to configure audio outputs.
+ * Have a look at the [MPD doc](https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices) for more.
+ * @title Audio Outputs
+ * @usage MphpD::output(int $id) : Output
+ */
 class Output
 {
 

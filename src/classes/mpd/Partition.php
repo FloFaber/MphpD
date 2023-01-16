@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * This subclass is used to create, switch and configure [partitions](https://mpd.readthedocs.io/en/latest/protocol.html#partition-commands)
+ * @title Partitions
+ * @usage MphpD::partition(string $name) : Partition
+ */
 class Partition
 {
 

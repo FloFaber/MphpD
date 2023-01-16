@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * Subclass to retrieve MPD's current status.
+ * @title Status
+ * @usage MphpD::status() : Status
+ */
 class Status
 {
   private MphpD $mphpd;

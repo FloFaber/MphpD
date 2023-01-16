@@ -4,10 +4,10 @@ namespace FloFaber;
 
 
 /**
- * Player class.
- * Handles playback and playback options
- * https://mpd.readthedocs.io/en/latest/protocol.html#playback-options
- * https://mpd.readthedocs.io/en/latest/protocol.html#controlling-playback
+ * This subclass is used to control MPDs playback.
+ * You may also want to have a look at the [MPD documentation](https://mpd.readthedocs.io/en/latest/protocol.html#playback-options).
+ * @usage MphpD::player() : Player
+ * @title The Player
  */
 
 class Player
@@ -28,7 +28,8 @@ class Player
    *
    *                   * MPD_STATE_OFF - Disables consume mode
    *
-   *                   * MPD_STATE_ONESHOT - Enables consume mode for a single song
+   *                   * MPD_STATE_ONESHOT - Enables consume mode for a single song.
+   *                                         This is only supported on MPD version 0.24 and newer.
    * @return bool Returns true on success and false on failure
    * @throws MPDException
    */
@@ -116,7 +117,7 @@ class Player
   {
     // if no volume is specified return the current volume
     if($volume === -1){
-      // if version is 0.23 or higher use the new `getvol` command. Otherwise get the volume from `status`.
+      // on version 0.23 or higher use the new `getvol` command. Otherwise, get the volume from `status`.
       if($this->mphpd->version_bte("0.23")){
         $v = $this->mphpd->cmd("getvol");
         if($v !== false){ $v = $v["volume"]; }
@@ -126,7 +127,6 @@ class Player
 
       // return volume if valid and -1 otherwise.
       return ($v !== false AND $v !== NULL) ? $v : -1;
-
     }
     return $this->mphpd->cmd("setvol", [$volume], MPD_CMD_READ_BOOL);
   }
@@ -142,12 +142,13 @@ class Player
    *
    *                   * MPD_STATE_OFF - Disables single mode
    *
-   *                   * MPD_STATE_ONESHOT - Enables single mode for one time
+   *                   * MPD_STATE_ONESHOT - Enables single mode for only a single time.
+   *                     This is only supported on MPD version 0.21 and newer.
    */
   public function single(int $state) : bool
   {
 
-    if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.24")){
+    if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.21")){
       $state = "oneshot";
     }elseif($state === MPD_STATE_ONESHOT){
       return $this->mphpd->setError(new MPDException("Unsupported state: oneshot."));
@@ -203,9 +204,9 @@ class Player
    * Pause or resume playback.
    * @param int $state Optional. One of the following:
    *
-   *                   MPD_STATE_ON - Pause
+   *                   * MPD_STATE_ON - Pause
    *
-   *                   MPD_STATE_OFF - Resume
+   *                   * MPD_STATE_OFF - Resume
    *
    *                   If omitted the pause state is toggled.
    * @return bool Returns true on success and false on failure

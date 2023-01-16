@@ -15,7 +15,7 @@ class Socket
 
   private string $version;
 
-  protected int $errormode = MPD_ERRORMODE_EXCEPTION;
+  protected int $errormode = MPD_ERRORMODE_SILENT;
 
   public bool $connected = false;
 
@@ -68,9 +68,15 @@ class Socket
 
   /**
    * Send $command with $params to the MPD server.
+   *
+   * You, the library's user, are not intended to ever
+   * need this method. If you ever need it because the library does not support
+   * a specific command please file a [bug report](https://github.com/FloFaber/MphpD/issues).
+   * This method also parses MPDs response depending on the chosen mode.
+   *
    * @param string $command The command
    * @param array $params Parameters, automatically escaped
-   * @param int $mode One of the following:
+   * @param int $mode One of the following constants:
    *
    *                  * MPD_CMD_READ_NONE        - Do not read anything from the answer. Returns an empty array.
    *
@@ -148,6 +154,7 @@ class Socket
   /**
    * Function to start a command-list.
    * @return void
+   * @tags commandlist
    */
   public function bulk_start()
   {
@@ -161,6 +168,7 @@ class Socket
    * The command list is stopped in case an error occurs.
    * @return array|false Returns an array containing the commands responses.
    * @throws MPDException
+   * @tags commandlist
    */
   public function bulk_end(): array
   {
@@ -219,6 +227,7 @@ class Socket
    * Function to abort the current command list.
    * We can do that because we only start the list at protocol level when bulk_end() is called.
    * @return void
+   * @tags commandlist
    */
   public function bulk_abort()
   {
@@ -234,6 +243,7 @@ class Socket
    * @param array $params
    * @param int $mode
    * @return bool
+   * @tags commandlist
    */
   public function bulk_add(string $cmd, array $params = [], int $mode = MPD_CMD_READ_BOOL) : bool
   {
@@ -264,38 +274,46 @@ class Socket
 
 
   /**
+   * Close the connection to the MPD socket
+   * @return void
    * @throws MPDException
    */
-  public function close()
+  public function close() : void
   {
-    return $this->cmd("close");
+    $this->cmd("close", [], MPD_CMD_READ_NONE);
   }
 
 
   /**
+   * Kill MPD.
+   * @return void
    * @throws MPDException
    */
-  public function kill()
+  public function kill() : void
   {
-    return $this->cmd("kill");
+    $this->cmd("kill", [], MPD_CMD_READ_NONE);
   }
 
 
   /**
+   * Send the password for authentication
+   * @return bool
    * @throws MPDException
    */
   private function password(string $password)
   {
-    return $this->cmd("password", [$password]);
+    return $this->cmd("password", [$password], MPD_CMD_READ_BOOL);
   }
 
 
   /**
+   * Ping.
+   * @return bool
    * @throws MPDException
    */
   public function ping()
   {
-    return $this->cmd("ping");
+    return $this->cmd("ping", [], MPD_CMD_READ_BOOL);
   }
 
 
@@ -321,6 +339,8 @@ class Socket
 
 
   /**
+   * Return a list of all available tag types.
+   * @return array|false
    * @throws MPDException
    */
   public function tagtypes()
@@ -330,43 +350,56 @@ class Socket
 
 
   /**
+   * Disable specified tag types.
+   * @param array $tagtypes A list of tag types to disable.
+   * @return bool
    * @throws MPDException
    */
-  public function tagtypes_disable(array $tagtypes)
+  public function tagtypes_disable(array $tagtypes) : bool
   {
-    return $this->cmd("tagtypes disable", $tagtypes);
+    return $this->cmd("tagtypes disable", $tagtypes, MPD_CMD_READ_BOOL);
   }
 
 
   /**
+   * Enable specified tag types.
+   * @param array $tagtypes A list of tag types to enable.
+   * @return bool
    * @throws MPDException
    */
-  public function tagtypes_enable(array $tagtypes)
+  public function tagtypes_enable(array $tagtypes) : bool
   {
-    return $this->cmd("tagtypes enable", $tagtypes);
+    return $this->cmd("tagtypes enable", $tagtypes, MPD_CMD_READ_BOOL);
   }
 
 
   /**
+   * Remove all tag types from responses.
+   * @return bool
    * @throws MPDException
    */
-  public function tagtypes_clear()
+  public function tagtypes_clear() : bool
   {
-    return $this->cmd("tagtypes clear");
+    return $this->cmd("tagtypes clear", [], MPD_CMD_READ_BOOL);
   }
 
 
   /**
+   * Enable all available tag types.
+   * @return bool
    * @throws MPDException
    */
-  public function tagtypes_all()
+  public function tagtypes_all() : bool
   {
-    return $this->cmd("tagtypes all");
+    return $this->cmd("tagtypes all", [], MPD_CMD_READ_BOOL);
   }
 
 
-
   /**
+   * Function to set the last occurred error.
+   * Should only be used inside the library!
+   * @param MPDException|string $err
+   * @return bool
    * @throws MPDException
    */
   public function setError($err): bool
@@ -381,7 +414,11 @@ class Socket
   }
 
 
-  public function getError(): MPDException
+  /**
+   * Return the last occurred error.
+   * @return MPDException
+   */
+  public function getError() : MPDException
   {
     return $this->last_error;
   }
@@ -392,7 +429,8 @@ class Socket
    * @throws MPDException
    * @return bool
    */
-  public function connect() : bool {
+  public function connect() : bool
+  {
 
     if($this->socket_type === "unix"){
       $address = $this->host;
@@ -443,7 +481,12 @@ class Socket
   }
 
 
-  public function disconnect(){
+  /**
+   * Disconnect from MPD
+   * @return void
+   */
+  public function disconnect()
+  {
     try{
       $this->close();
     } catch (MPDException $e) {

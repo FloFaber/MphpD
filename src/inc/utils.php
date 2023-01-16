@@ -137,13 +137,15 @@ function parse(array $lines, int $flag = MPD_CMD_READ_NORMAL)
     // channel: test
     // message: goodbye
     // OK
-    if($first_key !== NULL && (isset($lines_parsed[$i+1]) && ($lines_parsed[$i+1]["k"] === $first_key)) || !isset($lines_parsed[$i+1])){
-      if($flag === MPD_CMD_READ_LIST){
-        $b[] = $tmp;
-        $tmp = [];
-      }elseif($flag === MPD_CMD_READ_LIST_SINGLE){
-        $b[] = $v;
-      }
+    if($flag === MPD_CMD_READ_LIST && ($first_key !== NULL && (isset($lines_parsed[$i+1]) && ($lines_parsed[$i+1]["k"] === $first_key)) || !isset($lines_parsed[$i+1]))){
+      $b[] = $tmp;
+      $tmp = [];
+
+      // If we only parse a list with a single possible key just push its value to the result array.
+      // If this is used in a command which returns more than one possible key the result will look a little funky.
+      // We can, however, simple blame the user.
+    }elseif($flag === MPD_CMD_READ_LIST_SINGLE){
+      $b[] = $v;
     }
 
     // set the first encountered key if there isn't already one

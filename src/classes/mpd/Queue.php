@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * Subclass to control the Queue.
+ * @title The Queue
+ * @usage MphpD::queue() : Queue
+ */
 class Queue
 {
   private MphpD $mphpd;
@@ -171,7 +176,7 @@ class Queue
    * @return array|bool Associative array containing song information or false on failure.
    * @throws MPDException
    */
-  public function getID(int $songid)
+  public function getid(int $songid)
   {
     return $this->mphpd->cmd("playlistid", [ $songid ], MPD_CMD_READ_NORMAL);
   }

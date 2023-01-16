@@ -3,9 +3,11 @@
 namespace FloFaber;
 
 /**
- * Class to handle MPD filters. It takes care of parsing and escaping.
- * See: https://mpd.readthedocs.io/en/latest/protocol.html#filters for more
- * @Link: https://mphpd.org/doc/filters
+ * Filters provide a way to search for specific songs. They take care of parsing and escaping.
+ * They are used in various other methods like [DB::search](/doc/methods/db-search), [Playlist::searchadd](/doc/methods/playlist-searchadd) and more.
+ * Refer to the [MPD documentation](https://mpd.readthedocs.io/en/latest/protocol.html#filters) for more information about filters.
+ * @title Filters
+ * @usage new Filter(string $tag, string $operator, string $value) : Filter
  */
 class Filter
 {
@@ -16,7 +18,7 @@ class Filter
 
 
   /**
-   * Creates a new filter
+   * Creates a new filter.
    * @param string $tag Tag to be searched for. Like artist, title,...
    * @param string $operator Comparison operator. Like ==, contains, ~=,...
    * @param string $value The value to search for. Unescaped.
@@ -28,7 +30,7 @@ class Filter
 
 
   /**
-   * Used to chain multiple filters with AND
+   * Used to chain multiple filters together with a logical AND.
    * @param string $tag
    * @param string $operator
    * @param string $value

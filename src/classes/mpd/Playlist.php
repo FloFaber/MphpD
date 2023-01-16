@@ -3,7 +3,9 @@
 namespace FloFaber;
 
 /**
- * Class for stored Playlists
+ * Subclass to interact with stored Playlists.
+ * @title Playlists
+ * @usage MphpD::playlist(string $name) : Playlist
  */
 class Playlist
 {
@@ -17,9 +19,6 @@ class Playlist
   private MphpD $mphpd;
   private string $name;
 
-  /**
-   * @throws MPDException
-   */
   public function __construct(MphpD $mphpd, string $name)
   {
     $this->mphpd = $mphpd;
@@ -94,7 +93,7 @@ class Playlist
 
 
   /**
-   * Same as `search()` but adds the songs into the Playlist $playlist at position $pos.
+   * Search for songs using Filter and add them into the Playlist at position $pos.
    * @see DB::search()
    * @param Filter $filter
    * @param string $sort
@@ -172,19 +171,18 @@ class Playlist
     return $this->mphpd->cmd("rm", [$this->name], MPD_CMD_READ_BOOL);
   }
 
-
   /**
    * Saves the queue to the specified playlist in the playlist directory
-   * @param int $mode <b>Supported in MPD 0.24 and newer. Only MODE_CREATE is supported for versions below 0.24.</b>
+   * @param int $mode Optional. One of the following:
    *
-   *                  Optional argument. One of MODE_CREATE, MODE_APPEND, or MODE_REPLACE.
+   *                  * MPD_MODE_CREATE: The default. Create a new playlist. Fails if a playlist with name $name already exists.
    *
-   *                  * MODE_CREATE: The default. Create a new playlist. Fail if a playlist with name $name already exists.
+   *                  * MPD_MODE_APPEND: Append an existing playlist. Fails if a playlist with name $name doesn't already exist.
+   *                                     Only supported on MPD v0.24 and newer.
    *
-   *                  * MODE_APPEND: Append an existing playlist. Fail if a playlist with name $name doesn't already exist.
-   *
-   *                  * MODE_REPLACE: Replace an existing playlist. Fail if a playlist with name $name doesn't already exist.
-   * @return array|false
+   *                  * MPD_MODE_REPLACE: Replace an existing playlist. Fails if a playlist with name $name doesn't already exist.
+   *                                      Only supported on MPD v0.24 and newer.
+   * @return bool True on success. False on failure.
    * @throws MPDException
    */
   public function save(int $mode = MPD_MODE_CREATE) : bool

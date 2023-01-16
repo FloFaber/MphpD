@@ -9,7 +9,7 @@ class ActiveMphpdTest extends mphpdTest
   public function setUp(): void
   {
     $this->mpd = new MphpD([
-
+      "errormode" => MPD_ERRORMODE_EXCEPTION
     ]);
     $this->mpd->connect();
     $this->mpd->playlist("test")->load();
@@ -25,7 +25,8 @@ class ActiveMphpdTest extends mphpdTest
 
   public function testStatus()
   {
-    $this->assertArrayHasKey("volume", $this->mpd->status()->get());
+    $ret = $this->mpd->status()->get();
+    $this->assertArrayHasKey("volume", $ret);
     $this->assertIsInt($this->mpd->status()->get([ "volume" ]));
   }
 

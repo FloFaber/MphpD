@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * This subclass is used to mount and unmount directories.
+ * @title Mounts
+ * @usage MphpD::mount(string $name) : Mount
+ */
 class Mount
 {
 
@@ -15,12 +20,23 @@ class Mount
   }
 
 
+  /**
+   * Mount $uri to path
+   * @param string $uri The URI to mount
+   * @return bool
+   * @throws MPDException
+   */
   public function mount(string $uri) : bool
   {
     return $this->mphpd->cmd("mount", [ $this->path, $uri ], MPD_CMD_READ_BOOL);
   }
 
 
+  /**
+   * Unmount the path
+   * @return array|bool
+   * @throws MPDException
+   */
   public function unmount()
   {
     return $this->mphpd->cmd("unmount", [ $this->path ]);

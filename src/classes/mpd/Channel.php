@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * This subclass is used for client-to-client communication over MPD
+ * @title Channels
+ * @usage MphpD::channel(string $name) : Channel
+ */
 class Channel
 {
 
@@ -22,7 +27,7 @@ class Channel
 
 
   /**
-   * Subscribe to a specific channel
+   * Subscribe to the channel.
    * @return bool
    * @throws MPDException
    */
@@ -33,7 +38,7 @@ class Channel
 
 
   /**
-   * Unsubscribe a channel
+   * Unsubscribe the channel.
    * @return bool
    * @throws MPDException
    */
@@ -44,10 +49,8 @@ class Channel
 
 
   /**
-   * Read message.
-   * If $name was specified only the messages of this specific channel will be returned.
-   * If $name was omitted all available message will be returned.
-   * @return array|false
+   * Returns a list of the channel's messages.
+   * @return array|false `Array` containing the messages on success. `False` otherwise.
    * @throws MPDException
    */
   public function readmessages()
@@ -55,30 +58,26 @@ class Channel
 
     $messages = $this->mphpd->cmd("readmessages", [], MPD_CMD_READ_LIST);
     if($messages === false){ return false; }
-    if(empty($this->name)){
-      return $messages;
-    }
 
     $msgs = [];
     foreach($messages as $message){
       if($message["channel"] === $this->name){
-        $msgs[] = $message;
+        $msgs[] = $message["message"];
       }
     }
 
     return $msgs;
-
   }
 
 
   /**
-   * Send a message to the specified channel.
+   * Send a message to the channel.
    * @param string $message
-   * @return array|bool
+   * @return bool
    * @throws MPDException
    */
-  public function sendmessage(string $message)
+  public function sendmessage(string $message) : bool
   {
-    return $this->mphpd->cmd("sendmessage", [ $this->name, $message ]);
+    return $this->mphpd->cmd("sendmessage", [ $this->name, $message ], MPD_CMD_READ_BOOL);
   }
 }

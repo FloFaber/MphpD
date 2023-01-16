@@ -4,6 +4,11 @@ namespace FloFaber;
 
 require_once __DIR__ . "/../Filter.php";
 
+/**
+ * This subclass is used to interact with and retrieve information from MPD's database.
+ * @title The Database
+ * @usage MphpD::DB() : DB
+ */
 class DB
 {
 
@@ -148,30 +153,30 @@ class DB
 
 
   /**
-   * Returns an array with a "directories"-key and a "files" key containing the directories/files of $uri.
+   * Returns an array containing the directories and files of $uri.
    * @param string $uri Can be a relative path or a URI understood by one of the storage plugins.
-   * @param bool $metadata If true metadata will be included in the information.
+   * @param bool $metadata If `true` metadata will be included in the information.
    * @return array|false Array on success or false on failure.
-   *                     <pre>Array [
-   *                       "directories" => Array [
-   *                         Array [
-   *                           "directory" => "dirname",
-   *                           "last-modified" => "2022-10-03T16:26:58Z"
-   *                         ], Array [
-   *                           "directory" => "dir2", ...
-   *                         ]
-   *                       ],
-   *                       "files" => Array [
-   *                         Array [
-   *                           "file" => "song1.mp3",
-   *                           "size" => 123456,
-   *                           "last-modified" => "2023-01-01T23:59:01Z",
-   *                           {OPTIONAL METADATA}
-   *                         ], Array [
-   *                           "file" => "song2.mp3", ...
-   *                         ]
-   *                       ]
-   *                     ]</pre>
+   * <pre>Array [
+   *   "directories" => Array [
+   *      Array [
+   *        "directory" => "dirname",
+   *        "last-modified" => "2022-10-03T16:26:58Z"
+   *      ], Array [
+   *        "directory" => "dir2", ...
+   *      ]
+   *   ],
+   *   "files" => Array [
+   *     Array [
+   *       "file" => "song1.mp3",
+   *       "size" => 123456,
+   *       "last-modified" => "2023-01-01T23:59:01Z",
+   *       {OPTIONAL METADATA}
+   *     ], Array [
+   *       "file" => "song2.mp3", ...
+   *     ]
+   *   ]
+   * ]</pre>
    * @throws MPDException
    */
   public function listfiles(string $uri, bool $metadata = false)
@@ -260,13 +265,13 @@ class DB
 
 
   /**
-   * Update the Database. Returns Job-ID.
-   * @param string $uri Optional. Only update the given path.
-   * @param bool $rescan If true rescans also unmodified files.
-   * @param bool $force If false and an update Job is already running, just returns its ID.
+   * Update the Database and return the Job-ID.
+   * @param string $uri Optional. Only update the given path. Omit or specify an empty string to update everything.
+   * @param bool $rescan If set to `true` also rescan unmodified files.
+   * @param bool $force If set to `false` and an update Job is already running, just return its ID.
    *
    *                    If true and an update Job is already running it starts another one and returns the ID of the new Job.
-   * @return int|false Returns Job-ID on success or false on failure.
+   * @return int|false Returns the Job-ID on success or false on failure.
    * @throws MPDException
    */
   public function update(string $uri = "", bool $rescan = false, bool $force = false)

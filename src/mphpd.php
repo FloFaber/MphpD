@@ -32,7 +32,11 @@ require_once __DIR__ . "/classes/mpd/Status.php"; // MphpD::status
 require_once __DIR__ . "/classes/mpd/Sticker.php"; // Mphpd::sticker()
 
 
-
+/**
+ * The Main MphpD class.
+ * @title MphpD
+ * @usage new MphpD(array $config = []) : MphpD
+ */
 class MphpD extends Socket
 {
 
@@ -248,30 +252,56 @@ class MphpD extends Socket
    */
 
 
+  /**
+   * Returns an associative array of configuration values.
+   * This function is only available for client connected via Unix Socket!
+   * @return array|false
+   * @throws MPDException
+   */
   public function config()
   {
-    return $this->cmd("config");
+    return $this->cmd("config", [], MPD_CMD_READ_NORMAL);
   }
 
 
+  /**
+   * Returns a list of all available commands.
+   * @return array|false
+   * @throws MPDException
+   */
   public function commands()
   {
     return $this->cmd("commands", [], MPD_CMD_READ_LIST_SINGLE);
   }
 
 
+  /**
+   * Returns a list of all not-available commands.
+   * @return array|false
+   * @throws MPDException
+   */
   public function notcommands()
   {
     return $this->cmd("notcommands", [], MPD_CMD_READ_LIST_SINGLE);
   }
 
 
+  /**
+   * Returns a list of all available urlhandlers. Like smb://, sftp://, http://...
+   * @return array|bool
+   * @throws MPDException
+   */
   public function urlhandlers()
   {
     return $this->cmd("urlhandlers", [], MPD_CMD_READ_LIST_SINGLE);
   }
 
 
+  /**
+   * Returns a list of available decoder plugins and their supported suffixes and mimetypes.
+   * @return array|false
+   * @throws MPDException
+   */
   public function decoders()
   {
     return $this->cmd("decoders", [], MPD_CMD_READ_LIST);

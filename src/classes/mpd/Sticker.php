@@ -2,6 +2,11 @@
 
 namespace FloFaber;
 
+/**
+ * Subclass for [Stickers](https://mpd.readthedocs.io/en/latest/protocol.html#stickers).
+ * @title Stickers
+ * @usage MphpD::sticker(string $type, string $uri) : Sticker
+ */
 class Sticker
 {
 
