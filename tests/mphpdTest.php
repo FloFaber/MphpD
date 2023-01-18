@@ -36,35 +36,35 @@ abstract class mphpdTest extends TestCase
 
   public function testClearError()
   {
-    $this->assertNotFalse($this->mpd->status()->clearerror());
+    $this->assertNotFalse($this->mpd->clearerror());
   }
 
   public function testCurrentSong()
   {
-    $this->assertNotFalse($this->mpd->status()->currentsong());
+    $this->assertNotFalse($this->mpd->player()->currentsong());
   }
 
   public function testStatus()
   {
-    $this->assertArrayHasKey("single", $this->mpd->status()->get());
+    $this->assertArrayHasKey("single", $this->mpd->status());
 
-    $this->assertIsInt($this->mpd->status()->get([ "playlist" ]));
-    $this->assertNull($this->mpd->status()->get([ "nonexistant" ]));
+    $this->assertIsInt($this->mpd->status([ "playlist" ]));
+    $this->assertNull($this->mpd->status([ "nonexistant" ]));
 
-    $this->assertArrayHasKey("random", $this->mpd->status()->get([ "random", "single" ]));
-    $this->assertIsInt($this->mpd->status()->get([ "playlist", "single" ])["playlist"]);
+    $this->assertArrayHasKey("random", $this->mpd->status([ "random", "single" ]));
+    $this->assertIsInt($this->mpd->status([ "playlist", "single" ])["playlist"]);
 
   }
 
   public function testStats()
   {
-    $this->assertArrayHasKey("artists", $this->mpd->status()->stats());
+    $this->assertArrayHasKey("artists", $this->mpd->stats());
 
-    $this->assertIsInt($this->mpd->status()->stats([ "songs" ]));
-    $this->assertNull($this->mpd->status()->stats([ "nonexistant" ]));
+    $this->assertIsInt($this->mpd->stats([ "songs" ]));
+    $this->assertNull($this->mpd->stats([ "nonexistant" ]));
 
-    $this->assertArrayHasKey("uptime", $this->mpd->status()->stats([ "uptime", "songs" ]));
-    $this->assertIsInt($this->mpd->status()->stats([ "uptime", "single" ])["uptime"]);
+    $this->assertArrayHasKey("uptime", $this->mpd->stats([ "uptime", "songs" ]));
+    $this->assertIsInt($this->mpd->stats([ "uptime", "single" ])["uptime"]);
   }
 
 
@@ -72,13 +72,13 @@ abstract class mphpdTest extends TestCase
   {
 
     $offset = 0;
-    if($this->mpd->status()->get([ "updating_db" ]) !== NULL){
+    if($this->mpd->status([ "updating_db" ]) !== NULL){
       $offset = 1;
     }
 
     $job = $this->mpd->db()->update("", true, true);
     $this->assertIsInt($job);
-    $this->assertIsInt($this->mpd->status()->get([ "updating_db" ]));
+    $this->assertIsInt($this->mpd->status([ "updating_db" ]));
 
     $this->assertSame($job, $this->mpd->db()->update() + $offset);
   }

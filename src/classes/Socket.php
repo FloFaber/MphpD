@@ -274,6 +274,30 @@ class Socket
 
 
   /**
+   * Waits until there is a noteworthy change in one or more of MPD’s subsystems.
+   * @param string $subsystem
+   * @param int $timeout Specifies how long to wait for MPD to return an answer.
+   * @return array|false Returns an array of changed subsystems or false on timeout.
+   * @throws MPDException
+   */
+  public function idle(string $subsystem = "", int $timeout = 60)
+  {
+    stream_set_timeout($this->get_socket(), $timeout);
+    $subsystems = $this->cmd("idle", [$subsystem], MPD_CMD_READ_LIST_SINGLE);
+
+
+    // if the stream timed out we need to send "noidle". Otherwise, MPD won't know that we don't want to wait anymore.
+    // Alternatively reconnecting would also work.
+    $metadata = stream_get_meta_data($this->get_socket());
+    if($metadata["timed_out"]){
+      $this->cmd("noidle");
+    }
+
+    return $subsystems;
+  }
+
+
+  /**
    * Close the connection to the MPD socket
    * @return void
    * @throws MPDException

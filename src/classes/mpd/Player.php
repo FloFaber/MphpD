@@ -122,7 +122,7 @@ class Player
         $v = $this->mphpd->cmd("getvol");
         if($v !== false){ $v = $v["volume"]; }
       }else{
-        $v = $this->mphpd->status()->get([ "volume" ]);
+        $v = $this->mphpd->status([ "volume" ]);
       }
 
       // return volume if valid and -1 otherwise.
@@ -187,7 +187,15 @@ class Player
    * ######################
    */
 
-
+  /**
+   * Returns an associative array containing information about the currently playing song.
+   * @return array|false
+   * @throws MPDException
+   */
+  public function currentsong()
+  {
+    return $this->mphpd->cmd("currentsong");
+  }
 
   /**
    * Plays the next song in the Queue
@@ -228,7 +236,7 @@ class Player
   public function play(int $pos = -1) : bool
   {
 
-    $state = $this->mphpd->status()->get([ "state" ]);
+    $state = $this->mphpd->status([ "state" ]);
 
     // if no position is given and the player is stopped -> start playing at the first song.
     if($pos === -1 AND $state === "stop"){
@@ -311,7 +319,7 @@ class Player
    */
   public function stop() : bool
   {
-    return $this->mphpd->cmd("stop", MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("stop", [], MPD_CMD_READ_BOOL);
   }
 
 

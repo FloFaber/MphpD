@@ -28,7 +28,6 @@ require_once __DIR__ . "/classes/mpd/Partition.php"; // MphpD::partition()
 require_once __DIR__ . "/classes/mpd/Player.php"; // MphpD::player
 require_once __DIR__ . "/classes/mpd/Playlist.php"; // MphpD::playlist()
 require_once __DIR__ . "/classes/mpd/Queue.php"; // MphpD::queue
-require_once __DIR__ . "/classes/mpd/Status.php"; // MphpD::status
 require_once __DIR__ . "/classes/mpd/Sticker.php"; // Mphpd::sticker()
 
 
@@ -43,7 +42,6 @@ class MphpD extends Socket
   private DB $db;
   private Player $player;
   private Queue $queue;
-  private Status $status;
 
 
   public function __construct(array $options = [])
@@ -51,7 +49,6 @@ class MphpD extends Socket
     $this->db = new DB($this);
     $this->player = new Player($this);
     $this->queue = new Queue($this);
-    $this->status = new Status($this);
 
     parent::__construct($options);
   }
@@ -90,16 +87,6 @@ class MphpD extends Socket
   public function queue() : Queue
   {
     return $this->queue;
-  }
-
-
-  /**
-   * Return the Status instance
-   * @return Status
-   */
-  public function status() : Status
-  {
-    return $this->status;
   }
 
 
@@ -230,6 +217,103 @@ class MphpD extends Socket
   public function channels()
   {
     return $this->cmd("channels", [], MPD_CMD_READ_LIST_SINGLE);
+  }
+
+
+  /**
+   * Clears the current error
+   * @return bool
+   * @throws MPDException
+   */
+  public function clearerror() : bool
+  {
+    return $this->cmd("clearerror", [], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Returns the value of the specified key(s) from MPD's status.
+   * @param array $items Optional. Array containing the wanted key(s) like `status`, `songid`,...
+   *
+   *                     If only one item is given only it's value will be returned instead of an associative array.
+   *
+   *                     If the given item(s) do not exist `null` will be set as their value.
+   *
+   *                     If omitted, an associative array containing all status information will be returned.
+   *
+   * @return array|false|int|null Returns
+   *                     `false` on error
+   *
+   *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
+   *
+   *                     Otherwise, an associative array containing all available (or specified) keys.
+   * @throws MPDException
+   */
+  public function status(array $items = [])
+  {
+    $status = $this->cmd("status");
+
+    // if status has failed return false
+    if($status === false){ return false; }
+
+    // if no items are given return the whole status
+    if(!$items){ return $status; }
+
+    // if items contain a single item return it's value or null if it doesn't exist
+    if(count($items) === 1){
+      return $status[$items[0]] ?? null;
+    }
+
+    // otherwise return only the requested items
+    $tmp = [];
+    foreach($items as $item){
+      $tmp[$item] = $status[$item] ?? null;
+    }
+
+    return $tmp;
+  }
+
+
+  /**
+   * Returns the value of the specified key from MPD's stats.
+   * @param array $items Optional. Array containing the wanted stat(s). Example: `[ "artists", "uptime", "playtime" ]`
+   *
+   *                     If only one item is given only it's value will be returned instead of an associative array.
+   *
+   *                    If the given item(s) do not exist `null` will be set as their value.
+   *
+   *                    If omitted, an associative array containing all stats will be returned.
+   *
+   * @return array|false|int|null Returns
+   *                     `false` on error
+   *
+   *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
+   *
+   *                     Otherwise, an associative array containing all available (or specified) stats.
+   * @throws MPDException
+   */
+  public function stats(array $items = [])
+  {
+    $stats = $this->cmd("stats");
+
+    // if stats failed return false immediately
+    if($stats === false){ return false; }
+
+    // if no items are given return all stats
+    if(!$items){ return $stats; }
+
+    // if items contain a single item return it's value or null if it doesn't exist
+    if(count($items) === 1){
+      return $stats[$items[0]] ?? null;
+    }
+
+    // otherwise return only the requested items
+    $tmp = [];
+    foreach($items as $item){
+      $tmp[$item] = $stats[$item] ?? null;
+    }
+
+    return $tmp;
   }
 
 

@@ -40,10 +40,10 @@ try{
 }
 
 // get MPD's status like current song, volume, state, etc...
-$status = $mpd->status()->get();
+$status = $mpd->status();
 
 // if you only want to retrieve a single (or more) values
-$state = $mpd->status()->get([ "state" ]);
+$state = $mpd->status([ "state" ]);
 
 // clear the queue
 $mpd->queue()->clear();

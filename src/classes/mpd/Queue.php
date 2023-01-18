@@ -220,7 +220,7 @@ class Queue
 
   /**
    * Returns an array of changed songs currently in the playlist since $version.
-   * @param int $version The current version can be retrieved with MphpD->status()->get("playlist").
+   * @param int $version The current version can be retrieved with MphpD::status([ "playlist" ]).
    * @param int|array $range Position of song or Range
    * @param bool $metadata If set to true the metadata will be included.
    *
@@ -234,7 +234,7 @@ class Queue
     if($metadata === true){
       $cmd = "plchangesposid";
     }
-    return $this->mphpd->cmd($cmd, [$version, pos_or_range($range) ], MPD_CMD_READ_LIST);
+    return $this->mphpd->cmd($cmd, [ $version, pos_or_range($range) ], MPD_CMD_READ_LIST);
   }
 
 

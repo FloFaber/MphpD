@@ -283,7 +283,7 @@ class DB
     }
 
     // if a job is already running but $force is false return the current Job ID
-    $job = $this->mphpd->status()->get([ "updating_db" ]);
+    $job = $this->mphpd->status([ "updating_db" ]);
     if($job !== false AND $job !== null AND $force === false){
       return $job;
     }
