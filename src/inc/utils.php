@@ -39,7 +39,9 @@ function escape_params(array $params, int $flags = MPD_ESCAPE_PREFIX_SPACE): str
     $param = (string)$param;
     // @ToDo make sure this works aka. test this
     if(strlen($param) === 0){ continue; }
-    $parsed .= $prefix.$quote.escapeshellcmd($param).$quote.$suffix;
+    //$param = str_replace("\\", "\\\\", $param);
+    $param = escapeshellcmd(escapeshellcmd($param));
+    $parsed .= $prefix.$quote.$param.$quote.$suffix;
   }
   return $parsed;
 }

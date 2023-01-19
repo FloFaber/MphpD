@@ -74,7 +74,7 @@ class DB
    * @return string|bool Returns the fingerprint on success or false on failure.
    * @throws MPDException
    */
-  public function getfingerprint(string $uri)
+  public function fingerprint(string $uri)
   {
     $fp = $this->mphpd->cmd("getfingerprint", [$uri]);
     if($fp === false){ return false; }
@@ -106,19 +106,19 @@ class DB
    * If group is omitted returns an array of unique tag values of the specified type.
    * If group is specified returns an array of associative arrays containing the grouped result.
    * @param string $type Any tag supported by MPD. Like artist or album.
-   * @param Filter $filter
+   * @param Filter|null $filter
    * @param string $group Tag name to group the result by. Like artist or album.
    * @return array|bool
    * @throws MPDException
    */
-  public function list(string $type, Filter $filter, string $group = "")
+  public function list(string $type, Filter $filter = null, string $group = "")
   {
     $m = MPD_CMD_READ_LIST_SINGLE;
     if(!empty($group)){
       $m = MPD_CMD_READ_LIST;
     }
 
-    $type = "type ".escape_params([ $type ]);
+    $type = escape_params([ $type ]);
     return $this->mphpd->cmd("list $type $filter", [
       ($group ? "group" : ""), ($group ?: "")
     ], $m);
@@ -134,7 +134,7 @@ class DB
    * @return array|bool
    * @throws MPDException
    */
-  public function listall(string $uri = "", bool $metadata = false)
+  public function list_all(string $uri = "", bool $metadata = false)
   {
 
     if($metadata === true){
@@ -179,7 +179,7 @@ class DB
    * ]</pre>
    * @throws MPDException
    */
-  public function listfiles(string $uri, bool $metadata = false)
+  public function list_files(string $uri, bool $metadata = false)
   {
 
     $cmd = "listfiles";
@@ -212,7 +212,7 @@ class DB
    * @return array|bool
    * @throws MPDException
    */
-  public function readcomments(string $uri)
+  public function read_comments(string $uri)
   {
     return $this->mphpd->cmd("readcomments", [$uri], MPD_CMD_READ_LIST);
   }
@@ -223,7 +223,7 @@ class DB
    * @param string $uri
    * @return false|string Binary data on success and false on failure.
    */
-  public function readpicture(string $uri)
+  public function read_picture(string $uri)
   {
     $offset = 0;
     $binary_data = "";

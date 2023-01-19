@@ -53,7 +53,7 @@ class Channel
    * @return array|false `Array` containing the messages on success. `False` otherwise.
    * @throws MPDException
    */
-  public function readmessages()
+  public function read_messages()
   {
 
     $messages = $this->mphpd->cmd("readmessages", [], MPD_CMD_READ_LIST);
@@ -76,7 +76,7 @@ class Channel
    * @return bool
    * @throws MPDException
    */
-  public function sendmessage(string $message) : bool
+  public function send_message(string $message) : bool
   {
     return $this->mphpd->cmd("sendmessage", [ $this->name, $message ], MPD_CMD_READ_BOOL);
   }

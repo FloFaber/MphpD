@@ -57,7 +57,7 @@ class Playlist
    * @return array|false On success returns an Array of associative Arrays containing song information. False on failure.
    * @throws MPDException
    */
-  public function getSongs(bool $metadata = false) : array
+  public function get_songs(bool $metadata = false) : array
   {
     return $this->mphpd->cmd("listplaylist".($metadata ? "info" : ""), [$this->name], MPD_CMD_READ_LIST);
   }
@@ -102,7 +102,7 @@ class Playlist
    * @return bool
    * @throws MPDException
    */
-  public function searchadd(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
+  public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
   {
     $name = escape_params([ $this->name ]);
     return $this->mphpd->cmd("searchaddpl $name $filter", [
@@ -130,7 +130,7 @@ class Playlist
    * @return bool
    * @throws MPDException
    */
-  public function removeSong($songpos = -1) : bool
+  public function remove_song($songpos = -1) : bool
   {
     return $this->mphpd->cmd("playlistdelete", [ $this->name, pos_or_range($songpos) ], MPD_CMD_READ_BOOL);
   }
@@ -143,7 +143,7 @@ class Playlist
    * @return bool
    * @throws MPDException
    */
-  public function moveSong(int $from, int $to) : bool
+  public function move_song(int $from, int $to) : bool
   {
     return $this->mphpd->cmd("playlistmove", [$this->name, $from, $to], MPD_CMD_READ_BOOL);
   }

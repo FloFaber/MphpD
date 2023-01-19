@@ -105,14 +105,14 @@ class Socket
   {
 
     if(!$this->connected){
-      $this->setError("Socket not connected!");
+      $this->set_error("Socket not connected!");
       return false;
     }
 
     $cmd = $command.escape_params($params);
 
     if (fputs($this->socket, "$cmd\n") === false) {
-      $this->setError("Unable to write to socket!");
+      $this->set_error("Unable to write to socket!");
       return false;
     }
 
@@ -127,7 +127,7 @@ class Socket
 
     $parsed = parse($this->readls(), $mode);
     if($parsed instanceof MPDException){
-      return $this->setError($parsed);
+      return $this->set_error($parsed);
     }
 
     return $parsed;
@@ -202,7 +202,7 @@ class Socket
 
       // if there is an error -> stop
       if($parsed instanceof MPDException){
-        $this->setError($parsed);
+        $this->set_error($parsed);
         $f_err = true;
         break;
       }
@@ -426,7 +426,7 @@ class Socket
    * @return bool
    * @throws MPDException
    */
-  public function setError($err): bool
+  public function set_error($err): bool
   {
     if(!$err instanceof MPDException){
       $this->last_error = parse_error($err);
@@ -442,7 +442,7 @@ class Socket
    * Return the last occurred error.
    * @return MPDException
    */
-  public function getError() : MPDException
+  public function get_error() : MPDException
   {
     return $this->last_error;
   }
@@ -465,7 +465,7 @@ class Socket
     $this->socket = stream_socket_client($address, $errno, $errstr, $this->timeout);
 
     if(!$this->socket){
-      return $this->setError(new MPDException($errstr, $errno));
+      return $this->set_error(new MPDException($errstr, $errno));
     }
 
     // set socket timeout
@@ -489,7 +489,7 @@ class Socket
       // binarylimit is only supported in MPD 0.22.4 and above
       if($this->version_bte("0.22.4")){
         if($this->set_binarylimit($this->binarylimit) !== true){
-          return $this->setError(new MPDException("Error setting binarylimit in MPD!", 2));
+          return $this->set_error(new MPDException("Error setting binarylimit in MPD!", 2));
         }
       }else{
         $this->binarylimit = 8192; // 8192 bytes is hardcoded in MPD before version 0.22.4.
@@ -497,7 +497,7 @@ class Socket
 
       // nevertheless set the socket chunk size to the specified limit.
       if(!stream_set_chunk_size($this->socket, $this->binarylimit)){
-        return $this->setError(new MPDException("Error setting socket chunk size!", 1));
+        return $this->set_error(new MPDException("Error setting socket chunk size!", 1));
       }
     }
 

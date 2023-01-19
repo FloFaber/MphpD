@@ -36,12 +36,12 @@ abstract class mphpdTest extends TestCase
 
   public function testClearError()
   {
-    $this->assertNotFalse($this->mpd->clearerror());
+    $this->assertNotFalse($this->mpd->clear_error());
   }
 
   public function testCurrentSong()
   {
-    $this->assertNotFalse($this->mpd->player()->currentsong());
+    $this->assertNotFalse($this->mpd->player()->current_song());
   }
 
   public function testStatus()

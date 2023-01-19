@@ -60,7 +60,7 @@ class Partition
    * @return bool
    * @throws MPDException
    */
-  public function moveoutput(string $name): bool
+  public function move_output(string $name): bool
   {
     return $this->mphpd->cmd("moveoutput", [ $name ], MPD_CMD_READ_BOOL);
   }

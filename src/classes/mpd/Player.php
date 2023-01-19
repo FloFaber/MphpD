@@ -38,7 +38,7 @@ class Player
     if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.24")){
       $state = "oneshot";
     }elseif($state === MPD_STATE_ONESHOT){
-      return $this->mphpd->setError(new MPDException("Unsupported state: oneshot."));
+      return $this->mphpd->set_error(new MPDException("Unsupported state: oneshot."));
     }
 
     return $this->mphpd->cmd("consume", [ $state ], MPD_CMD_READ_BOOL);
@@ -64,7 +64,7 @@ class Player
    * @return bool Returns true on success and false on failure.
    * @throws MPDException
    */
-  public function mixrampdb(int $dB) : bool
+  public function mixramp_db(int $dB) : bool
   {
     return $this->mphpd->cmd("mixrampdb", [$dB], MPD_CMD_READ_BOOL);
   }
@@ -75,7 +75,7 @@ class Player
    * @return bool Returns true on success and false on failure
    * @throws MPDException
    */
-  public function mixrampdelay(float $seconds) : bool
+  public function mixramp_delay(float $seconds) : bool
   {
     return $this->mphpd->cmd("mixrampdelay", [$seconds], MPD_CMD_READ_BOOL);
   }
@@ -151,7 +151,7 @@ class Player
     if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.21")){
       $state = "oneshot";
     }elseif($state === MPD_STATE_ONESHOT){
-      return $this->mphpd->setError(new MPDException("Unsupported state: oneshot."));
+      return $this->mphpd->set_error(new MPDException("Unsupported state: oneshot."));
     }
 
     return $this->mphpd->cmd("single", [$state], MPD_CMD_READ_BOOL);
@@ -192,7 +192,7 @@ class Player
    * @return array|false
    * @throws MPDException
    */
-  public function currentsong()
+  public function current_song()
   {
     return $this->mphpd->cmd("currentsong");
   }
@@ -258,7 +258,7 @@ class Player
    * @return bool Returns true on success and false on failure
    * @throws MPDException
    */
-  public function playid(int $id) : bool
+  public function play_id(int $id) : bool
   {
     return $this->mphpd->cmd("playid", [$id], MPD_CMD_READ_BOOL);
   }
@@ -294,7 +294,7 @@ class Player
    * @return bool Returns true on success and false on failure
    * @throws MPDException
    */
-  public function seekid(int $songid, float $time) : bool
+  public function seek_id(int $songid, float $time) : bool
   {
     return $this->mphpd->cmd("seekid", [ $songid, $time ], MPD_CMD_READ_BOOL);
   }
@@ -306,7 +306,7 @@ class Player
    * @return bool Returns true on success and false on failure
    * @throws MPDException
    */
-  public function seekcur($time) : bool
+  public function seek_cur($time) : bool
   {
     return $this->mphpd->cmd("seekcur", [$time], MPD_CMD_READ_BOOL);
   }

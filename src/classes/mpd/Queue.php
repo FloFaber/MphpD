@@ -42,11 +42,11 @@ class Queue
    * @return int|false Returns the song ID on success or false on failure.
    * @throws MPDException
    */
-  public function addid(string $uri, $pos = -1) : array
+  public function add_id(string $uri, $pos = -1) : array
   {
-    $addid = $this->mphpd->cmd("addid", [ $uri, ($pos !== -1 ? $pos : "") ]);
-    if(!$addid){ return false; }
-    return $addid["id"] ?? false;
+    $add_id = $this->mphpd->cmd("addid", [ $uri, ($pos !== -1 ? $pos : "") ]);
+    if(!$add_id){ return false; }
+    return $add_id["id"] ?? false;
   }
 
 
@@ -60,7 +60,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function searchadd(Filter $filter, string $sort, array $window = [], int $position = -1) : bool
+  public function add_search(Filter $filter, string $sort, array $window = [], int $position = -1) : bool
   {
     return $this->mphpd->cmd("searchadd $filter", [
         ($sort ? "sort" : ""), ($sort ?: ""),
@@ -80,7 +80,7 @@ class Queue
    * @return array|bool
    * @throws MPDException
    */
-  public function findadd(Filter $filter, string $sort = "", array $window = [], int $pos = -1)
+  public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1)
   {
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
@@ -119,7 +119,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function deleteid(int $songid) : bool
+  public function delete_id(int $songid) : bool
   {
     return $this->mphpd->cmd("deleteid", [$songid], MPD_CMD_READ_BOOL);
   }
@@ -137,7 +137,7 @@ class Queue
   public function move($from, string $to) : bool
   {
     if(!is_numeric($to))
-      $this->mphpd->setError(new MPDException("\$to is not numeric.", 400));
+      $this->mphpd->set_error(new MPDException("\$to is not numeric.", 400));
 
     return $this->mphpd->cmd("move", [pos_or_range($from), $to], MPD_CMD_READ_BOOL);
   }
@@ -152,10 +152,10 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function moveid(int $from, string $to) : bool
+  public function move_id(int $from, string $to) : bool
   {
     if(!is_numeric($to))
-      $this->mphpd->setError(new MPDException("\$to is not numeric.", 400));
+      $this->mphpd->set_error(new MPDException("\$to is not numeric.", 400));
     return $this->mphpd->cmd("moveid", [$from, $to], MPD_CMD_READ_BOOL);
   }
 
@@ -176,7 +176,7 @@ class Queue
    * @return array|bool Associative array containing song information or false on failure.
    * @throws MPDException
    */
-  public function getid(int $songid)
+  public function get_id(int $songid)
   {
     return $this->mphpd->cmd("playlistid", [ $songid ], MPD_CMD_READ_NORMAL);
   }
@@ -262,7 +262,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function prioid(int $priority, int $id) : bool
+  public function prio_id(int $priority, int $id) : bool
   {
     return $this->mphpd->cmd("prioid", [ $priority, $id ], MPD_CMD_READ_BOOL);
   }
@@ -276,7 +276,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function rangeid(int $songid, array $range = []) : bool
+  public function range_id(int $songid, array $range = []) : bool
   {
     return $this->mphpd->cmd("rangeid", [ $songid, pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
@@ -314,7 +314,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function swapid(int $songid_1, int $songid_2) : bool
+  public function swap_id(int $songid_1, int $songid_2) : bool
   {
     return $this->mphpd->cmd("swapid", [$songid_1, $songid_2], MPD_CMD_READ_BOOL);
   }
@@ -328,7 +328,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function addtagid(int $songid, string $tag, string $value) : bool
+  public function add_tag_id(int $songid, string $tag, string $value) : bool
   {
     return $this->mphpd->cmd("addtagid", [$songid, $tag, $value], MPD_CMD_READ_BOOL);
   }
@@ -341,7 +341,7 @@ class Queue
    * @return bool
    * @throws MPDException
    */
-  public function cleartagid(int $songid, string $tag) : bool
+  public function clear_tag_id(int $songid, string $tag) : bool
   {
     return $this->mphpd->cmd("cleartagid", [$songid, $tag], MPD_CMD_READ_BOOL);
   }

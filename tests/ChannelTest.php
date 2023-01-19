@@ -25,35 +25,35 @@ class ChannelTest extends TestCase
 
   public function testSendmessage()
   {
-    $ret = $this->client1->channel("c1")->sendmessage("test, oida");
+    $ret = $this->client1->channel("c1")->send_message("test, oida");
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->getError());
+    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
 
     $this->client1->channel("c1")->subscribe();
-    $ret = $this->client1->channel("c1")->sendmessage("HELLO C2");
+    $ret = $this->client1->channel("c1")->send_message("HELLO C2");
     $this->assertTrue($ret);
 
     $this->client2->channel("c1")->subscribe();
-    $ret = $this->client2->channel("c1")->sendmessage("HELLO C1");
+    $ret = $this->client2->channel("c1")->send_message("HELLO C1");
     $this->assertTrue($ret);
   }
 
   public function testReadmessages()
   {
 
-    $ret = $this->client1->channel("c1")->sendmessage("test, oida");
+    $ret = $this->client1->channel("c1")->send_message("test, oida");
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->getError());
+    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
 
     $this->client1->channel("c1")->subscribe();
-    $ret = $this->client1->channel("c1")->sendmessage("HELLO C2");
+    $ret = $this->client1->channel("c1")->send_message("HELLO C2");
     $this->assertTrue($ret);
 
     $this->client2->channel("c1")->subscribe();
-    $ret = $this->client2->channel("c1")->sendmessage("HELLO C1");
+    $ret = $this->client2->channel("c1")->send_message("HELLO C1");
     $this->assertTrue($ret);
 
-    $ret = $this->client1->channel("c1")->readmessages();
+    $ret = $this->client1->channel("c1")->read_messages();
     $this->assertEquals([ "HELLO C2", "HELLO C1" ], $ret);
 
 
@@ -63,7 +63,7 @@ class ChannelTest extends TestCase
   {
     $ret = $this->client1->channel("non-existent")->unsubscribe();
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->getError());
+    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
 
     $this->client1->channel("test")->subscribe();
     $ret = $this->client1->channel("test")->unsubscribe();
@@ -78,7 +78,7 @@ class ChannelTest extends TestCase
     $ret = $this->client1->channel("test")->subscribe();
     $this->assertFalse($ret);
 
-    $this->assertInstanceOf(MPDException::class, $this->client1->getError());
+    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
   }
 
   public function testChannels()

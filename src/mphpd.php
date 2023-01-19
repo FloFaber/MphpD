@@ -225,7 +225,7 @@ class MphpD extends Socket
    * @return bool
    * @throws MPDException
    */
-  public function clearerror() : bool
+  public function clear_error() : bool
   {
     return $this->cmd("clearerror", [], MPD_CMD_READ_BOOL);
   }
