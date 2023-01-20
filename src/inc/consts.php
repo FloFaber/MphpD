@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * MphpD
+ * http://mphpd.org
+ *
+ * Copyright (c) 2023 Florian Faber
+ * http://www.flofaber.com
+ */
 
 const MPD_STATE_STOPPED = 0x01;
 const MPD_STATE_PLAYING = 0x02;

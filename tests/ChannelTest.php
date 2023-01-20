@@ -1,4 +1,11 @@
 <?php
+/*
+ * MphpD
+ * http://mphpd.org
+ *
+ * Copyright (c) 2023 Florian Faber
+ * http://www.flofaber.com
+ */
 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . "/../src/mphpd.php";

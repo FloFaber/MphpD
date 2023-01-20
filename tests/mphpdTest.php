@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * MphpD
+ * http://mphpd.org
+ *
+ * Copyright (c) 2023 Florian Faber
+ * http://www.flofaber.com
+ */
 
 require_once __DIR__ . "/../src/mphpd.php";
 
