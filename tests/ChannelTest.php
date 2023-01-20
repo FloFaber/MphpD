@@ -32,37 +32,47 @@ class ChannelTest extends TestCase
 
   public function testSendmessage()
   {
-    $ret = $this->client1->channel("c1")->send_message("test, oida");
+    $ret = $this->client1->channel("c1")->send("test, oida");
     $this->assertFalse($ret);
     $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
 
     $this->client1->channel("c1")->subscribe();
-    $ret = $this->client1->channel("c1")->send_message("HELLO C2");
+    $ret = $this->client1->channel("c1")->send("HELLO C2");
     $this->assertTrue($ret);
 
     $this->client2->channel("c1")->subscribe();
-    $ret = $this->client2->channel("c1")->send_message("HELLO C1");
+    $ret = $this->client2->channel("c1")->send("HELLO C1");
     $this->assertTrue($ret);
   }
 
   public function testReadmessages()
   {
 
-    $ret = $this->client1->channel("c1")->send_message("test, oida");
+    $ret = $this->client1->channel("c1")->send("test, oida");
     $this->assertFalse($ret);
     $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
 
     $this->client1->channel("c1")->subscribe();
-    $ret = $this->client1->channel("c1")->send_message("HELLO C2");
+    $ret = $this->client1->channel("c1")->send("HELLO C2");
     $this->assertTrue($ret);
 
     $this->client2->channel("c1")->subscribe();
-    $ret = $this->client2->channel("c1")->send_message("HELLO C1");
+    $ret = $this->client2->channel("c1")->send("HELLO C1");
     $this->assertTrue($ret);
 
-    $ret = $this->client1->channel("c1")->read_messages();
+    $this->client1->channel("c2")->subscribe();
+    $ret = $this->client1->channel("c2")->send("HELLO C3");
+    $this->assertTrue($ret);
+
+    $this->client2->channel("c2")->subscribe();
+    $ret = $this->client2->channel("c2")->send("HELLO C4");
+    $this->assertTrue($ret);
+
+    $ret = $this->client1->channel("c1")->read();
     $this->assertEquals([ "HELLO C2", "HELLO C1" ], $ret);
 
+    $ret = $this->client1->channel("c2")->read();
+    $this->assertEquals([ "HELLO C3", "HELLO C4" ], $ret);
 
   }
 

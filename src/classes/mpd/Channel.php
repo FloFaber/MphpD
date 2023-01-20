@@ -25,6 +25,7 @@ class Channel
 
   private MphpD $mphpd;
   private string $name;
+  private static array $unread_messages = [];
 
   public function __construct(MphpD $mphpd, string $name)
   {
@@ -60,16 +61,31 @@ class Channel
    * @return array|false `Array` containing the messages on success. `False` otherwise.
    * @throws MPDException
    */
-  public function read_messages()
+  public function read()
   {
 
     $messages = $this->mphpd->cmd("readmessages", [], MPD_CMD_READ_LIST);
     if($messages === false){ return false; }
 
     $msgs = [];
+
+    // loop through the unread messages and add those in the wanted channel to the $msgs array.
+    foreach(Channel::$unread_messages as $key => $unread_message){
+      if($unread_message["channel"] === $this->name){
+        $msgs[] = $unread_message["message"];
+
+        // remove message and re-index
+        unset(Channel::$unread_messages[$key]);
+        Channel::$unread_messages = array_values(Channel::$unread_messages);
+      }
+    }
+
     foreach($messages as $message){
       if($message["channel"] === $this->name){
         $msgs[] = $message["message"];
+      }else{
+        // if the channel is not the channel we want, save the message in case the user wants to retrieve later on
+        Channel::$unread_messages[] = $message;
       }
     }
 
@@ -83,7 +99,7 @@ class Channel
    * @return bool
    * @throws MPDException
    */
-  public function send_message(string $message) : bool
+  public function send(string $message) : bool
   {
     return $this->mphpd->cmd("sendmessage", [ $this->name, $message ], MPD_CMD_READ_BOOL);
   }
