@@ -23,23 +23,28 @@ class ActiveMphpdTest extends mphpdTest
     $this->mpd->player()->play();
   }
 
+  public function tearDown(): void
+  {
+    $this->mpd->player()->stop();
+  }
+
   public function testCurrentSong()
   {
-    $currentsong = $this->mpd->status()->currentsong();
+    $currentsong = $this->mpd->player()->current_song();
     $this->assertArrayHasKey("file", $currentsong);
     $this->assertArrayHasKey("id", $currentsong);
   }
 
   public function testStatus()
   {
-    $ret = $this->mpd->status()->get();
-    $this->assertArrayHasKey("volume", $ret);
-    $this->assertIsInt($this->mpd->status()->get([ "volume" ]));
+    $ret = $this->mpd->status();
+    $this->assertArrayHasKey("playlist", $ret);
+    $this->assertIsInt($this->mpd->status([ "playlist" ]));
   }
 
   public function testStats()
   {
-    $stats = $this->mpd->status()->stats();
+    $stats = $this->mpd->stats();
     $this->assertIsArray($stats);
     $this->assertIsInt($stats["artists"]);
     $this->assertIsInt($stats["albums"]);
@@ -55,13 +60,13 @@ class ActiveMphpdTest extends mphpdTest
     $consume = $this->mpd->player()->consume(MPD_STATE_ON);
     $this->assertNotFalse($consume);
 
-    $consume = $this->mpd->status()->get(["consume"]);
+    $consume = $this->mpd->status(["consume"]);
     $this->assertEquals(1, $consume);
 
     $consume = $this->mpd->player()->consume(MPD_STATE_OFF);
     $this->assertNotFalse($consume);
 
-    $consume = $this->mpd->status()->get(["consume"]);
+    $consume = $this->mpd->status(["consume"]);
     $this->assertEquals(0, $consume);
 
 
@@ -74,7 +79,7 @@ class ActiveMphpdTest extends mphpdTest
     $consume = $this->mpd->player()->consume(MPD_STATE_ONESHOT);
     $this->assertNotFalse($consume);
 
-    $status = $this->mpd->status()->get();
+    $status = $this->mpd->status();
     $this->assertEquals("oneshot", $status["consume"]);
 
 
@@ -85,13 +90,13 @@ class ActiveMphpdTest extends mphpdTest
     $crossfade = $this->mpd->player()->crossfade(4);
     $this->assertNotFalse($crossfade);
 
-    $status = $this->mpd->status()->get(["xfade"]);
+    $status = $this->mpd->status(["xfade"]);
     $this->assertEquals(4, $status);
 
     $crossfade = $this->mpd->player()->crossfade(0);
     $this->assertNotFalse($crossfade);
 
-    $status = $this->mpd->status()->get(["xfade"]);
+    $status = $this->mpd->status(["xfade"]);
     $this->assertNull($status);
 
     $this->expectException(FloFaber\MPDException::class);
