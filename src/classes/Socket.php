@@ -446,12 +446,25 @@ class Socket
 
 
   /**
-   * Return the last occurred error.
-   * @return MPDException
+   * Return an array containing information about the last error
+   * @return array associative array containing the following keys:
+   * <pre>
+   * [
+   *   "code" => (int),
+   *   "message" => (string),
+   *   "command" => (string),
+   *   "commandlistnum" => (int)
+   * ]
+   * </pre>
    */
-  public function get_error() : MPDException
+  public function get_last_error() : array
   {
-    return $this->last_error;
+    return [
+      "code" => $this->last_error->getCode(),
+      "message" => $this->last_error->getMessage(),
+      "command" => $this->last_error->getCommand(),
+      "commandlistnum" => $this->last_error->getCommandlistNum()
+    ];
   }
 
 

@@ -34,7 +34,8 @@ class ChannelTest extends TestCase
   {
     $ret = $this->client1->channel("c1")->send("test, oida");
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
+    $this->assertArrayHasKey("code", $this->client1->get_last_error());
+    $this->assertArrayHasKey("message", $this->client1->get_last_error());
 
     $this->client1->channel("c1")->subscribe();
     $ret = $this->client1->channel("c1")->send("HELLO C2");
@@ -50,7 +51,8 @@ class ChannelTest extends TestCase
 
     $ret = $this->client1->channel("c1")->send("test, oida");
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
+    $this->assertArrayHasKey("code", $this->client1->get_last_error());
+    $this->assertArrayHasKey("message", $this->client1->get_last_error());
 
     $this->client1->channel("c1")->subscribe();
     $ret = $this->client1->channel("c1")->send("HELLO C2");
@@ -80,7 +82,9 @@ class ChannelTest extends TestCase
   {
     $ret = $this->client1->channel("non-existent")->unsubscribe();
     $this->assertFalse($ret);
-    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
+
+    $this->assertArrayHasKey("code", $this->client1->get_last_error());
+    $this->assertArrayHasKey("message", $this->client1->get_last_error());
 
     $this->client1->channel("test")->subscribe();
     $ret = $this->client1->channel("test")->unsubscribe();
@@ -95,7 +99,8 @@ class ChannelTest extends TestCase
     $ret = $this->client1->channel("test")->subscribe();
     $this->assertFalse($ret);
 
-    $this->assertInstanceOf(MPDException::class, $this->client1->get_error());
+    $this->assertArrayHasKey("code", $this->client1->get_last_error());
+    $this->assertArrayHasKey("message", $this->client1->get_last_error());
   }
 
   public function testChannels()
