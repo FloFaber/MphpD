@@ -42,8 +42,9 @@ try{
 // get MPD's status like current song, volume, state, etc...
 $status = $mpd->status();
 
-// if you only want to retrieve a single (or more) values
-$state = $mpd->status([ "state" ]);
+// if you only want to retrieve only one (or more) values
+// you can pass it a list of keys.
+$state = $mpd->status([ "state", "playlist" ]);
 
 // clear the queue
 $mpd->queue()->clear();
@@ -66,3 +67,15 @@ See the full documentation on [mphpd.org/doc](https://mphpd.org/doc) for more.
 
 ## Required PHP extensions
 * Only `sockets` which is included by default on most PHP installations.
+
+## Required PHP functions
+
+A list of PHP functions required by MphpD for socket communication:
+ 
+* fgets
+* fputs
+* fread
+* stream_get_meta_data
+* stream_set_chunk_size
+* stream_set_timeout
+* stream_socket_client
