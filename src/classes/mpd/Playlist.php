@@ -159,7 +159,7 @@ class Playlist
   /**
    * Renames the specified playlist to $new_name
    * @param string $new_name New playlist name
-   * @return bool
+   * @return array
    * @throws MPDException
    */
   public function rename(string $new_name) : array
