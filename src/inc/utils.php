@@ -72,26 +72,6 @@ function pos_or_range($p)
 
 
 /**
- * Function to (not) throw exceptions
- * @param MPDException $e
- * @param int $errormode
- * @return bool
- * @throws MPDException
- */
-function error(MPDException $e, int $errormode): bool
-{
-  if($errormode & MPD_ERRORMODE_EXCEPTION){
-    throw $e;
-  }
-  if($errormode & MPD_ERRORMODE_WARNING){
-    trigger_error($e->__toString(), E_USER_WARNING);
-  }
-  return false;
-}
-
-
-
-/**
  * Parse an array of lines returned by MPD into a PHP array.
  * @param array $lines Given lines
  * @param int $flag Refer to `cmd()`'s documentation.

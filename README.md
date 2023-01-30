@@ -24,7 +24,6 @@ This library is simple to use.
 $options = [
   "host" => "127.0.0.1",
   "port" => 6600,
-  "errormode" => MPD_ERRORMODE_EXCEPTION,
 ];
 
 // create new mphpd instance

@@ -45,7 +45,7 @@ class DB
         return false;
       }
 
-      $offset = $offset + $this->mphpd->binarylimit();
+      $offset = $offset + $this->mphpd->get_binarylimit();
       $binary_data .= $aa["binary_data"];
 
     }while($offset < $binary_size);
@@ -61,7 +61,6 @@ class DB
    * @param Filter $filter
    * @param string $group A tag name like `artist`. If specified the results will be grouped by this tag.
    * @return array|false
-   * @throws MPDException
    */
   public function count(Filter $filter, string $group = "")
   {
@@ -79,7 +78,6 @@ class DB
    * Calculate the song's fingerprint
    * @param string $uri
    * @return string|bool Returns the fingerprint on success or false on failure.
-   * @throws MPDException
    */
   public function fingerprint(string $uri)
   {
@@ -98,7 +96,6 @@ class DB
    *                     If omitted the order is undefined.
    * @param array $window Retrieve only a given portion
    * @return array|false Returns array on success and false on failure.
-   * @throws MPDException
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
@@ -116,7 +113,6 @@ class DB
    * @param Filter|null $filter
    * @param string $group Tag name to group the result by. Like artist or album.
    * @return array|bool
-   * @throws MPDException
    */
   public function list(string $type, Filter $filter = null, string $group = "")
   {
@@ -139,7 +135,6 @@ class DB
    * @param string $uri
    * @param bool $metadata
    * @return array|bool
-   * @throws MPDException
    */
   public function list_all(string $uri = "", bool $metadata = false)
   {
@@ -184,7 +179,6 @@ class DB
    *     ]
    *   ]
    * ]</pre>
-   * @throws MPDException
    */
   public function list_files(string $uri, bool $metadata = false)
   {
@@ -217,7 +211,6 @@ class DB
    * The meaning of these "comments" depend on the codec. For an OGG file this lists the vorbis commands.
    * @param string $uri
    * @return array|bool
-   * @throws MPDException
    */
   public function read_comments(string $uri)
   {
@@ -243,7 +236,7 @@ class DB
         return false;
       }
 
-      $offset = $offset + $this->mphpd->binarylimit();
+      $offset = $offset + $this->mphpd->get_binarylimit();
       $binary_data .= $aa["binary_data"];
 
     }while($offset < $binary_size);
@@ -260,7 +253,6 @@ class DB
    * @param string $sort
    * @param array $window
    * @return array|bool
-   * @throws MPDException
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {
@@ -279,7 +271,6 @@ class DB
    *
    *                    If true and an update Job is already running it starts another one and returns the ID of the new Job.
    * @return int|false Returns the Job-ID on success or false on failure.
-   * @throws MPDException
    */
   public function update(string $uri = "", bool $rescan = false, bool $force = false)
   {

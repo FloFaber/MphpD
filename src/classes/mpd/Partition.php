@@ -20,16 +20,17 @@ class Partition
   private MphpD $mphpd;
   private string $name;
 
+
   public function __construct(MphpD $mphpd, string $name)
   {
     $this->mphpd = $mphpd;
     $this->name = $name;
   }
 
+
   /**
    * Switch the client to the given partition
    * @return bool
-   * @throws MPDException
    */
   public function switch(): bool
   {
@@ -40,7 +41,6 @@ class Partition
   /**
    * Create a new partition
    * @return bool
-   * @throws MPDException
    */
   public function create(): bool
   {
@@ -51,7 +51,6 @@ class Partition
   /**
    * Delete a given partition
    * @return bool
-   * @throws MPDException
    */
   public function delete(): bool
   {
@@ -59,13 +58,10 @@ class Partition
   }
 
 
-
-
   /**
    * Move a specific output to the current partition
    * @param string $name Name of the output
    * @return bool
-   * @throws MPDException
    */
   public function move_output(string $name): bool
   {

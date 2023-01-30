@@ -32,7 +32,6 @@ class Queue
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
    * @return bool Returns `true` on success and `false` on failure.
-   * @throws MPDException
    */
   public function add(string $uri, $pos = -1) : bool
   {
@@ -47,7 +46,6 @@ class Queue
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
    * @return int|false Returns the song ID on success or false on failure.
-   * @throws MPDException
    */
   public function add_id(string $uri, $pos = -1) : array
   {
@@ -65,7 +63,6 @@ class Queue
    * @param array $window
    * @param int $position
    * @return bool
-   * @throws MPDException
    */
   public function add_search(Filter $filter, string $sort, array $window = [], int $position = -1) : bool
   {
@@ -85,7 +82,6 @@ class Queue
    * @param array $window
    * @param int $pos Optional. If specified the matched songs will be added to this position in the Queue.
    * @return array|bool
-   * @throws MPDException
    */
   public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1)
   {
@@ -100,7 +96,6 @@ class Queue
   /**
    * Clears the queue
    * @return bool Returns true on success and false on failure.
-   * @throws MPDException
    */
   public function clear() : bool
   {
@@ -112,7 +107,6 @@ class Queue
    * Deletes a song or a range of songs from the queue
    * @param int|array $p The song position or Range
    * @return bool
-   * @throws MPDException
    */
   public function delete($p) : bool
   {
@@ -124,7 +118,6 @@ class Queue
    * Deletes the song with ID $songid from the Queue
    * @param int $songid
    * @return bool
-   * @throws MPDException
    */
   public function delete_id(int $songid) : bool
   {
@@ -139,7 +132,6 @@ class Queue
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved range).
    * @return bool
-   * @throws MPDException
    */
   public function move($from, string $to) : bool
   {
@@ -157,7 +149,6 @@ class Queue
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved song).
    * @return bool
-   * @throws MPDException
    */
   public function move_id(int $from, string $to) : bool
   {
@@ -167,6 +158,13 @@ class Queue
   }
 
 
+  /**
+   * Same as Queue::search but case-sensitive
+   * @param Filter $filter
+   * @param string $sort
+   * @param array $window
+   * @return array|bool
+   */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
     return $this->mphpd->cmd("playlistfind", [
@@ -181,7 +179,6 @@ class Queue
    * Returns an associative arrays containing information about the song with ID $songid.
    * @param int $songid
    * @return array|bool Associative array containing song information or false on failure.
-   * @throws MPDException
    */
   public function get_id(int $songid)
   {
@@ -196,7 +193,6 @@ class Queue
    *
    *                     If omitted all songs in the queue will be returned.
    * @return array|false Array on success. False on failure.
-   * @throws MPDException
    */
   public function get($p = -1) : array
   {
@@ -214,7 +210,6 @@ class Queue
    * @param string $sort If specified the results are sorted by the specified tag.
    * @param array $window If specified returns only the given portion.
    * @return array|false Returns array on success and false on failure.
-   * @throws MPDException
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {
@@ -233,7 +228,6 @@ class Queue
    *
    *                       If set to false only the position and ID of the changed songs will be returned.
    * @return array|false Returns array on success and false on failure.
-   * @throws MPDException
    */
   public function changes(int $version, $range = -1, bool $metadata = false)
   {
@@ -252,7 +246,6 @@ class Queue
    * @param int $priority Priority. 0-255.
    * @param int|array $range Position of song or Range
    * @return bool
-   * @throws MPDException
    */
   public function prio(int $priority, $range = -1) : bool
   {
@@ -267,7 +260,6 @@ class Queue
    * @param int $priority
    * @param int $id
    * @return bool
-   * @throws MPDException
    */
   public function prio_id(int $priority, int $id) : bool
   {
@@ -281,7 +273,6 @@ class Queue
    * @param int $songid
    * @param array $range Range. Start and End are offsets in seconds. If omitted the "play-range" will be removed from the song.
    * @return bool
-   * @throws MPDException
    */
   public function range_id(int $songid, array $range = []) : bool
   {
@@ -293,7 +284,6 @@ class Queue
    * Shuffle the Queue.
    * @param array $range If specified only this portion will be shuffled.
    * @return bool
-   * @throws MPDException
    */
   public function shuffle(array $range = []) : bool
   {
@@ -306,7 +296,6 @@ class Queue
    * @param int $songpos_1
    * @param int $songpos_2
    * @return bool
-   * @throws MPDException
    */
   public function swap(int $songpos_1, int $songpos_2) : bool
   {
@@ -319,7 +308,6 @@ class Queue
    * @param int $songid_1
    * @param int $songid_2
    * @return bool
-   * @throws MPDException
    */
   public function swap_id(int $songid_1, int $songid_2) : bool
   {
@@ -333,7 +321,6 @@ class Queue
    * @param string $tag Tag name
    * @param string $value Tag value
    * @return bool
-   * @throws MPDException
    */
   public function add_tag_id(int $songid, string $tag, string $value) : bool
   {
@@ -346,7 +333,6 @@ class Queue
    * @param int $songid
    * @param string $tag Tag name
    * @return bool
-   * @throws MPDException
    */
   public function clear_tag_id(int $songid, string $tag) : bool
   {

@@ -22,8 +22,6 @@ class Socket
 
   private string $version;
 
-  protected int $errormode = MPD_ERRORMODE_SILENT;
-
   public bool $connected = false;
 
   protected string $socket_type = "";
@@ -46,9 +44,6 @@ class Socket
 
   public function __construct(array $options = [])
   {
-    if(isset($options["errormode"])){
-      $this->errormode = $options["errormode"];
-    }
     if(isset($options["host"])){
       $this->host = $options["host"];
     }
@@ -105,7 +100,6 @@ class Socket
    * @return array|bool  False on failure.
    *                     Array on success.
    *                     True on success if $mode is MPD_CMD_READ_BOOL
-   * @throws MPDException
    * @link https://mphpd.org/doc/methods/cmd
    */
   public function cmd(string $command, array $params = [], int $mode = MPD_CMD_READ_NORMAL)
@@ -174,7 +168,6 @@ class Socket
    * Function to end a command-list and execute its commands
    * The command list is stopped in case an error occurs.
    * @return array|false Returns an array containing the commands responses.
-   * @throws MPDException
    * @tags commandlist
    */
   public function bulk_end(): array
@@ -285,7 +278,6 @@ class Socket
    * @param string $subsystem
    * @param int $timeout Specifies how long to wait for MPD to return an answer.
    * @return array|false Returns an array of changed subsystems or false on timeout.
-   * @throws MPDException
    */
   public function idle(string $subsystem = "", int $timeout = 60)
   {
@@ -307,7 +299,6 @@ class Socket
   /**
    * Close the connection to the MPD socket
    * @return void
-   * @throws MPDException
    */
   public function close() : void
   {
@@ -318,7 +309,6 @@ class Socket
   /**
    * Kill MPD.
    * @return void
-   * @throws MPDException
    */
   public function kill() : void
   {
@@ -329,7 +319,6 @@ class Socket
   /**
    * Send the password for authentication
    * @return bool
-   * @throws MPDException
    */
   private function password(string $password)
   {
@@ -340,7 +329,6 @@ class Socket
   /**
    * Ping.
    * @return bool
-   * @throws MPDException
    */
   public function ping()
   {
@@ -352,7 +340,6 @@ class Socket
    * Sets the max. binary response size to $limit bytes for the current connection.
    * @param int $limit
    * @return bool
-   * @throws MPDException
    */
   private function set_binarylimit(int $limit) : bool
   {
@@ -363,7 +350,7 @@ class Socket
    * Returns the current binarylimit
    * @return int
    */
-  public function binarylimit() : int
+  public function get_binarylimit() : int
   {
     return $this->binarylimit;
   }
@@ -372,7 +359,6 @@ class Socket
   /**
    * Return a list of all available tag types.
    * @return array|false
-   * @throws MPDException
    */
   public function tagtypes()
   {
@@ -384,7 +370,6 @@ class Socket
    * Disable specified tag types.
    * @param array $tagtypes A list of tag types to disable.
    * @return bool
-   * @throws MPDException
    */
   public function tagtypes_disable(array $tagtypes) : bool
   {
@@ -396,7 +381,6 @@ class Socket
    * Enable specified tag types.
    * @param array $tagtypes A list of tag types to enable.
    * @return bool
-   * @throws MPDException
    */
   public function tagtypes_enable(array $tagtypes) : bool
   {
@@ -407,7 +391,6 @@ class Socket
   /**
    * Remove all tag types from responses.
    * @return bool
-   * @throws MPDException
    */
   public function tagtypes_clear() : bool
   {
@@ -418,7 +401,6 @@ class Socket
   /**
    * Enable all available tag types.
    * @return bool
-   * @throws MPDException
    */
   public function tagtypes_all() : bool
   {
@@ -430,18 +412,16 @@ class Socket
    * Function to set the last occurred error.
    * Should only be used inside the library!
    * @param MPDException|string $err
-   * @return bool
-   * @throws MPDException
+   * @return false
    */
-  public function set_error($err): bool
+  public function set_error($err) : bool
   {
     if(!$err instanceof MPDException){
       $this->last_error = parse_error($err);
     }else{
       $this->last_error = $err;
     }
-
-    return error($this->last_error, $this->errormode);
+    return false;
   }
 
 
@@ -470,7 +450,7 @@ class Socket
 
   /**
    * Initiate connection to MPD with the parameters given at instantiation.
-   * @throws MPDException
+   * @throws MPDException Throws MPDException when a connection error occurs.
    * @return bool
    */
   public function connect() : bool
@@ -482,10 +462,10 @@ class Socket
       $address = "tcp://$this->host:$this->port";
     }
 
-    $this->socket = stream_socket_client($address, $errno, $errstr, $this->timeout);
+    $this->socket = @stream_socket_client($address, $errno, $errstr, $this->timeout);
 
     if(!$this->socket){
-      return $this->set_error(new MPDException($errstr, $errno));
+      throw new MPDException($errstr, $errno);
     }
 
     // set socket timeout

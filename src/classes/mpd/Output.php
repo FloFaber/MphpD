@@ -34,7 +34,6 @@ class Output
   /**
    * Disable the given output
    * @return bool
-   * @throws MPDException
    */
   public function disable() : bool
   {
@@ -45,7 +44,6 @@ class Output
   /**
    * Enable the given output
    * @return bool
-   * @throws MPDException
    */
   public function enable(): bool
   {
@@ -56,7 +54,6 @@ class Output
   /**
    * Enable/Disable the given output depending on the current state.
    * @return bool
-   * @throws MPDException
    */
   public function toggle(): bool
   {
@@ -69,7 +66,6 @@ class Output
    * @param string $name
    * @param string $value
    * @return bool
-   * @throws MPDException
    */
   public function set(string $name, string $value): bool
   {

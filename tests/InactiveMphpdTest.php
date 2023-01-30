@@ -16,9 +16,7 @@ class InactiveMphpdTest extends mphpdTest
 {
   public function setUp(): void
   {
-    $this->mpd = new MphpD([
-      "errormode" => MPD_ERRORMODE_EXCEPTION
-    ]);
+    $this->mpd = new MphpD();
     $this->mpd->connect();
     $this->mpd->queue()->clear();
     $this->mpd->playlist("test")->load();

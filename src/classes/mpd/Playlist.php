@@ -62,7 +62,6 @@ class Playlist
    * Returns a list of all songs in the specified playlist.
    * @param bool $metadata If set to true metadata like duration, last-modified,... will be included.
    * @return array|false On success returns an Array of associative Arrays containing song information. False on failure.
-   * @throws MPDException
    */
   public function get_songs(bool $metadata = false) : array
   {
@@ -77,7 +76,6 @@ class Playlist
    *
    *                    Can be relative if prefixed with + or -
    * @return bool
-   * @throws MPDException
    */
   public function load(array $range = [], $pos = "") : bool
   {
@@ -91,7 +89,6 @@ class Playlist
    * @param int|string $pos Specifies where the songs will be inserted into the playlist.
    *                    Can be relative if prefixed with + or -
    * @return bool Returns true on success and false on failure.
-   * @throws MPDException
    */
   public function add(string $uri, $pos = "") : bool
   {
@@ -107,7 +104,6 @@ class Playlist
    * @param array $window
    * @param int $position
    * @return bool
-   * @throws MPDException
    */
   public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
   {
@@ -123,7 +119,6 @@ class Playlist
   /**
    * Removes all songs from the specified playlist.
    * @return bool Returns true on success and false on failure.
-   * @throws MPDException
    */
   public function clear() : bool
   {
@@ -135,7 +130,6 @@ class Playlist
    * Deletes $songpos from the specified playlist.
    * @param int|array $songpos Position of the song or Range
    * @return bool
-   * @throws MPDException
    */
   public function remove_song($songpos = -1) : bool
   {
@@ -148,7 +142,6 @@ class Playlist
    * @param int $from
    * @param int $to
    * @return bool
-   * @throws MPDException
    */
   public function move_song(int $from, int $to) : bool
   {
@@ -160,7 +153,6 @@ class Playlist
    * Renames the specified playlist to $new_name
    * @param string $new_name New playlist name
    * @return array
-   * @throws MPDException
    */
   public function rename(string $new_name) : array
   {
@@ -171,12 +163,12 @@ class Playlist
   /**
    * Removes the specified playlist from the playlist directory.
    * @return bool
-   * @throws MPDException
    */
   public function delete() : bool
   {
     return $this->mphpd->cmd("rm", [$this->name], MPD_CMD_READ_BOOL);
   }
+
 
   /**
    * Saves the queue to the specified playlist in the playlist directory
@@ -190,7 +182,7 @@ class Playlist
    *                  * MPD_MODE_REPLACE: Replace an existing playlist. Fails if a playlist with name $name doesn't already exist.
    *                                      Only supported on MPD v0.24 and newer.
    * @return bool True on success. False on failure.
-   * @throws MPDException
+   * @throws MPDException if $mode is not supported.
    */
   public function save(int $mode = MPD_MODE_CREATE) : bool
   {
@@ -206,7 +198,7 @@ class Playlist
 
     // ignore the mode parameter on version older than 0.24
     if(!$this->mphpd->version_bte("0.24")){
-      $m = "";
+      throw new MPDException("Mode $m is only supported on MPD v0.24 and newer.");
     }
 
     return $this->mphpd->cmd("save", [$this->name, $m], MPD_CMD_READ_BOOL);

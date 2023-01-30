@@ -31,7 +31,6 @@ class Mount
    * Mount $uri to path
    * @param string $uri The URI to mount
    * @return bool
-   * @throws MPDException
    */
   public function mount(string $uri) : bool
   {
@@ -41,12 +40,11 @@ class Mount
 
   /**
    * Unmount the path
-   * @return array|bool
-   * @throws MPDException
+   * @return bool
    */
-  public function unmount()
+  public function unmount(): bool
   {
-    return $this->mphpd->cmd("unmount", [ $this->path ]);
+    return $this->mphpd->cmd("unmount", [ $this->path ], MPD_CMD_READ_BOOL);
   }
 
 }

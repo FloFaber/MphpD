@@ -37,7 +37,6 @@ class Channel
   /**
    * Subscribe to the channel.
    * @return bool
-   * @throws MPDException
    */
   public function subscribe(): bool
   {
@@ -48,7 +47,6 @@ class Channel
   /**
    * Unsubscribe the channel.
    * @return bool
-   * @throws MPDException
    */
   public function unsubscribe(): bool
   {
@@ -59,7 +57,6 @@ class Channel
   /**
    * Returns a list of the channel's messages.
    * @return array|false `Array` containing the messages on success. `False` otherwise.
-   * @throws MPDException
    */
   public function read()
   {
@@ -97,7 +94,6 @@ class Channel
    * Send a message to the channel.
    * @param string $message
    * @return bool
-   * @throws MPDException
    */
   public function send(string $message) : bool
   {

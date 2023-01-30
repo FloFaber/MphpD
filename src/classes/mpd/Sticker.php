@@ -39,7 +39,6 @@ class Sticker
    * Returns the value of the specified sticker
    * @param string $name
    * @return false|string Returns string on success and false on failure
-   * @throws MPDException
    */
   public function get(string $name)
   {
@@ -62,7 +61,6 @@ class Sticker
    * @param string $name
    * @param string $value
    * @return bool
-   * @throws MPDException
    */
   public function set(string $name, string $value) : bool
   {
@@ -74,7 +72,6 @@ class Sticker
    * Deletes the value from the specified sticker.
    * @param string $name If omitted all sticker values will be deleted.
    * @return bool
-   * @throws MPDException
    */
   public function delete(string $name = ""): bool
   {
@@ -85,7 +82,6 @@ class Sticker
   /**
    * Returns an associative array containing sticker names and values of the specified object.
    * @return array|false
-   * @throws MPDException
    */
   public function list()
   {
@@ -113,7 +109,6 @@ class Sticker
    * @param string $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
    * @param string $value Optional. The value to search for. Only in combination with $operator.
    * @return array|false
-   * @throws MPDException
    */
   public function find(string $name, string $operator = "", string $value = "")
   {

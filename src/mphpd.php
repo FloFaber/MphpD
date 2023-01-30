@@ -219,7 +219,6 @@ class MphpD extends Socket
 
   /**
    * Return a list of available channels
-   * @throws MPDException
    */
   public function channels()
   {
@@ -230,7 +229,6 @@ class MphpD extends Socket
   /**
    * Clears the current error
    * @return bool
-   * @throws MPDException
    */
   public function clear_error() : bool
   {
@@ -254,7 +252,6 @@ class MphpD extends Socket
    *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
    *
    *                     Otherwise, an associative array containing all available (or specified) keys.
-   * @throws MPDException
    */
   public function status(array $items = [])
   {
@@ -297,7 +294,6 @@ class MphpD extends Socket
    *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
    *
    *                     Otherwise, an associative array containing all available (or specified) stats.
-   * @throws MPDException
    */
   public function stats(array $items = [])
   {
@@ -347,7 +343,6 @@ class MphpD extends Socket
    * Returns an associative array of configuration values.
    * This function is only available for client connected via Unix Socket!
    * @return array|false
-   * @throws MPDException
    */
   public function config()
   {
@@ -358,7 +353,6 @@ class MphpD extends Socket
   /**
    * Returns a list of all available commands.
    * @return array|false
-   * @throws MPDException
    */
   public function commands()
   {
@@ -369,7 +363,6 @@ class MphpD extends Socket
   /**
    * Returns a list of all not-available commands.
    * @return array|false
-   * @throws MPDException
    */
   public function notcommands()
   {
@@ -380,7 +373,6 @@ class MphpD extends Socket
   /**
    * Returns a list of all available urlhandlers. Like smb://, sftp://, http://...
    * @return array|bool
-   * @throws MPDException
    */
   public function urlhandlers()
   {
@@ -391,7 +383,6 @@ class MphpD extends Socket
   /**
    * Returns a list of available decoder plugins and their supported suffixes and mimetypes.
    * @return array|false
-   * @throws MPDException
    */
   public function decoders()
   {
