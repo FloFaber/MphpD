@@ -16,15 +16,12 @@ use Throwable;
  * MPDException is a slightly modified version of a standard Exception.
  * You may call `MPDException::getCode` and `MPDException::getMessage` to retrieve information about the error.
  *
- * In case an error occurs at the protocol level and depending on the errormode you chose the called methods either throw an MPDException or simply return false.
- * Either way you want to know what went wrong.
+ * In case an error occurs at the protocol level the called methods simply return false.
  *
- * Available Error-modes are described [here](/doc/general/configuration#errormode).
- *
- * To retrieve the last occurred error call [MphpD::getError](/doc/methods/mphpd-getError).
+ * To retrieve the last occurred error call [MphpD::get_last_error](/doc/methods/mphpd-get_last_error).
  *
  * @title MPDException
- * @usage MphpD::getError() : MPDException
+ * @usage MphpD::get_last_error() : Array
  */
 class MPDException extends Exception
 {
