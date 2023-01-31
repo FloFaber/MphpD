@@ -34,7 +34,7 @@ try{
   $mpd->connect();
   echo "connected!\n";
 }catch(MPDException $e){
-  echo $e."\n";
+  echo $e->getMessage()."\n";
   return false;
 }
 
