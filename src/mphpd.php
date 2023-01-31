@@ -7,14 +7,6 @@
  * http://www.flofaber.com
  */
 
-/*
- * MphpD
- * http://mphpd.org
- *
- * (c) Florian Faber
- * http://www.flofaber.com
- */
-
 declare(strict_types=1);
 
 namespace FloFaber;
