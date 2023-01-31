@@ -3,7 +3,17 @@
 ## v0.1.2
 
 * [BREAKING CHANGE] Removed Mount.php and moved `mount` and `unmount` to main class
-* 
+* [FIX] Return type of `Queue::add_id` is now `int|false` instead of `array`
+* [FIX] Return type of `Queue::add_find` is now `bool` instead of `array`
+* [FIX] `$sort` is not required anymore in `Queue::add_search`
+* [FIX] `Queue::find` does now work
+* [FIX] `Queue::get` now returns a list when `$p` is omitted instead of a single song
+* [FIX] `Queue::range_id` does not produce an error anymore if `$range` is omitted
+* [FIX] `Player::volume` is not causing an `Undefined array key`-error anymore
+* [FIX] `MphpD::get_last_error` now returns an empty array if there was no error yet
+* `Player::consume` and `Player::single` now throw an MPDException if the given `$mode` is not supported
+* Made `MphpD::readls` private
+
 
 ## v0.1.1
 
