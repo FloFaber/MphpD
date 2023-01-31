@@ -47,7 +47,7 @@ class Queue
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
    * @return int|false Returns the song ID on success or false on failure.
    */
-  public function add_id(string $uri, $pos = -1) : array
+  public function add_id(string $uri, $pos = -1)
   {
     $add_id = $this->mphpd->cmd("addid", [ $uri, ($pos !== -1 ? $pos : "") ]);
     if(!$add_id){ return false; }
@@ -64,7 +64,7 @@ class Queue
    * @param int $position
    * @return bool
    */
-  public function add_search(Filter $filter, string $sort, array $window = [], int $position = -1) : bool
+  public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
   {
     return $this->mphpd->cmd("searchadd $filter", [
         ($sort ? "sort" : ""), ($sort ?: ""),
@@ -81,15 +81,15 @@ class Queue
    * @param string $sort
    * @param array $window
    * @param int $pos Optional. If specified the matched songs will be added to this position in the Queue.
-   * @return array|bool
+   * @return bool
    */
-  public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1)
+  public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1): bool
   {
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
       ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
       ($pos !== -1 ? "position" : ""), ($pos !== -1 ? $pos : "")
-    ], MPD_CMD_READ_LIST);
+    ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -167,8 +167,7 @@ class Queue
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
-    return $this->mphpd->cmd("playlistfind", [
-      $filter,
+    return $this->mphpd->cmd("playlistfind $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
       ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
@@ -196,9 +195,13 @@ class Queue
    */
   public function get($p = -1) : array
   {
+
     $m = MPD_CMD_READ_LIST;
     if(!is_array($p)){
       $m = MPD_CMD_READ_NORMAL;
+    }
+    if($p === -1){
+      $m = MPD_CMD_READ_LIST;
     }
     return $this->mphpd->cmd("playlistinfo", [ pos_or_range($p) ], $m);
   }
@@ -276,7 +279,11 @@ class Queue
    */
   public function range_id(int $songid, array $range = []) : bool
   {
-    return $this->mphpd->cmd("rangeid", [ $songid, pos_or_range($range) ], MPD_CMD_READ_BOOL);
+    $pos = pos_or_range($range);
+    if(!$range){
+      $pos = ":";
+    }
+    return $this->mphpd->cmd("rangeid", [ $songid, $pos ], MPD_CMD_READ_BOOL);
   }
 
 
