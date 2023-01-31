@@ -38,13 +38,14 @@ class Player
    *                   * MPD_STATE_ONESHOT - Enables consume mode for a single song.
    *                                         This is only supported on MPD version 0.24 and newer.
    * @return bool Returns true on success and false on failure
+   * @throws MPDException if $state is not supported.
    */
   public function consume(int $state) : bool
   {
     if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.24")){
       $state = "oneshot";
-    }elseif($state === MPD_STATE_ONESHOT){
-      return $this->mphpd->set_error(new MPDException("Unsupported state: oneshot."));
+    }elseif($state === MPD_STATE_ONESHOT) {
+      throw new MPDException("Unsupported state: oneshot.", 2);
     }
 
     return $this->mphpd->cmd("consume", [ $state ], MPD_CMD_READ_BOOL);
@@ -120,7 +121,7 @@ class Player
       // on version 0.23 or higher use the new `getvol` command. Otherwise, get the volume from `status`.
       if($this->mphpd->version_bte("0.23")){
         $v = $this->mphpd->cmd("getvol");
-        if($v !== false){ $v = $v["volume"]; }
+        if($v !== false){ $v = $v["volume"] ?? null; }
       }else{
         $v = $this->mphpd->status([ "volume" ]);
       }
@@ -134,7 +135,6 @@ class Player
 
   /**
    * Enables/Disables the single-mode. If enabled MPD will play the same song over and over.
-   * @return bool
    * @param int $state One of the following:
    *
    *                   * MPD_STATE_ON - Enables single mode
@@ -143,6 +143,8 @@ class Player
    *
    *                   * MPD_STATE_ONESHOT - Enables single mode for only a single time.
    *                     This is only supported on MPD version 0.21 and newer.
+   * @return bool
+   * @throws MPDException if $state is not supported.
    */
   public function single(int $state) : bool
   {
@@ -150,7 +152,7 @@ class Player
     if($state === MPD_STATE_ONESHOT && $this->mphpd->version_bte("0.21")){
       $state = "oneshot";
     }elseif($state === MPD_STATE_ONESHOT){
-      return $this->mphpd->set_error(new MPDException("Unsupported state: oneshot."));
+      throw new MPDException("Unsupported state: oneshot.", 2);
     }
 
     return $this->mphpd->cmd("single", [$state], MPD_CMD_READ_BOOL);
