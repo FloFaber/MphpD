@@ -21,7 +21,6 @@ require_once __DIR__ . "/classes/Filter.php"; // FloFaber\Filter
 
 require_once __DIR__ . "/classes/mpd/Channel.php"; // MphpD::channel()
 require_once __DIR__ . "/classes/mpd/DB.php"; // MphpD::DB
-require_once __DIR__ . "/classes/mpd/Mount.php"; // MphpD::mount()
 require_once __DIR__ . "/classes/mpd/Output.php"; // MphpD::output()
 require_once __DIR__ . "/classes/mpd/Partition.php"; // MphpD::partition()
 require_once __DIR__ . "/classes/mpd/Player.php"; // MphpD::player
@@ -107,7 +106,6 @@ class MphpD extends Socket
   /**
    * Returns an Array of associative arrays of all playlists in the playlist directory
    * @return array|false
-   * @throws MPDException
    */
   public function playlists()
   {
@@ -129,7 +127,6 @@ class MphpD extends Socket
   /**
    * Returns an Array of associative arrays of all available outputs
    * @return array|false
-   * @throws MPDException
    */
   public function outputs()
   {
@@ -138,31 +135,8 @@ class MphpD extends Socket
 
 
   /**
-   * Return a new Mount instance
-   * @param string $path
-   * @return Mount
-   */
-  public function mount(string $path) : Mount
-  {
-    return new Mount($this, $path);
-  }
-
-
-  /**
-   * Return all mounts.
-   * @return array|bool
-   * @throws MPDException
-   */
-  public function mounts()
-  {
-    return $this->cmd("listmounts", [], MPD_CMD_READ_LIST);
-  }
-
-
-  /**
    * Return neighbors on the network like available SMB servers
    * @return array|bool
-   * @throws MPDException
    */
   public function neighbors()
   {
@@ -184,7 +158,6 @@ class MphpD extends Socket
   /**
    * Return a list of all available partitions
    * @return array|bool
-   * @throws MPDException
    */
   public function partitions()
   {
@@ -324,6 +297,39 @@ class MphpD extends Socket
   }
 
 
+  /**
+   * Return all mounts.
+   * @return array|bool
+   */
+  public function mounts()
+  {
+    return $this->cmd("listmounts", [], MPD_CMD_READ_LIST);
+  }
+
+
+  /**
+   * Mount $uri to path
+   * @param string $path
+   * @param string $uri The URI to mount
+   * @return bool
+   */
+  public function mount(string $path, string $uri) : bool
+  {
+    return $this->cmd("mount", [ $path, $uri ], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Unmount the path
+   * @param string $path
+   * @return bool
+   */
+  public function unmount(string $path): bool
+  {
+    return $this->cmd("unmount", [ $path ], MPD_CMD_READ_BOOL);
+  }
+
+
   /*
    * ################
    *    REFLECTION
@@ -338,7 +344,7 @@ class MphpD extends Socket
    */
   public function config()
   {
-    return $this->cmd("config", [], MPD_CMD_READ_NORMAL);
+    return $this->cmd("config");
   }
 
 

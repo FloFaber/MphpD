@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.2
+
+* [BREAKING CHANGE] Removed Mount.php and moved `mount` and `unmount` to main class
+* 
+
 ## v0.1.1
 
 This _release_ breaks but also fixes a lot of stuff. I'm lucky this library is **A**: private and **B**:
