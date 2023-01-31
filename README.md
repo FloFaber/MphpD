@@ -18,7 +18,7 @@ require_once __DIR__ . "/mphpd/mphpd.php";
 
 ## How to use
 
-This library is simple to use.
+This library is simple to use as you can see in these examples:
 
 ```PHP
 $options = [
@@ -43,7 +43,7 @@ $status = $mpd->status();
 
 // if you only want to retrieve only one (or more) values
 // you can pass it a list of keys.
-$state = $mpd->status([ "state", "playlist" ]);
+$state = $mpd->status([ "state" ]);
 
 // clear the queue
 $mpd->queue()->clear();
