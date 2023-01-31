@@ -439,6 +439,9 @@ class Socket
    */
   public function get_last_error() : array
   {
+    if(!isset($this->last_error)){
+      return [];
+    }
     return [
       "code" => $this->last_error->getCode(),
       "message" => $this->last_error->getMessage(),
@@ -511,11 +514,8 @@ class Socket
    */
   public function disconnect()
   {
-    try{
-      $this->close();
-    } catch (MPDException $e) {
-      $this->connected = false;
-    }
+    $this->close();
+    $this->connected = false;
   }
 
 
@@ -571,7 +571,7 @@ class Socket
    * Read multiple lines from socket
    * @return array
    */
-  public function readls(): array
+  private function readls(): array
   {
     $lines = [];
     $lb = "";
