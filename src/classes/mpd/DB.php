@@ -77,7 +77,7 @@ class DB
   /**
    * Calculate the song's fingerprint
    * @param string $uri
-   * @return string|bool Returns the fingerprint on success or false on failure.
+   * @return string|false Returns the fingerprint on success or false on failure.
    */
   public function fingerprint(string $uri)
   {
@@ -112,7 +112,7 @@ class DB
    * @param string $type Any tag supported by MPD. Like artist or album.
    * @param Filter|null $filter
    * @param string $group Tag name to group the result by. Like artist or album.
-   * @return array|bool
+   * @return array|false
    */
   public function list(string $type, Filter $filter = null, string $group = "")
   {
@@ -134,7 +134,7 @@ class DB
    * If $metadata is true returns an array of associative arrays containing all songs in $uri including metadata.
    * @param string $uri
    * @param bool $metadata
-   * @return array|bool
+   * @return array|false
    */
   public function list_all(string $uri = "", bool $metadata = false)
   {
@@ -210,7 +210,7 @@ class DB
    * Read "comments" from the specified file.
    * The meaning of these "comments" depend on the codec. For an OGG file this lists the vorbis commands.
    * @param string $uri
-   * @return array|bool
+   * @return array|false
    */
   public function read_comments(string $uri)
   {
@@ -252,7 +252,7 @@ class DB
    * @param Filter $filter
    * @param string $sort
    * @param array $window
-   * @return array|bool
+   * @return array|false
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {

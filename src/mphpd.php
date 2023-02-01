@@ -139,7 +139,7 @@ class MphpD extends Socket
 
   /**
    * Return neighbors on the network like available SMB servers
-   * @return array|bool
+   * @return array|false
    */
   public function neighbors()
   {
@@ -296,7 +296,7 @@ class MphpD extends Socket
 
   /**
    * Return all mounts.
-   * @return array|bool
+   * @return array|false
    */
   public function mounts()
   {
@@ -539,7 +539,7 @@ class MphpD extends Socket
 
   /**
    * Returns a list of all available urlhandlers. Like smb://, sftp://, http://...
-   * @return array|bool
+   * @return array|false
    */
   public function urlhandlers()
   {

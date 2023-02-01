@@ -163,7 +163,7 @@ class Queue
    * @param Filter $filter
    * @param string $sort
    * @param array $window
-   * @return array|bool
+   * @return array|false
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
@@ -177,7 +177,7 @@ class Queue
   /**
    * Returns an associative arrays containing information about the song with ID $songid.
    * @param int $songid
-   * @return array|bool Associative array containing song information or false on failure.
+   * @return array|false Associative array containing song information or false on failure.
    */
   public function get_id(int $songid)
   {
