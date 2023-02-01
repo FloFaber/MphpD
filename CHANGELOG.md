@@ -9,6 +9,7 @@
 * [FIX] `Queue::find` does now work
 * [FIX] `Queue::get` now returns a list when `$p` is omitted instead of a single song
 * [FIX] `Queue::range_id` does not produce an error anymore if `$range` is omitted
+* [FIX] `plchanges` and `plchangesposid` in `Queue::changes` is not reversed anymore.
 * [FIX] `Player::volume` is not causing an `Undefined array key`-error anymore
 * [FIX] `MphpD::get_last_error` now returns an empty array if there was no error yet
 * `Player::consume` and `Player::single` now throw an MPDException if the given `$mode` is not supported

@@ -234,9 +234,9 @@ class Queue
    */
   public function changes(int $version, $range = -1, bool $metadata = false)
   {
-    $cmd = "plchanges";
+    $cmd = "plchangesposid";
     if($metadata === true){
-      $cmd = "plchangesposid";
+      $cmd = "plchanges";
     }
     return $this->mphpd->cmd($cmd, [ $version, pos_or_range($range) ], MPD_CMD_READ_LIST);
   }
