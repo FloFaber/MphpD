@@ -39,7 +39,7 @@ class PlayerTest extends TestCase
 
   public function testSeek_cur()
   {
-    $this->mphpd->player()->play();
+    $this->mphpd->player()->play(0);
     $ret = $this->mphpd->player()->seek_cur(5);
     $this->assertTrue($ret);
   }
