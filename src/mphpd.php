@@ -41,6 +41,9 @@ class MphpD extends Socket
   private Player $player;
   private Queue $queue;
 
+  private bool $in_bulk = false;
+  private array $bulk_list = [];
+
 
   public function __construct(array $options = [])
   {
@@ -321,6 +324,178 @@ class MphpD extends Socket
   public function unmount(string $path): bool
   {
     return $this->cmd("unmount", [ $path ], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Function to start a command-list.
+   * @return void
+   * @tags commandlist
+   */
+  public function bulk_start()
+  {
+    $this->in_bulk = true;
+    $this->bulk_list = [];
+  }
+
+
+  /**
+   * Function to end a command-list and execute its commands
+   * The command list is stopped in case an error occurs.
+   * @return array|false Returns an array containing the commands responses.
+   * @tags commandlist
+   */
+  public function bulk_end(): array
+  {
+
+    // if there is no command list return false
+    if($this->in_bulk === false){ return false; }
+
+    // start the command list at protocol level (without reading the non-existent response)
+    $this->cmd("command_list_ok_begin", [], MPD_CMD_READ_NONE);
+
+    // then send every command. Again without reading anything.
+    $ret = [];
+    foreach($this->bulk_list as $b){
+      $this->cmd($b["cmd"], [], MPD_CMD_READ_NONE);
+    }
+
+    // end and execute the command list
+    $this->cmd("command_list_end", [], MPD_CMD_READ_NONE);
+
+    // then read the response from each command
+    // we can do this because readls() stops on OK,ACK and list_OK
+    $f_err = false;
+    foreach($this->bulk_list as $b){
+      $parsed = parse($this->readls(), $b["mode"]);
+
+      if($parsed instanceof MPDException AND $b["mode"] === MPD_CMD_READ_BOOL){
+        $ret[] = false;
+      }else{
+        $ret[] = $parsed;
+      }
+
+      // if there is an error -> stop
+      if($parsed instanceof MPDException){
+        $this->set_error($parsed);
+        $f_err = true;
+        break;
+      }
+    }
+
+    // There is a remaining "OK\n" in the socket buffer if all commands in the command list succeeded.
+    // We need to read that before sending other commands. If we would not do that the next commands response
+    // would be empty as there was still an "OK\n" in the buffer.
+    // We only need to do this if the command list did NOT fail!
+    if(!$f_err){
+      $lb = "";
+      $this->readl($lb);
+    }
+
+    // disable bulk and return
+    $this->in_bulk = false;
+    return $ret;
+  }
+
+
+  /**
+   * Function to abort the current command list.
+   * We can do that because we only start the list at protocol level when bulk_end() is called.
+   * @return void
+   * @tags commandlist
+   */
+  public function bulk_abort()
+  {
+    $this->bulk_list = [];
+    $this->in_bulk = false;
+  }
+
+
+  /**
+   * Function to add a command to the bulk_list.
+   * @see MphpD::cmd()
+   * @param string $cmd
+   * @param array $params
+   * @param int $mode
+   * @return bool
+   * @tags commandlist
+   */
+  public function bulk_add(string $cmd, array $params = [], int $mode = MPD_CMD_READ_BOOL) : bool
+  {
+    // return false if bulk is not enabled
+    if(!$this->in_bulk) {
+      return false;
+    }
+
+    $cmd = $cmd.escape_params($params);
+    $this->bulk_list[] = [
+      "cmd" => $cmd,
+      "mode" => $mode
+    ];
+
+    return true;
+  }
+
+
+  /**
+   * Return a list of all available tag types.
+   * @return array|false
+   */
+  public function tagtypes()
+  {
+    return $this->cmd("tagtypes", [], MPD_CMD_READ_LIST_SINGLE);
+  }
+
+
+  /**
+   * Disable specified tag types.
+   * @param array $tagtypes A list of tag types to disable.
+   * @return bool
+   */
+  public function tagtypes_disable(array $tagtypes) : bool
+  {
+    return $this->cmd("tagtypes disable", $tagtypes, MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Enable specified tag types.
+   * @param array $tagtypes A list of tag types to enable.
+   * @return bool
+   */
+  public function tagtypes_enable(array $tagtypes) : bool
+  {
+    return $this->cmd("tagtypes enable", $tagtypes, MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Remove all tag types from responses.
+   * @return bool
+   */
+  public function tagtypes_clear() : bool
+  {
+    return $this->cmd("tagtypes clear", [], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Enable all available tag types.
+   * @return bool
+   */
+  public function tagtypes_all() : bool
+  {
+    return $this->cmd("tagtypes all", [], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Ping.
+   * @return bool
+   */
+  public function ping() :  bool
+  {
+    return $this->cmd("ping", [], MPD_CMD_READ_BOOL);
   }
 
 
