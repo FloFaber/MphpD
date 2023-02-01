@@ -21,7 +21,7 @@ use Throwable;
  * To retrieve the last occurred error call [MphpD::get_last_error](/doc/methods/mphpd-get_last_error).
  *
  * @title MPDException
- * @usage MphpD::get_last_error() : Array
+ * @usage MphpD::get_last_error() : array
  */
 class MPDException extends Exception
 {

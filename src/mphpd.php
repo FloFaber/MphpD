@@ -93,7 +93,7 @@ class MphpD extends Socket
 
   /**
    * Returns a Playlist instance with the given name or null if the name is empty
-   * @param string $name Playlist name. Must not be empty.
+   * @param string $name The name of the playlist. Must not be empty.
    * @return Playlist|null
    */
   public function playlist(string $name): ?Playlist
@@ -118,7 +118,7 @@ class MphpD extends Socket
 
   /**
    * Return a new output instance
-   * @param int $id
+   * @param int $id The ID of the output
    * @return Output
    */
   public function output(int $id) : Output
@@ -149,7 +149,7 @@ class MphpD extends Socket
 
   /**
    * Return a new Partition instance
-   * @param string $name
+   * @param string $name The name of the partition
    * @return Partition
    */
   public function partition(string $name) : Partition
@@ -170,7 +170,7 @@ class MphpD extends Socket
 
   /**
    * Return a new Channel instance
-   * @param string $name
+   * @param string $name The name of the channel
    * @return Channel
    */
   public function channel(string $name = "") : Channel

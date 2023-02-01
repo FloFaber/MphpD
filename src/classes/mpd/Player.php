@@ -31,14 +31,14 @@ class Player
    * Enables/Disables the consume mode
    * @param int $state One of the following:
    *
-   *                   * MPD_STATE_ON - Enables consume mode
+   *                   * `MPD_STATE_ON` - Enables consume mode
    *
-   *                   * MPD_STATE_OFF - Disables consume mode
+   *                   * `MPD_STATE_OFF` - Disables consume mode
    *
-   *                   * MPD_STATE_ONESHOT - Enables consume mode for a single song.
+   *                   * `MPD_STATE_ONESHOT` - Enables consume mode for a single song.
    *                                         This is only supported on MPD version 0.24 and newer.
    * @return bool Returns true on success and false on failure
-   * @throws MPDException if $state is not supported.
+   * @throws MPDException if `$state` is not supported.
    */
   public function consume(int $state) : bool
   {
@@ -53,7 +53,7 @@ class Player
 
 
   /**
-   * Sets crossfade to $seconds seconds.
+   * Sets crossfade to `$seconds` seconds.
    * @param int $seconds
    * @return bool Returns true on success and false on failure
    */
@@ -108,7 +108,7 @@ class Player
 
 
   /**
-   * Sets volume to $volume or returns the current volume if $volume is omitted.
+   * Sets volume to `$volume` or returns the current volume if `$volume` is omitted.
    * @param int $volume If specified the current volume is set to $volume.
    *
    *                    If omitted the current volume is returned.
@@ -137,11 +137,11 @@ class Player
    * Enables/Disables the single-mode. If enabled MPD will play the same song over and over.
    * @param int $state One of the following:
    *
-   *                   * MPD_STATE_ON - Enables single mode
+   *                   * `MPD_STATE_ON` - Enables single mode
    *
-   *                   * MPD_STATE_OFF - Disables single mode
+   *                   * `MPD_STATE_OFF` - Disables single mode
    *
-   *                   * MPD_STATE_ONESHOT - Enables single mode for only a single time.
+   *                   * `MPD_STATE_ONESHOT` - Enables single mode for only a single time.
    *                     This is only supported on MPD version 0.21 and newer.
    * @return bool
    * @throws MPDException if $state is not supported.
@@ -210,9 +210,9 @@ class Player
    * Pause or resume playback.
    * @param int $state Optional. One of the following:
    *
-   *                   * MPD_STATE_ON - Pause
+   *                   * `MPD_STATE_ON` - Pause
    *
-   *                   * MPD_STATE_OFF - Resume
+   *                   * `MPD_STATE_OFF` - Resume
    *
    *                   If omitted the pause state is toggled.
    * @return bool Returns true on success and false on failure
@@ -225,7 +225,7 @@ class Player
 
 
   /**
-   * Plays the song position $pos in the Queue
+   * Plays the song position `$pos` in the Queue
    * @param int $pos Song position. Starting at 0
    * @return bool Returns true on success and false on failure
    */
@@ -249,7 +249,7 @@ class Player
 
 
   /**
-   * Begins playing the playlist at song $id
+   * Begins playing the playlist at song `$id`
    * @param int $id
    * @return bool Returns true on success and false on failure
    */
@@ -269,7 +269,7 @@ class Player
 
 
   /**
-   * Seeks to $seconds of song $songpos in the Queue.
+   * Seeks to `$seconds` of song `$songpos` in the Queue.
    * @param int $songpos
    * @param int|float $time
    * @return bool Returns true on success and false on failure
@@ -281,7 +281,7 @@ class Player
 
 
   /**
-   * Seeks to $seconds of song $songid
+   * Seeks to `$seconds` of song `$songid`
    * @param int $songid
    * @param float $time
    * @return bool Returns true on success and false on failure
@@ -293,7 +293,7 @@ class Player
 
 
   /**
-   * Seeks to $seconds of the current song.
+   * Seeks to `$seconds` of the current song.
    * @param string|int|float $time If prefixed with `+` or `-` the time is relative to the current playing position.
    * @return bool Returns true on success and false on failure
    */
