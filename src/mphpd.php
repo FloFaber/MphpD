@@ -157,17 +157,11 @@ class MphpD extends Socket
 
   /**
    * Return a list of all available partitions
-   * @return array|bool
+   * @return array|false
    */
   public function partitions()
   {
-    $partitions = $this->cmd("listpartitions", [], MPD_CMD_READ_LIST);
-    if($partitions === false){ return false; }
-    $ps = [];
-    foreach($partitions as $partition){
-      $ps[] = $partition["partition"];
-    }
-    return $ps;
+    return $this->cmd("listpartitions", [], MPD_CMD_READ_LIST_SINGLE);
   }
 
 
