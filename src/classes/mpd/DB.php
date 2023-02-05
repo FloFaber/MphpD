@@ -129,80 +129,51 @@ class DB
 
 
   /**
-   * Returns all songs and directories in $uri
-   * If $metadata is false or omitted returns an array containing all songs and directories in $uri.
-   * If $metadata is true returns an array of associative arrays containing all songs in $uri including metadata.
+   * List files,directories and playlists in $uri
    * @param string $uri
-   * @param bool $metadata
-   * @return array|false
+   * @param bool $metadata Specifies if additional information should be included.
+   * @param bool $recursive Specified if files and directories should be listed recursively.
+   * @return array|false Returns an array containing the keys `files`, `directories` and `playlists` on success and `false` on failure.
    */
-  public function list_all(string $uri = "", bool $metadata = false)
+  public function ls(string $uri, bool $metadata = false, bool $recursive = false)
   {
 
-    if($metadata === true){
-      return $this->mphpd->cmd("listallinfo", [$uri], MPD_CMD_READ_LIST);
-    }
+    if($metadata && $recursive){
+      $items = $this->mphpd->cmd("listallinfo", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
+    }elseif(!$metadata && $recursive){
+      $items = $this->mphpd->cmd("listall", [$uri], MPD_CMD_READ_LIST, [ "file", "direcotry", "playlist" ]);
+    }elseif($metadata && !$recursive){
+      $items = $this->mphpd->cmd("lsinfo", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
+    }elseif(!$metadata && !$recursive){
+      $items = $this->mphpd->cmd("listfiles", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
+    }else{ $items = false; }
 
-    $list = [];
-    $ls = $this->mphpd->cmd("listall", [$uri], MPD_CMD_READ_LIST);
-    if($ls === false){ return false; }
-    foreach($ls as $l){
-      $file = $l["file"];
-      $list[] = $file;
-    }
-    return $list;
-  }
+    if($items === false){ return false; }
 
+    $files = [];
+    $directories = [];
+    $playlists = [];
 
-  /**
-   * Returns an array containing the directories and files of $uri.
-   * @param string $uri Can be a relative path or a URI understood by one of the storage plugins.
-   * @param bool $metadata If `true` metadata will be included in the information.
-   * @return array|false Array on success or false on failure.
-   * <pre>Array [
-   *   "directories" => Array [
-   *      Array [
-   *        "directory" => "dirname",
-   *        "last-modified" => "2022-10-03T16:26:58Z"
-   *      ], Array [
-   *        "directory" => "dir2", ...
-   *      ]
-   *   ],
-   *   "files" => Array [
-   *     Array [
-   *       "file" => "song1.mp3",
-   *       "size" => 123456,
-   *       "last-modified" => "2023-01-01T23:59:01Z",
-   *       {OPTIONAL METADATA}
-   *     ], Array [
-   *       "file" => "song2.mp3", ...
-   *     ]
-   *   ]
-   * ]</pre>
-   */
-  public function list_files(string $uri, bool $metadata = false)
-  {
-
-    $cmd = "listfiles";
-    if($metadata === true){
-      $cmd = "lsinfo";
-    }
-
-    $files = $directories = [];
-    $lfs = $this->mphpd->cmd($cmd, [$uri], MPD_CMD_READ_LIST);
-    if($lfs === false){ return false; }
-
-    foreach($lfs as $lf){
-      if(isset($lf["file"])){
-        $files[] = $lf;
-      }elseif(isset($lf["directory"])){
-        $directories[] = $lf;
+    // split items into multiple arrays for more usability
+    foreach($items as $item){
+      if(isset($item["file"])){
+        $item["name"] = $item["file"]; unset($item["file"]);
+        $files[] = $item;
+      }elseif(isset($item["directory"])){
+        $item["name"] = $item["directory"]; unset($item["directory"]);
+        $directories[] = $item;
+      }elseif(isset($item["playlist"])){
+        $item["name"] = $item["playlist"]; unset($item["playlist"]);
+        $playlists[] = $item;
       }
     }
+
     return [
+      "files" => $files,
       "directories" => $directories,
-      "files" => $files
+      "playlists" => $playlists
     ];
+
   }
 
 
