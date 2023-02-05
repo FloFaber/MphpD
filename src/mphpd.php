@@ -367,7 +367,7 @@ class MphpD extends Socket
     // we can do this because readls() stops on OK,ACK and list_OK
     $f_err = false;
     foreach($this->bulk_list as $b){
-      $parsed = parse($this->readls(), $b["mode"]);
+      $parsed = $this->parse($this->readls(), $b["mode"]);
 
       if($parsed instanceof MPDException AND $b["mode"] === MPD_CMD_READ_BOOL){
         $ret[] = false;

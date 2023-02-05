@@ -89,13 +89,13 @@ class Socket
    *                  * MPD_CMD_READ_BOOL        - Parses the answer into `true` on OK and list_OK and `false` on `ACK`.
    *                                               Used for commands which do not return anything but OK or ACK.
    *
-   *
+   * @param array $list_start In combination with `$mode = MPD_CMD_READ_LIST` indicates on which `key` a new list starts.
    * @return array|bool  False on failure.
    *                     Array on success.
    *                     True on success if $mode is MPD_CMD_READ_BOOL
    * @link https://mphpd.org/doc/methods/cmd
    */
-  public function cmd(string $command, array $params = [], int $mode = MPD_CMD_READ_NORMAL)
+  public function cmd(string $command, array $params = [], int $mode = MPD_CMD_READ_NORMAL, array $list_start = [])
   {
 
     if(!$this->connected){
@@ -119,7 +119,7 @@ class Socket
       return [];
     }
 
-    $parsed = parse($this->readls(), $mode);
+    $parsed = $this->parse($this->readls(), $mode, $list_start);
     if($parsed instanceof MPDException){
       return $this->set_error($parsed);
     }
@@ -361,7 +361,7 @@ class Socket
 
     if(str_starts_with($lb, "binary:")){
 
-      $p = parse([$lb]);
+      $p = $this->parse([$lb]);
 
       if($p instanceof MPDException){
         return 0;
@@ -410,6 +410,97 @@ class Socket
     }
 
     return $lines;
+  }
+
+
+  /**
+   * Parse an array of lines returned by MPD into a PHP array.
+   * @param array $lines Given lines
+   * @param int $mode Refer to `cmd()`'s documentation.
+   * @param array $list_starts An array of possible keys on which a new list-item starts.
+   * @return array|true|MPDException
+   */
+  protected function parse(array $lines, int $mode = MPD_CMD_READ_NORMAL, array $list_starts = [])
+  {
+
+    $b = [];
+    $tmp = [];
+    $first_key = NULL;
+
+    $lines_parsed = [];
+
+    // parse lines first so we can look ahead later
+    foreach($lines as $line){
+      if(str_starts_with($line, "ACK")){
+        return parse_error($line);
+      }
+      $ls = explode(":", $line, 2);
+      if(count($ls) < 2){
+        continue;
+      }
+      if($ls[0] === "binary_data"){
+        $k = "binary_data";
+        $v = $ls[1];
+      }else{
+        $k = strtolower(trim($ls[0]));
+        $v = trim($ls[1]);
+        if(is_numeric($v)){
+          $v = (int)$v;
+        }
+      }
+      $lines_parsed[] = [ "k" => $k, "v" => $v ];
+    }
+
+    // now loop through the parsed lines
+    for($i = 0; $i < count($lines_parsed); $i++){
+
+      $line = $lines_parsed[$i];
+      $k = $line["k"];
+      $v = $line["v"];
+
+      // push to current key-value pair to a tmp array which we later will at to the list of items.
+      $tmp[$k] = $v;
+
+      // on the last key (the one after the first key) we push the stored data to the result array
+      // Example:
+      // channel: test    <- First key
+      // message: hi      <- The last key
+      // channel: test    <- Also the "first" key
+      // message: hello
+      // channel: test
+      // message: goodbye
+      // OK
+
+
+      // omfg
+      // ok,ok. If we read a list and the `key` of the next line is either in `$list_starts` or is equal to `$first_key` we push the list-item to the list of items.
+      if($mode === MPD_CMD_READ_LIST &&
+        (//$first_key !== NULL &&
+          (isset($lines_parsed[$i+1]) && ($lines_parsed[$i+1]["k"] === $first_key || in_array($lines_parsed[$i+1]["k"], $list_starts))) || !isset($lines_parsed[$i+1])
+        )){
+
+        $b[] = $tmp;
+        $tmp = [];
+
+        // If we only parse a list with a single possible key just push its value to the result array.
+        // If this is used in a command which returns more than one possible key the result will look a little funky.
+        // We can, however, simple blame the user.
+      }elseif($mode === MPD_CMD_READ_LIST_SINGLE){
+        $b[] = $v;
+      }
+
+      // set the first encountered key if there isn't already one
+      if(($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE) && $first_key === NULL){
+        $first_key = $k;
+      }
+
+    }
+
+    if($mode === MPD_CMD_READ_BOOL){
+      return true;
+    }
+
+    return ($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE ? $b : $tmp);
   }
 
 }
