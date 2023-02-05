@@ -38,12 +38,10 @@ class DB
     $binary_data = "";
     do{
 
-      try{
-        $aa = $this->mphpd->cmd("albumart", [$songuri, $offset]);
-        $binary_size = $aa["size"];
-      }catch (MPDException $e){
-        return false;
-      }
+      $aa = $this->mphpd->cmd("albumart", [$songuri, $offset]);
+      if($aa === false){ return false; }
+      
+      $binary_size = $aa["size"];
 
       $offset = $offset + $this->mphpd->get_binarylimit();
       $binary_data .= $aa["binary_data"];
@@ -200,12 +198,10 @@ class DB
     $binary_data = "";
     do{
 
-      try{
-        $aa = $this->mphpd->cmd("readpicture", [$uri, $offset]);
-        $binary_size = $aa["size"];
-      }catch (MPDException $e){
-        return false;
-      }
+      $aa = $this->mphpd->cmd("readpicture", [$uri, $offset]);
+      if($aa === false){ return false; }
+
+      $binary_size = $aa["size"];
 
       $offset = $offset + $this->mphpd->get_binarylimit();
       $binary_data .= $aa["binary_data"];
