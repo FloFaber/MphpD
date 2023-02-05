@@ -40,7 +40,7 @@ class DB
 
       $aa = $this->mphpd->cmd("albumart", [$songuri, $offset]);
       if($aa === false){ return false; }
-      
+
       $binary_size = $aa["size"];
 
       $offset = $offset + $this->mphpd->get_binarylimit();
@@ -105,6 +105,7 @@ class DB
 
 
   /**
+   * Lists unique tags values of the specified type. `$type` can be any tag supported by MPD.
    * If group is omitted returns an array of unique tag values of the specified type.
    * If group is specified returns an array of associative arrays containing the grouped result.
    * @param string $type Any tag supported by MPD. Like artist or album.
