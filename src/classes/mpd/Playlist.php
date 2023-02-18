@@ -41,20 +41,16 @@ class Playlist
    */
   public function exists(): bool
   {
-    try{
-      $playlists = $this->mphpd->cmd("listplaylists", [], MPD_CMD_READ_LIST);
-      if($playlists === false OR empty($playlists)){
-        return false;
-      }
-      foreach($playlists as $playlist){
-        if(isset($playlist["playlist"]) AND $playlist["playlist"] === $this->name){
-          return true;
-        }
-      }
-      return false;
-    }catch (MPDException $e){
+    $playlists = $this->mphpd->cmd("listplaylists", [], MPD_CMD_READ_LIST);
+    if($playlists === false OR empty($playlists)){
       return false;
     }
+    foreach($playlists as $playlist){
+      if(isset($playlist["playlist"]) AND $playlist["playlist"] === $this->name){
+        return true;
+      }
+    }
+    return false;
   }
 
 
