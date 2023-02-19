@@ -107,12 +107,17 @@ class MphpD extends Socket
 
 
   /**
-   * Returns an Array of associative arrays of all playlists in the playlist directory
+   * If $metadata is set to `true` an Array of associative arrays containing information about the playlists will be returned.
+   * If $metadata is omitted or set to `false` a list containing all playlists names is returned.
+   * @param bool $metadata Include/Exclude additional information like "last-modified",...
    * @return array|false
    */
-  public function playlists()
+  public function playlists(bool $metadata = false)
   {
-    return $this->cmd("listplaylists", [], MPD_CMD_READ_LIST);
+    if($metadata){
+      return $this->cmd("listplaylists", [], MPD_CMD_READ_LIST);
+    }
+    return $this->cmd("listplaylists", [], MPD_CMD_READ_LIST_SINGLE);
   }
 
 
