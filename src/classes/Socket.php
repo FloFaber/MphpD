@@ -307,6 +307,8 @@ class Socket
     if(str_starts_with($helo, "OK MPD")){
       $this->version = trim(str_replace("OK MPD", "", $helo));
       $this->connected = true;
+    }else{
+      throw new MPDException("Invalid initial response from MPD: ".$helo);
     }
 
     if(!empty($this->password) && $this->password($this->password) === false){
