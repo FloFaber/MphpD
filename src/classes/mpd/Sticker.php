@@ -118,7 +118,13 @@ class Sticker
 
     $stickers = [];
 
-    $ss = $this->mphpd->cmd("sticker find", [ $this->type, $this->uri, $name, $operator, $value ], MPD_CMD_READ_LIST);
+    // we need a little cheat here
+    $uri = $this->uri;
+    if($this->uri === ""){
+      $uri = "''";
+    }
+
+    $ss = $this->mphpd->cmd("sticker find", [ $this->type, $uri, $name, $operator, $value ], MPD_CMD_READ_LIST);
     if($ss === false){ return false; }
 
     foreach($ss as $s){
