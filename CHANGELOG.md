@@ -14,6 +14,10 @@
 * [FIX] `plchanges` and `plchangesposid` in `Queue::changes` is not reversed anymore.
 * [FIX] `Player::volume` is not causing an `Undefined array key`-error anymore
 * [FIX] `MphpD::get_last_error` now returns an empty array if there was no error yet
+* [FIX] Return type of `Playlist::rename` is now `bool` instead of `array`
+* [FIX] Fixed bug when saving a playlist on MPD versions before 0.24
+* [FIX] Fixed bug in `Sticker::list` when parsing stickers
+* [FIX] Fixed bug in `Sticker::find` when $uri was empty
 * `Player::consume` and `Player::single` now throw an MPDException if the given `$mode` is not supported
 * Made `MphpD::readls` private
 
