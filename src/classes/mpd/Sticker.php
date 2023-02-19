@@ -95,7 +95,7 @@ class Sticker
     if($ss === false){ return false; }
 
     foreach($ss as $s){ // say that 5 times in a row
-      $sticker = explode("=", $s, 2);
+      $sticker = explode("=", $s["sticker"], 2);
       $stickers[$sticker[0]] = $sticker[1];
     }
 
@@ -104,7 +104,7 @@ class Sticker
 
 
   /**
-   * Search the sticker database for sticker with the specified name and/or value.
+   * Search the sticker database for sticker with the specified name and/or value in the specified $uri
    * @param string $name The sticker name
    * @param string $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
    * @param string $value Optional. The value to search for. Only in combination with $operator.
