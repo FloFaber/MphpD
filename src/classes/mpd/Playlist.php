@@ -148,9 +148,9 @@ class Playlist
   /**
    * Renames the specified playlist to $new_name
    * @param string $new_name New playlist name
-   * @return array
+   * @return bool Returns true on success and false on failure
    */
-  public function rename(string $new_name) : array
+  public function rename(string $new_name) : bool
   {
     return $this->mphpd->cmd("rename", [$this->name, $new_name], MPD_CMD_READ_BOOL);
   }
@@ -193,8 +193,10 @@ class Playlist
     }
 
     // ignore the mode parameter on version older than 0.24
-    if(!$this->mphpd->version_bte("0.24")){
+    if(!$this->mphpd->version_bte("0.24") && $mode !== MPD_MODE_CREATE){
       throw new MPDException("Mode $m is only supported on MPD v0.24 and newer.");
+    }elseif(!$this->mphpd->version_bte("0.24") && $mode == MPD_MODE_CREATE){
+      $m = "";
     }
 
     return $this->mphpd->cmd("save", [$this->name, $m], MPD_CMD_READ_BOOL);
