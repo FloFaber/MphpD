@@ -1,9 +1,8 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/mphpd.php";
 
-use FloFaber\Queue;
 use FloFaber\MphpD;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +16,7 @@ class QueueTest extends TestCase
   public function __construct(?string $name = null, array $data = [], $dataName = '')
   {
     parent::__construct($name, $data, $dataName);
-    $this->mphpd = new MphpD([]);
+    $this->mphpd = new MphpD(MPD_CONFIG);
     $this->mphpd->connect();
 
     $this->version = $this->mphpd->status([ "playlist" ]);
@@ -44,7 +43,7 @@ class QueueTest extends TestCase
 
   public function testMove_id()
   {
-    $this->assertTrue($this->mphpd->queue()->move_id(0, 10));
+    $this->assertTrue($this->mphpd->queue()->move_id(0, 1));
   }
 
   public function testClear()
@@ -74,13 +73,13 @@ class QueueTest extends TestCase
 
   public function testFind()
   {
-    $ret = $this->mphpd->queue()->find(new \FloFaber\Filter("file", "contains", "aequitas"));
+    $ret = $this->mphpd->queue()->find(new \FloFaber\Filter("file", "contains", "test"));
     $this->assertNotEmpty($ret);
   }
 
   public function testMove()
   {
-    $this->assertTrue($this->mphpd->queue()->move(0, 5));
+    $this->assertTrue($this->mphpd->queue()->move(0, 2));
   }
 
   public function testGet_id()
@@ -134,13 +133,13 @@ class QueueTest extends TestCase
 
   public function testSearch()
   {
-    $ret = $this->mphpd->queue()->search(new \FloFaber\Filter("Artist", "contains", "Aequitas"));
+    $ret = $this->mphpd->queue()->search(new \FloFaber\Filter("Artist", "contains", "fictional"));
     $this->assertNotEmpty($ret);
   }
 
   public function testDelete()
   {
-    $this->assertTrue($this->mphpd->queue()->delete(8));
+    $this->assertTrue($this->mphpd->queue()->delete(1));
     $this->assertTrue($this->mphpd->queue()->delete([0,10]));
   }
 

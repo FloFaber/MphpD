@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/mphpd.php";
 
 use FloFaber\MphpD;
@@ -12,7 +13,7 @@ class OutputTest extends TestCase
 
   public function __construct(?string $name = null, array $data = [], $dataName = '')
   {
-    $this->mphpd = new MphpD();
+    $this->mphpd = new MphpD(MPD_CONFIG);
     $this->mphpd->connect();
     parent::__construct($name, $data, $dataName);
   }

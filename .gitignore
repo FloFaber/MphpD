@@ -3,3 +3,5 @@ tmp/
 vendor/
 composer.lock
 .phpunit.result.cache
+tests/mpd/mpd.conf
+tests/config.php

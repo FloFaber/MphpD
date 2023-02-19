@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/mphpd.php";
 
 use FloFaber\MphpD;
@@ -13,7 +14,7 @@ class PartitionTest extends TestCase
 
   public function __construct(?string $name = null, array $data = [], $dataName = '')
   {
-    $this->mphpd = new MphpD();
+    $this->mphpd = new MphpD(MPD_CONFIG);
     $this->mphpd->connect();
     parent::__construct($name, $data, $dataName);
   }
@@ -33,7 +34,8 @@ class PartitionTest extends TestCase
    */
   public function testMove_output()
   {
-    $this->assertTrue($this->mphpd->partition("test1")->move_output("pipewire-output"));
+    $r = $this->mphpd->partition("test1")->move_output(MPD_OUTPUT_NAME);
+    $this->assertTrue($r);
   }
 
   /**

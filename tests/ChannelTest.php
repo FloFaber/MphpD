@@ -7,10 +7,9 @@
  * http://www.flofaber.com
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/mphpd.php";
 
-use FloFaber\MPDException;
 use FloFaber\MphpD;
 use PHPUnit\Framework\TestCase;
 
@@ -23,8 +22,8 @@ class ChannelTest extends TestCase
   {
     parent::__construct($name, $data, $dataName);
 
-    $this->client1 = new MphpD();
-    $this->client2 = new MphpD();
+    $this->client1 = new MphpD(MPD_CONFIG);
+    $this->client2 = new MphpD(MPD_CONFIG);
 
     $this->client1->connect();
     $this->client2->connect();
