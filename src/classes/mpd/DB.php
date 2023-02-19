@@ -140,7 +140,7 @@ class DB
     if($metadata && $recursive){
       $items = $this->mphpd->cmd("listallinfo", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
     }elseif(!$metadata && $recursive){
-      $items = $this->mphpd->cmd("listall", [$uri], MPD_CMD_READ_LIST, [ "file", "direcotry", "playlist" ]);
+      $items = $this->mphpd->cmd("listall", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
     }elseif($metadata && !$recursive){
       $items = $this->mphpd->cmd("lsinfo", [$uri], MPD_CMD_READ_LIST, [ "file", "directory", "playlist" ]);
     }elseif(!$metadata && !$recursive){
