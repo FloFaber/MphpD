@@ -124,6 +124,11 @@ class Socket
       return $this->set_error($parsed);
     }
 
+    $metadata = stream_get_meta_data($this->socket);
+    if($metadata["timed_out"]){
+      return $this->set_error("Connection timed out");
+    }
+
     return $parsed;
 
   }
