@@ -2,7 +2,7 @@
 
 ## v0.1.2
 
-* [BREAKING CHANGE] Removed Mount.php and moved `mount` and `unmount` to main class
+* [BREAKING CHANGE] Removed Mount.php and moved `mount()` and `unmount()` to MphpD class
 * [BREAKING CHANGE] (re)moved `DB::list_all` and `DB::list_files` into a new `DB::ls` method.
 * [FIX] Fixed bug in parses with `$mode = MPD_CMD_READ_LIST`.
 * [FIX] Return type of `Queue::add_id` is now `int|false` instead of `array`
