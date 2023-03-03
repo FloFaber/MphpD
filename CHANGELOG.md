@@ -18,6 +18,7 @@
 * [FIX] Fixed bug when saving a playlist on MPD versions before 0.24
 * [FIX] Fixed bug in `Sticker::list` when parsing stickers
 * [FIX] Fixed bug in `Sticker::find` when $uri was empty
+* [FIX] Fixed bug when using UNIX socket (#10)
 * `Player::consume` and `Player::single` now throw an MPDException if the given `$mode` is not supported
 * Made `MphpD::readls` private
 

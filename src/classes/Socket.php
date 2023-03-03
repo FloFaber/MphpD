@@ -287,7 +287,7 @@ class Socket
   {
 
     if($this->socket_type === "unix"){
-      $address = $this->host;
+      $address = "unix://$this->host";
     }else{
       $address = "tcp://$this->host:$this->port";
     }
