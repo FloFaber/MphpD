@@ -47,20 +47,19 @@ class PlayerTest extends TestCase
 
   public function testVolume()
   {
-    $this->mphpd->player()->play();
+    $this->mphpd->player()->pause(MPD_STATE_OFF);
     $this->assertIsInt($this->mphpd->player()->volume());
     $this->assertTrue($this->mphpd->player()->volume(10));
   }
 
   public function testPrevious()
   {
-    $this->mphpd->player()->play();
+    $this->mphpd->player()->play(0);
     $this->assertTrue($this->mphpd->player()->previous());
   }
 
   public function testPlay()
   {
-    $this->assertTrue($this->mphpd->player()->play());
     $this->assertTrue($this->mphpd->player()->play(0));
     $this->assertFalse($this->mphpd->player()->play(999999));
   }
@@ -110,7 +109,7 @@ class PlayerTest extends TestCase
 
   public function testNext()
   {
-    $this->mphpd->player()->play();
+    $this->mphpd->player()->play(0);
     $this->assertTrue($this->mphpd->player()->next());
   }
 
@@ -148,7 +147,10 @@ class PlayerTest extends TestCase
 
   public function testPause()
   {
+    $this->assertTrue($this->mphpd->player()->play(0));
     $this->assertTrue($this->mphpd->player()->pause());
+    $this->assertTrue($this->mphpd->player()->pause(MPD_STATE_OFF));
+    $this->assertTrue($this->mphpd->player()->pause(MPD_STATE_ON));
   }
 
   public function testRepeat()

@@ -208,19 +208,18 @@ class Player
 
   /**
    * Pause or resume playback.
-   * @param int $state Optional. One of the following:
+   * @param int|null $state Optional. One of the following:
    *
    *                   * `MPD_STATE_ON` - Pause
    *
    *                   * `MPD_STATE_OFF` - Resume
    *
-   *                   If omitted the pause state is toggled.
+   *                   If omitted or `null` the pause state is toggled.
    * @return bool Returns true on success and false on failure
    */
-  public function pause(int $state = -1) : bool
+  public function pause(int $state = null) : bool
   {
-
-    return $this->mphpd->cmd("pause", [($state !== -1 ? $state : "")], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("pause", [($state !== null ? $state : "")], MPD_CMD_READ_BOOL);
   }
 
 
@@ -229,22 +228,9 @@ class Player
    * @param int $pos Song position. Starting at 0
    * @return bool Returns true on success and false on failure
    */
-  public function play(int $pos = -1) : bool
+  public function play(int $pos) : bool
   {
-
-    $state = $this->mphpd->status([ "state" ]);
-
-    // if no position is given and the player is stopped -> start playing at the first song.
-    if($pos === -1 AND $state === "stop"){
-      $pos = 0;
-
-      // if no position is given and the player is paused -> unpause
-    }elseif($pos === -1 AND $state === "pause"){
-      return $this->pause(0);
-    }
-
-    // otherwise play the given song
-    return $this->mphpd->cmd("play", [ $pos !== -1 ? $pos : 0 ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("play", [ $pos ], MPD_CMD_READ_BOOL);
   }
 
 
