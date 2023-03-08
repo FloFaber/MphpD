@@ -257,10 +257,10 @@ class Player
   /**
    * Seeks to `$seconds` of song `$songpos` in the Queue.
    * @param int $songpos
-   * @param int|float $time
+   * @param float $time
    * @return bool Returns true on success and false on failure
    */
-  public function seek(int $songpos, $time) : bool
+  public function seek(int $songpos, float $time) : bool
   {
     return $this->mphpd->cmd("seek", [ $songpos, $time ], MPD_CMD_READ_BOOL);
   }
