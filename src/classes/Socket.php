@@ -452,7 +452,7 @@ class Socket
         $k = strtolower(trim($ls[0]));
         $v = trim($ls[1]);
         if(is_numeric($v)){
-          $v = (int)$v;
+          $v = (floatval($v) == (int)$v ? (int)$v : (float)$v);
         }
       }
       $lines_parsed[] = [ "k" => $k, "v" => $v ];
