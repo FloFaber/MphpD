@@ -17,7 +17,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "FloFaber\\MphpD\\": "src/"
+      "FloFaber\\": "src/"
     }
   }
 }
