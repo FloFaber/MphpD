@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.3
+
+* [FIX] `Floats` returned from MPD are not casted into `ints` anymore (#13). `MphpD::status` may now return `float` if `$items` contain only one item.
+
+
 ## v0.1.2
 
 * [BREAKING CHANGE] Removed Mount.php and moved `mount()` and `unmount()` to MphpD class
