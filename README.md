@@ -1,7 +1,3 @@
-title: MphpD
-
----
-
 # A fully-featured, dependency-free PHP library for MPD
 
 MphpD is a library for the Music Player Daemon.
