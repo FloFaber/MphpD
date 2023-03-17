@@ -18,7 +18,7 @@ You can either install this library by using composer:
 composer require flofaber/mphpd
 ```
 and then autoload it:
-```
+```PHP
 require_once __DIR__ . "/vendor/autoload.php";
 ```
 
@@ -31,7 +31,7 @@ require_once __DIR__ . "/MphpD/MphpD.php";
 
 Create a new MphpD instance:
 
-```php
+```PHP
 use FloFaber\MphpD;
 
 $mpd = new MphpD([
@@ -42,7 +42,7 @@ $mpd = new MphpD([
 ```
 
 and connect to MPD
-```php
+```PHP
 try{
   $mpd->connect();
 }catch (MPDException $e){
