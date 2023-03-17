@@ -1,43 +1,65 @@
-# MphpD
-A fully-featured, dependency-free PHP library for MPD
+title: MphpD
 
-# What is it?
-MphpD is a library for the Music Player Daemon. It lets you control MPD from within your PHP application in a simple and object-oriented way while also taking care of escaping, parsing, error reporting and all the other painful stuff.
+---
 
-Did I mention the whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is fully supported?
+# A fully-featured, dependency-free PHP library for MPD
+
+MphpD is a library for the Music Player Daemon.
+It lets you control MPD from within your PHP application in a simple and object-oriented
+way while also taking care of escaping, parsing, error reporting and all the other
+painful stuff.
+
+
+The whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is supported!
+
+
 
 ## Installation
+
+
 You can either install this library by using composer:
 ```
 composer require flofaber/mphpd
 ```
-or by simply [downloading](https://github.com/FloFaber/mphpd/releases) it and including it in your code like so:
-```PHP
-require_once __DIR__ . "/mphpd/mphpd.php";
+and then autoload it:
+```
+require_once __DIR__ . "/vendor/autoload.php";
 ```
 
-## How to use
-
-This library is simple to use as you can see in these examples:
-
+or by simply [downloading](https://github.com/FloFaber/MphpD/releases) it and including it in your code like so:
 ```PHP
-$options = [
+require_once __DIR__ . "/MphpD/MphpD.php";
+```
+
+## Usage
+
+Create a new MphpD instance:
+
+```php
+use FloFaber\MphpD;
+
+$mpd = new MphpD([
   "host" => "127.0.0.1",
   "port" => 6600,
-];
+  "timeout" => 5
+]);
+```
 
-// create new mphpd instance
-$mpd = new MphpD($options);
-
-// try connecting to MPD.
+and connect to MPD
+```php
 try{
   $mpd->connect();
-  echo "connected!\n";
-}catch(MPDException $e){
-  echo $e->getMessage()."\n";
+}catch (MPDException $e){
+  echo $e->getMessage();
   return false;
 }
+```
 
+## Example
+
+Here are some examples of what you can do with it:
+
+```PHP
 // get MPD's status like current song, volume, state, etc...
 $status = $mpd->status();
 
@@ -61,7 +83,7 @@ $mpd->player()->volume(40);
 $mpd->player()->play();
 ```
 
-See the full documentation on [mphpd.org/doc](https://mphpd.org/doc) for more.
+For further information have a look at the [Documentation](/doc).
 
 
 ## Required PHP extensions
@@ -70,11 +92,11 @@ See the full documentation on [mphpd.org/doc](https://mphpd.org/doc) for more.
 ## Required PHP functions
 
 A list of PHP functions required by MphpD for socket communication:
- 
-* fgets
-* fputs
-* fread
-* stream_get_meta_data
-* stream_set_chunk_size
-* stream_set_timeout
-* stream_socket_client
+
+* `fgets`
+* `fputs`
+* `fread`
+* `stream_get_meta_data`
+* `stream_set_chunk_size`
+* `stream_set_timeout`
+* `stream_socket_client`

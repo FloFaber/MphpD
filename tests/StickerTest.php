@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/config/config.php";
-require_once __DIR__ . "/../src/mphpd.php";
+require_once __DIR__ . "/../src/MphpD.php";
 
 use PHPUnit\Framework\TestCase;
 use FloFaber\MphpD;
@@ -35,7 +35,6 @@ class StickerTest extends TestCase
   public function testSet()
   {
     $this->assertTrue($this->mphpd->sticker("song", "test-song1.mp3")->set("test1", "asdf"));
-    print_r($this->mphpd->sticker("song", "test-song1.mp3")->get("test1"));
   }
 
   public function testDelete()

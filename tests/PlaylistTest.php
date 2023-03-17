@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/config/config.php";
-require_once __DIR__ . "/../src/mphpd.php";
+require_once __DIR__ . "/../src/MphpD.php";
 
 use PHPUnit\Framework\TestCase;
 use FloFaber\MphpD;
