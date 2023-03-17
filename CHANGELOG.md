@@ -4,6 +4,7 @@
 
 * [BREAKING CHANGE] Renamed the main class file `mphpd.php` to `MphpD.php`.
 * [FIX] `Floats` returned from MPD are not casted into `ints` anymore (#13). `MphpD::status` may now return `float` if `$items` contain only one item.
+* The library is now available as a composer package. Hurray.
 
 
 ## v0.1.2
