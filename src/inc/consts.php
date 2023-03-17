@@ -7,21 +7,21 @@
  * http://www.flofaber.com
  */
 
-const MPD_STATE_OFF     = 0x00;
-const MPD_STATE_ON      = 0x01;
-const MPD_STATE_ONESHOT = 0x02;
+const MPD_STATE_OFF     = 0b00; // 0
+const MPD_STATE_ON      = 0b01; // 1
+const MPD_STATE_ONESHOT = 0b10; // 2
 
-const MPD_MODE_CREATE  = 0x01;
-const MPD_MODE_APPEND  = 0x02;
-const MPD_MODE_REPLACE = 0x04;
+const MPD_MODE_CREATE  = 0b001;
+const MPD_MODE_APPEND  = 0b010;
+const MPD_MODE_REPLACE = 0b100;
 
-const MPD_CMD_READ_RAW         = 0x01;
-const MPD_CMD_READ_NORMAL      = 0x02;
-const MPD_CMD_READ_LIST        = 0x04;
-const MPD_CMD_READ_LIST_SINGLE = 0x08;
-const MPD_CMD_READ_NONE        = 0x16;
-const MPD_CMD_READ_BOOL        = 0x32;
+const MPD_CMD_READ_RAW         = 0b000001; // 1
+const MPD_CMD_READ_NORMAL      = 0b000010;
+const MPD_CMD_READ_LIST        = 0b000100;
+const MPD_CMD_READ_LIST_SINGLE = 0b001000;
+const MPD_CMD_READ_NONE        = 0b010000;
+const MPD_CMD_READ_BOOL        = 0b100000; // 32
 
-const MPD_ESCAPE_DOUBLE_QUOTES = 0x02;
-const MPD_ESCAPE_PREFIX_SPACE  = 0x04;
-const MPD_ESCAPE_SUFFIX_SPACE  = 0x08;
+const MPD_ESCAPE_DOUBLE_QUOTES = 0b0010;
+const MPD_ESCAPE_PREFIX_SPACE  = 0b0100;
+const MPD_ESCAPE_SUFFIX_SPACE  = 0b1000;
