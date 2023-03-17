@@ -33,8 +33,9 @@ Create a new MphpD instance:
 
 ```PHP
 use FloFaber\MphpD;
+use FloFaber\MPDException;
 
-$mpd = new MphpD([
+$mphpd = new MphpD([
   "host" => "127.0.0.1",
   "port" => 6600,
   "timeout" => 5
@@ -44,7 +45,7 @@ $mpd = new MphpD([
 and connect to MPD
 ```PHP
 try{
-  $mpd->connect();
+  $mphpd->connect();
 }catch (MPDException $e){
   echo $e->getMessage();
   return false;
@@ -57,26 +58,26 @@ Here are some examples of what you can do with it:
 
 ```PHP
 // get MPD's status like current song, volume, state, etc...
-$status = $mpd->status();
+$status = $mphpd->status();
 
 // if you only want to retrieve only one (or more) values
 // you can pass it a list of keys.
-$state = $mpd->status([ "state" ]);
+$state = $mphpd->status([ "state" ]);
 
 // clear the queue
-$mpd->queue()->clear();
+$mphpd->queue()->clear();
 
 // load the first 10 songs of a playlist into the queue
-$mpd->playlist("some-playlist")->load([0,10]);
+$mphpd->playlist("some-playlist")->load([0,10]);
 
 // shuffle the queue
-$mpd->queue()->shuffle();
+$mphpd->queue()->shuffle();
 
 // adjust volume to 40%
-$mpd->player()->volume(40);
+$mphpd->player()->volume(40);
 
 // start playing
-$mpd->player()->play();
+$mphpd->player()->play();
 ```
 
 For further information have a look at the [Documentation](/doc).
