@@ -213,10 +213,10 @@ class MphpD extends Socket
    *
    *                     If omitted, an associative array containing all status information will be returned.
    *
-   * @return array|false|int|null Returns
+   * @return array|false|int|float|null Returns
    *                     `false` on error
    *
-   *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
+   *                     `string`, `int`, `float` or `null` if `$items` contains only one item. If it does not exist `null` will be returned instead.
    *
    *                     Otherwise, an associative array containing all available (or specified) keys.
    */
