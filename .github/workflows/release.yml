@@ -5,7 +5,7 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
 env:
-  INCLUDE: "./mphpd/ ./LICENSE.md ./README.md ./CHANGELOG.md"
+  INCLUDE: "./MphpD/ ./LICENSE.md ./README.md ./CHANGELOG.md"
   TAGNAME: "${{ github.ref_name }}"
   OUTFILE: "mphpd-${{ github.ref_name }}"
 
@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: rename src
-      run: mv ./src ./mphpd
+      run: mv ./src ./MphpD
     - name: parse changelog
       run: |
         echo "# Changelog" > CHANGES.md
