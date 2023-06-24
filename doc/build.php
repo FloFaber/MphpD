@@ -67,7 +67,7 @@ foreach($classes as $class){
   if($cdc) {
     $docblock = $factory->create($cdc);
 
-    $classsummary = $docblock->getDescription();
+    $classsummary = $docblock->getSummary()."<br>".$docblock->getDescription()->render();
     $classexample = $docblock->getTagsByName("example");
   }
 
