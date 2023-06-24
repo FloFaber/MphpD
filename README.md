@@ -67,8 +67,11 @@ $state = $mphpd->status([ "state" ]);
 // clear the queue
 $mphpd->queue()->clear();
 
-// load the first 10 songs of a playlist into the queue
-$mphpd->playlist("some-playlist")->load([0,10]);
+// load the first 10 songs of a playlist into the queue and exit on failure.
+if(!$mphpd->playlist("some-playlist")->load([0,10])){
+  echo $mphpd->get_last_error()["message"]; // prints "No such playlist"
+  return false;
+}
 
 // shuffle the queue
 $mphpd->queue()->shuffle();
