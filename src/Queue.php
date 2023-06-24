@@ -2,14 +2,13 @@
 /*
  * MphpD
  * http://mphpd.org
- *
  * Copyright (c) 2023 Florian Faber
  * http://www.flofaber.com
  */
 
 namespace FloFaber\MphpD;
 
-require_once __DIR__ . "/../Filter.php";
+require_once __DIR__ . "/Filter.php";
 
 /**
  * Subclass to control the Queue.

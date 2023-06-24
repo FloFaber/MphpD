@@ -2,14 +2,13 @@
 /*
  * MphpD
  * http://mphpd.org
- *
  * Copyright (c) 2023 Florian Faber
  * http://www.flofaber.com
  */
 
 namespace FloFaber\MphpD;
 
-require_once __DIR__ . "/../classes/MPDException.php";
+require_once __DIR__ . "/MPDException.php";
 
 // php<8 compatibility
 if(!function_exists("str_starts_with")){

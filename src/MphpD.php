@@ -13,20 +13,20 @@ namespace FloFaber\MphpD;
 
 // include class-less files
 require_once __DIR__ . "/inc/consts.php";
-require_once __DIR__ . "/classes/Utils.php";
+require_once __DIR__ . "/Utils.php";
 
 // include needed subclasses
-require_once __DIR__ . "/classes/Socket.php"; // Extended by the main class for socket communication
-require_once __DIR__ . "/classes/Filter.php"; // FloFaber\Filter
+require_once __DIR__ . "/Socket.php"; // Extended by the main class for socket communication
+require_once __DIR__ . "/Filter.php"; // FloFaber\Filter
 
-require_once __DIR__ . "/classes/mpd/Channel.php"; // MphpD::channel()
-require_once __DIR__ . "/classes/mpd/DB.php"; // MphpD::DB
-require_once __DIR__ . "/classes/mpd/Output.php"; // MphpD::output()
-require_once __DIR__ . "/classes/mpd/Partition.php"; // MphpD::partition()
-require_once __DIR__ . "/classes/mpd/Player.php"; // MphpD::player
-require_once __DIR__ . "/classes/mpd/Playlist.php"; // MphpD::playlist()
-require_once __DIR__ . "/classes/mpd/Queue.php"; // MphpD::queue
-require_once __DIR__ . "/classes/mpd/Sticker.php"; // Mphpd::sticker()
+require_once __DIR__ . "/Channel.php"; // MphpD::channel()
+require_once __DIR__ . "/DB.php"; // MphpD::DB
+require_once __DIR__ . "/Output.php"; // MphpD::output()
+require_once __DIR__ . "/Partition.php"; // MphpD::partition()
+require_once __DIR__ . "/Player.php"; // MphpD::player
+require_once __DIR__ . "/Playlist.php"; // MphpD::playlist()
+require_once __DIR__ . "/Queue.php"; // MphpD::queue
+require_once __DIR__ . "/Sticker.php"; // Mphpd::sticker()
 
 
 /**
