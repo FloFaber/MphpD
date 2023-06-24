@@ -13,13 +13,13 @@ const FOLDERS = [
   "guides", "classes", "methods"
 ];
 
-route("/doc/{version}/index", function($version){
+route("/doc/{version}/doc", function($version){
   include(__DIR__ . "/templates/header.html.php");
 
   echo "<details>\n<summary><h3 style='display: inline-block; cursor: pointer;'>Versions</h3></summary>\n<ul>\n";
   foreach(scandir("build/") as $v){
     if($v === "." || $v === ".."){ continue; }
-    echo "<li><a href='/doc/$v/index'>".($v === $version ? "<b>$v</b>" : $v)."</a></li>";
+    echo "<li><a href='/doc/$v/doc'>".($v === $version ? "<b>$v</b>" : $v)."</a></li>";
   }
   echo "</ul>\n</details>\n";
 
