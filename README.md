@@ -32,8 +32,8 @@ require_once __DIR__ . "/MphpD/MphpD.php";
 Create a new MphpD instance:
 
 ```PHP
-use FloFaber\MphpD;
-use FloFaber\MPDException;
+use FloFaber\Mphpd\MphpD;
+use FloFaber\Mphpd\MPDException;
 
 $mphpd = new MphpD([
   "host" => "127.0.0.1",
