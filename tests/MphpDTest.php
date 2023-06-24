@@ -3,7 +3,16 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
-use FloFaber\MphpD;
+use FloFaber\MphpD\MphpD;
+use FloFaber\MphpD\Channel;
+use FloFaber\MphpD\DB;
+use FloFaber\MphpD\Output;
+use FloFaber\MphpD\Partition;
+use FloFaber\MphpD\Player;
+use FloFaber\MphpD\Playlist;
+use FloFaber\MphpD\Queue;
+use FloFaber\MphpD\Sticker;
+
 use PHPUnit\Framework\TestCase;
 
 class MphpDTest extends TestCase
@@ -31,7 +40,7 @@ class MphpDTest extends TestCase
 
   public function testChannel()
   {
-    $this->assertInstanceOf(FloFaber\Channel::class, $this->mphpd->channel("c1"));
+    $this->assertInstanceOf(Channel::class, $this->mphpd->channel("c1"));
   }
 
   public function testChannels()
@@ -42,13 +51,13 @@ class MphpDTest extends TestCase
 
   public function testDb()
   {
-    $this->assertInstanceOf(FloFaber\DB::class, $this->mphpd->db());
+    $this->assertInstanceOf(DB::class, $this->mphpd->db());
   }
 
 
   public function testOutput()
   {
-    $this->assertInstanceOf(FloFaber\Output::class, $this->mphpd->output(0));
+    $this->assertInstanceOf(Output::class, $this->mphpd->output(0));
   }
 
   public function testOutputs()
@@ -59,7 +68,7 @@ class MphpDTest extends TestCase
 
   public function testPartition()
   {
-    $this->assertInstanceOf(FloFaber\Partition::class, $this->mphpd->partition("default"));
+    $this->assertInstanceOf(Partition::class, $this->mphpd->partition("default"));
   }
 
   public function testPartitions()
@@ -70,13 +79,13 @@ class MphpDTest extends TestCase
 
   public function testPlayer()
   {
-    $this->assertInstanceOf(FloFaber\Player::class, $this->mphpd->player());
+    $this->assertInstanceOf(Player::class, $this->mphpd->player());
   }
 
 
   public function testPlaylist()
   {
-    $this->assertInstanceOf(FloFaber\Playlist::class, $this->mphpd->playlist("test"));
+    $this->assertInstanceOf(Playlist::class, $this->mphpd->playlist("test"));
     $this->assertNull($this->mphpd->playlist(""));
   }
 
@@ -93,13 +102,13 @@ class MphpDTest extends TestCase
 
   public function testQueue()
   {
-    $this->assertInstanceOf(FloFaber\Queue::class, $this->mphpd->queue());
+    $this->assertInstanceOf(Queue::class, $this->mphpd->queue());
   }
 
 
   public function testSticker()
   {
-    $this->assertInstanceOf(FloFaber\Sticker::class, $this->mphpd->sticker("file", "test-song1.mp3"));
+    $this->assertInstanceOf(Sticker::class, $this->mphpd->sticker("file", "test-song1.mp3"));
   }
 
 

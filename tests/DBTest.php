@@ -3,7 +3,8 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
-use FloFaber\MphpD;
+use FloFaber\MphpD\MphpD;
+use FloFaber\MphpD\Filter;
 use PHPUnit\Framework\TestCase;
 
 class DBTest extends TestCase
@@ -20,22 +21,22 @@ class DBTest extends TestCase
 
   public function testSearch()
   {
-    $r1 = $this->mphpd->db()->search(new \FloFaber\Filter("album", "==", "test songs"), "title");
+    $r1 = $this->mphpd->db()->search(new Filter("album", "==", "test songs"), "title");
     $this->assertIsArray($r1);
     $this->assertNotEmpty($r1);
 
-    $r2 = $this->mphpd->db()->search(new \FloFaber\Filter("album", "==", "Test songs"), "title");
+    $r2 = $this->mphpd->db()->search(new Filter("album", "==", "Test songs"), "title");
     $this->assertIsArray($r2);
     $this->assertSame($r1, $r2);
   }
 
   public function testFind()
   {
-    $r = $this->mphpd->db()->find(new \FloFaber\Filter("album", "==", "test songs"), "title");
+    $r = $this->mphpd->db()->find(new Filter("album", "==", "test songs"), "title");
     $this->assertIsArray($r);
     $this->assertNotEmpty($r);
 
-    $r = $this->mphpd->db()->find(new \FloFaber\Filter("album", "==", "Test songs"), "title");
+    $r = $this->mphpd->db()->find(new Filter("album", "==", "Test songs"), "title");
     $this->assertIsArray($r);
     $this->assertEmpty($r);
   }
@@ -74,7 +75,7 @@ class DBTest extends TestCase
 
   public function testCount()
   {
-    $r = $this->mphpd->db()->count(new \FloFaber\Filter("artist", "==", "fictional artist"));
+    $r = $this->mphpd->db()->count(new Filter("artist", "==", "fictional artist"));
     $this->assertIsArray($r);
   }
 

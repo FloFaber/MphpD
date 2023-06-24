@@ -3,7 +3,8 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
-use FloFaber\MphpD;
+use FloFaber\MphpD\MphpD;
+use FloFaber\MphpD\Filter;
 use PHPUnit\Framework\TestCase;
 
 class QueueTest extends TestCase
@@ -54,7 +55,7 @@ class QueueTest extends TestCase
 
   public function testAdd_find()
   {
-    $this->assertTrue($this->mphpd->queue()->add_find(new \FloFaber\Filter("Artist", "contains", "Aequitas")));
+    $this->assertTrue($this->mphpd->queue()->add_find(new Filter("Artist", "contains", "Aequitas")));
   }
 
   public function testSwap_id()
@@ -73,7 +74,7 @@ class QueueTest extends TestCase
 
   public function testFind()
   {
-    $ret = $this->mphpd->queue()->find(new \FloFaber\Filter("file", "contains", "test"));
+    $ret = $this->mphpd->queue()->find(new Filter("file", "contains", "test"));
     $this->assertNotEmpty($ret);
   }
 
@@ -133,7 +134,7 @@ class QueueTest extends TestCase
 
   public function testSearch()
   {
-    $ret = $this->mphpd->queue()->search(new \FloFaber\Filter("Artist", "contains", "fictional"));
+    $ret = $this->mphpd->queue()->search(new Filter("Artist", "contains", "fictional"));
     $this->assertNotEmpty($ret);
   }
 
@@ -156,6 +157,6 @@ class QueueTest extends TestCase
 
   public function testAdd_search()
   {
-    $this->assertTrue($this->mphpd->queue()->add_search(new \FloFaber\Filter("Artist", "contains", "Aequitas")));
+    $this->assertTrue($this->mphpd->queue()->add_search(new Filter("Artist", "contains", "Aequitas")));
   }
 }

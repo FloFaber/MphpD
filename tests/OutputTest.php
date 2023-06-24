@@ -3,7 +3,7 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
-use FloFaber\MphpD;
+use FloFaber\MphpD\MphpD;
 use PHPUnit\Framework\TestCase;
 
 class OutputTest extends TestCase

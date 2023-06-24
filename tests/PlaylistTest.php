@@ -1,10 +1,11 @@
 <?php
 
-require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
+require_once __DIR__ . "/config/config.php";
 
 use PHPUnit\Framework\TestCase;
-use FloFaber\MphpD;
+use FloFaber\MphpD\MphpD;
+use FloFaber\MphpD\Filter;
 
 class PlaylistTest extends TestCase
 {
@@ -98,7 +99,7 @@ class PlaylistTest extends TestCase
   public function testAdd_search()
   {
     $this->assertTrue(
-      $this->mphpd->playlist("test2")->add_search(new \FloFaber\Filter("artist", "==", "fictional artist"))
+      $this->mphpd->playlist("test2")->add_search(new Filter("artist", "==", "fictional artist"))
     );
   }
 }

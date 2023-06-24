@@ -3,7 +3,8 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
-use FloFaber\MphpD;
+use FloFaber\MphpD\MPDException;
+use FloFaber\MphpD\MphpD;
 use PHPUnit\Framework\TestCase;
 
 class PlayerTest extends TestCase
@@ -102,7 +103,7 @@ class PlayerTest extends TestCase
     if($this->mphpd->version_bte("0.24")){
       $this->assertTrue($this->mphpd->player()->consume(MPD_STATE_ONESHOT));
     }else{
-      $this->expectException(\FloFaber\MPDException::class);
+      $this->expectException(MPDException::class);
       $this->mphpd->player()->consume(MPD_STATE_ONESHOT);
     }
   }
