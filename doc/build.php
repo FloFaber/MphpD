@@ -43,11 +43,11 @@ $include_docs = [
   [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/www/build/".VERSION."/guides/" ]
 ];
 
-// rebuild www dir
+/*// rebuild www dir
 rrmdir(__DIR__ . "/www/build");
 
 mkdir(__DIR__ . "/www/");
-mkdir(__DIR__ . "/www/build/");
+mkdir(__DIR__ . "/www/build/");*/
 mkdir(__DIR__ . "/www/build/".VERSION."/");
 mkdir(__DIR__ . "/www/build/".VERSION."/methods/");
 mkdir(__DIR__ . "/www/build/".VERSION."/guides/");
@@ -101,7 +101,7 @@ foreach($classes as $class){
 
       $docblock = $factory->create($dc);
       $return = $docblock->getTagsByName("return")[0] ?? false;
-      $summary = $docblock->getSummary();
+      $summary = $docblock->getSummary()."<br>".$docblock->getDescription()->render();
 
       if(count($docblock->getTagsByName("param"))){
         $methodparameters = "";

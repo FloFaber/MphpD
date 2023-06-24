@@ -17,15 +17,15 @@ route("/doc/{version}/index", function($version){
   include(__DIR__ . "/templates/header.html.php");
 
   echo "<details>\n<summary><h3 style='display: inline-block; cursor: pointer;'>Versions</h3></summary>\n<ul>\n";
-  foreach(scandir("doc/") as $v){
+  foreach(scandir("build/") as $v){
     if($v === "." || $v === ".."){ continue; }
-    echo "<li><a href='/doc/$v/doc'>".($v === $version ? "<b>$v</b>" : $v)."</a></li>";
+    echo "<li><a href='/doc/$v/index'>".($v === $version ? "<b>$v</b>" : $v)."</a></li>";
   }
   echo "</ul>\n</details>\n";
 
   foreach(FOLDERS as $folder){
     echo "<h1 style='text-transform: capitalize;'>$folder</h1>\n";
-    $nodes = select("doc/$version/$folder")->query("title", "asc", 0, [], false);
+    $nodes = select("build/$version/$folder")->query("title", "asc", 0, [], false);
     if(!$nodes){ return false; }
     echo "<ul>\n";
     foreach($nodes as $node){
@@ -37,13 +37,13 @@ route("/doc/{version}/index", function($version){
 });
 
 route("/doc/{version}/{page}", function($version, $page){
-  $node = select("doc/$version/")->one([ "keyword" => $page ]);
+  $node = select("build/$version/")->one([ "keyword" => $page ]);
   if(!$node){ return false; }
   include __DIR__ . "/templates/page.html.php";
 });
 
 route("/doc/{version}/{folder}/{page}", function($version, $folder, $page){
-  $node = select("doc/$version/$folder")->one([ "keyword" => $page ]);
+  $node = select("build/$version/$folder")->one([ "keyword" => $page ]);
   if(!$node){ return false; }
   include __DIR__ . "/templates/page.html.php";
 });
