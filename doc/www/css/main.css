@@ -1,0 +1,129 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url("/css/fonts/OpenSans-VariableFont_wdth,wght.ttf");
+}
+
+:root {
+    --primary: #3d2dff;
+    --primary-dark: #262628;
+    --grey: #888;
+    --light-grey: #f0eeee;
+    --black: #1a1a1a;
+    --white: #fdfdfd;
+}
+
+body{
+    -webkit-print-color-adjust: exact;
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    height: 100vh;
+    flex-flow: column;
+    position: relative;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+* {
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+a{
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover{
+    color: var(--primary-dark);
+}
+
+div#body{
+    padding: 0 20px;
+    display: flex;
+    flex-flow: column;
+}
+
+h1,h2,h3,h4,h5,h6{ font-weight: 500; display: flex; align-items: center; }
+
+h1:hover span.heading-url,h2:hover span.heading-url,h3:hover span.heading-url,h4:hover span.heading-url,h5:hover span.heading-url,h6:hover span.heading-url {
+    display: inline;
+}
+
+h1{ font-size: 1.75rem; }
+h2{ font-size: 1.50rem; margin-top: 45px; }
+h3{ font-size: 1.25rem; margin-top: 35px; }
+
+
+div#header{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+div#header-right a{
+    margin-left: 22px;
+}
+
+div#footer{
+    padding: 50px 0;
+    text-align: center;
+    color: #595959;
+}
+
+
+div#sidebar {
+    min-height: 100%;
+    width: 15%;
+    border-right: 1px solid var(--light-grey);
+    padding: 8px;
+}
+
+pre {
+    font-family: monospace;
+    font-weight: 400;
+}
+
+pre code{
+    display: block;
+    padding: 1em;
+}
+
+code{
+    border-radius: 3px;
+    font-family: monospace;
+    padding: 2px 3px;
+    background-color: #e4e3e6;
+}
+
+
+span.heading-url{
+    font-size: 14px;
+    display: none;
+    padding-left: 5px;
+}
+
+div.method{
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid;
+    border-image: linear-gradient(to right, var(--white), var(--primary), var(--white)) 1;
+}
+
+div.method h3:before{
+    content: "m";
+    position: absolute;
+    left: -4px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+    font-family: monospace;
+    background-color: var(--primary);
+    border-radius: 50%;
+    text-align: center;
+    color: var(--white);
+}
