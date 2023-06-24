@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\MPDException</h1>
-<p>You may call `MPDException::getCode` and `MPDException::getMessage` to retrieve information about the error.
+<p>MPDException is a slightly modified version of a standard Exception.<br>You may call `MPDException::getCode` and `MPDException::getMessage` to retrieve information about the error.
 
 In case an error occurs at the protocol level the called methods simply return false.
 

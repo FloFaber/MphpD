@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\MphpD</h1>
-<p></p>
+<p>The Main MphpD class.<br></p>
 
 ```php
 new MphpD(array $config = []) : MphpD

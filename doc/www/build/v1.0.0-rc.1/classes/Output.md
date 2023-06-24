@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Output</h1>
-<p>Have a look at the [MPD doc](https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices) for more.</p>
+<p>This subclass is used to configure audio outputs.<br>Have a look at the [MPD doc](https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices) for more.</p>
 
 ```php
 MphpD::output(int $id) : Output

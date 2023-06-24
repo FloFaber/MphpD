@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Partition</h1>
-<p></p>
+<p>This subclass is used to create, switch and configure [partitions](https://mpd.readthedocs.io/en/latest/protocol.html#partition-commands)<br></p>
 
 ```php
 MphpD::partition(string $name) : Partition

@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Filter</h1>
-<p>They are used in various other methods like [DB::search](../classes/DB#search), [Playlist::add_search](../classes/Playlist#add_search) and more.
+<p>Filters provide a way to search for specific songs. They take care of parsing and escaping.<br>They are used in various other methods like [DB::search](../classes/DB#search), [Playlist::add_search](../classes/Playlist#add_search) and more.
 Refer to the [MPD documentation](https://mpd.readthedocs.io/en/latest/protocol.html#filters) for more information about filters.</p>
 
 ```php

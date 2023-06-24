@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Playlist</h1>
-<p></p>
+<p>Subclass to interact with stored Playlists.<br></p>
 
 ```php
 MphpD::playlist(string $name) : Playlist

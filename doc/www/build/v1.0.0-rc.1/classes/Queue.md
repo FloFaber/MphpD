@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Queue</h1>
-<p></p>
+<p>Subclass to control the Queue.<br></p>
 
 ```php
 MphpD::queue() : Queue

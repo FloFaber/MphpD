@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\Sticker</h1>
-<p></p>
+<p>Subclass for [Stickers](https://mpd.readthedocs.io/en/latest/protocol.html#stickers).<br></p>
 
 ```php
 MphpD::sticker(string $type, string $uri) : Sticker

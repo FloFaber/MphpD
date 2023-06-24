@@ -4,7 +4,7 @@ tags: class
 ---
 
 <h1 class="method-name">FloFaber\MphpD\DB</h1>
-<p></p>
+<p>This subclass is used to interact with and retrieve information from MPD's database.<br></p>
 
 ```php
 MphpD::db() : DB
