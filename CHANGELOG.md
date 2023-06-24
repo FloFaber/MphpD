@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.0-rc.2
+
+* [FIX] Fixed critical unnoticed typo in composer.json
+
+
 ## v1.0.0-rc.1
 
 * [BREAKING CHANGE] Reorganized Namespaces of nearly all classes.
