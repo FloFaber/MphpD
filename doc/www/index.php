@@ -49,6 +49,7 @@ route("/doc/{version}/{folder}/{page}", function($version, $folder, $page){
 });
 
 reroute("/", "/doc/latest/index");
+reroute("/doc", "/doc/latest/doc");
 
 route("/*", function(){
   include __DIR__ . "/templates/404.html.php";
