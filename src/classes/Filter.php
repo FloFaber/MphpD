@@ -7,14 +7,15 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
+
+require_once __DIR__ . "/Utils.php";
 
 /**
  * Filters provide a way to search for specific songs. They take care of parsing and escaping.
- * They are used in various other methods like [DB::search](/doc/methods/db-search), [Playlist::searchadd](/doc/methods/playlist-searchadd) and more.
+ * They are used in various other methods like [DB::search](../classes/DB#search), [Playlist::add_search](../classes/Playlist#add_search) and more.
  * Refer to the [MPD documentation](https://mpd.readthedocs.io/en/latest/protocol.html#filters) for more information about filters.
- * @title Filters
- * @usage new Filter(string $tag, string $operator, string $value) : Filter
+ * @example new FloFaber\MphpD\Filter(string $tag, string $operator, string $value) : Filter
  */
 class Filter
 {
@@ -45,7 +46,7 @@ class Filter
    */
   public function and(string $tag, string $operator, string $value): Filter
   {
-    $value = escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    $value = Utils::escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
     $this->tags[] = $tag;
     $this->operators[] = $operator;
     $this->values[] = $value;

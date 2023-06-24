@@ -7,12 +7,10 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
-
+namespace FloFaber\MphpD;
 /**
  * This subclass is used to create, switch and configure [partitions](https://mpd.readthedocs.io/en/latest/protocol.html#partition-commands)
- * @title Partitions
- * @usage MphpD::partition(string $name) : Partition
+ * @example MphpD::partition(string $name) : Partition
  */
 class Partition
 {
@@ -20,7 +18,12 @@ class Partition
   private MphpD $mphpd;
   private string $name;
 
-
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::partition() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   * @param string $name
+   */
   public function __construct(MphpD $mphpd, string $name)
   {
     $this->mphpd = $mphpd;

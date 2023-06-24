@@ -7,20 +7,26 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
 
+require_once __DIR__ . "/../Utils.php";
 require_once __DIR__ . "/../Filter.php";
+
 
 /**
  * This subclass is used to interact with and retrieve information from MPD's database.
- * @title The Database
- * @usage MphpD::DB() : DB
+ * @example MphpD::db() : DB
  */
 class DB
 {
 
   private MphpD $mphpd;
 
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::db() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   */
   public function __construct(MphpD $mphpd)
   {
     $this->mphpd = $mphpd;
@@ -99,7 +105,7 @@ class DB
   {
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
+      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
   }
 
@@ -120,7 +126,7 @@ class DB
       $m = MPD_CMD_READ_LIST;
     }
 
-    $type = escape_params([ $type ]);
+    $type = Utils::escape_params([ $type ]);
     return $this->mphpd->cmd("list $type $filter", [
       ($group ? "group" : ""), ($group ?: "")
     ], $m);
@@ -226,7 +232,7 @@ class DB
   {
     return $this->mphpd->cmd("search $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
+      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
   }
 

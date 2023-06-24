@@ -7,16 +7,23 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
+
+require_once __DIR__ . "/../Filter.php";
 
 /**
  * Subclass to control the Queue.
- * @title The Queue
- * @usage MphpD::queue() : Queue
+ * @example MphpD::queue() : Queue
  */
 class Queue
 {
   private MphpD $mphpd;
+
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::queue() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   */
   public function __construct(MphpD $mphpd)
   {
     $this->mphpd = $mphpd;
@@ -26,7 +33,6 @@ class Queue
   /**
    * Adds the file $uri to the queue (directories add recursively). $uri can also be a single file.
    * @param string $uri Can be a single file or folder.
-   *
    *                    If connected via Unix socket you may add arbitrary local files (absolute paths)
    * @param int|string $pos If set the song is inserted at the specified position.
    *                 If the parameter starts with + or -, then it is relative to the current song.
@@ -68,7 +74,7 @@ class Queue
   {
     return $this->mphpd->cmd("searchadd $filter", [
         ($sort ? "sort" : ""), ($sort ?: ""),
-        ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
+        ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
         ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
       ], MPD_CMD_READ_BOOL);
   }
@@ -87,7 +93,7 @@ class Queue
   {
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
+      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
       ($pos !== -1 ? "position" : ""), ($pos !== -1 ? $pos : "")
     ], MPD_CMD_READ_BOOL);
   }
@@ -110,7 +116,7 @@ class Queue
    */
   public function delete($p) : bool
   {
-    return $this->mphpd->cmd("delete", [ pos_or_range($p) ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("delete", [ Utils::pos_or_range($p) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -138,7 +144,7 @@ class Queue
     if(!is_numeric($to))
       $this->mphpd->set_error(new MPDException("\$to is not numeric.", 400));
 
-    return $this->mphpd->cmd("move", [pos_or_range($from), $to], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("move", [ Utils::pos_or_range($from), $to ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -169,7 +175,7 @@ class Queue
   {
     return $this->mphpd->cmd("playlistfind $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
+      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
   }
 
@@ -203,7 +209,7 @@ class Queue
     if($p === -1){
       $m = MPD_CMD_READ_LIST;
     }
-    return $this->mphpd->cmd("playlistinfo", [ pos_or_range($p) ], $m);
+    return $this->mphpd->cmd("playlistinfo", [ Utils::pos_or_range($p) ], $m);
   }
 
 
@@ -218,7 +224,7 @@ class Queue
   {
     return $this->mphpd->cmd("playlistsearch $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? pos_or_range($window) : "")
+      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
     ], MPD_CMD_READ_LIST);
   }
 
@@ -238,7 +244,7 @@ class Queue
     if($metadata === true){
       $cmd = "plchanges";
     }
-    return $this->mphpd->cmd($cmd, [ $version, pos_or_range($range) ], MPD_CMD_READ_LIST);
+    return $this->mphpd->cmd($cmd, [ $version, Utils::pos_or_range($range) ], MPD_CMD_READ_LIST);
   }
 
 
@@ -252,7 +258,7 @@ class Queue
    */
   public function prio(int $priority, $range = -1) : bool
   {
-    return $this->mphpd->cmd("prio", [ $priority, pos_or_range($range) ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("prio", [ $priority, Utils::pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -279,7 +285,7 @@ class Queue
    */
   public function range_id(int $songid, array $range = []) : bool
   {
-    $pos = pos_or_range($range);
+    $pos = Utils::pos_or_range($range);
     if(!$range){
       $pos = ":";
     }
@@ -294,7 +300,7 @@ class Queue
    */
   public function shuffle(array $range = []) : bool
   {
-    return $this->mphpd->cmd("shuffle", [pos_or_range($range)], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("shuffle", [ Utils::pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
 
 

@@ -7,12 +7,12 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
+
 
 /**
  * This subclass is used for client-to-client communication over MPD
- * @title Channels
- * @usage MphpD::channel(string $name) : Channel
+ * @example MphpD::channel(string $name) : Channel
  */
 class Channel
 {
@@ -27,6 +27,12 @@ class Channel
   private string $name;
   private static array $unread_messages = [];
 
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::channel() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   * @param string $name
+   */
   public function __construct(MphpD $mphpd, string $name)
   {
     $this->mphpd = $mphpd;

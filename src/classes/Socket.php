@@ -7,9 +7,11 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
 
-require_once __DIR__ . "/../inc/utils.php";
+require_once __DIR__ . "/Utils.php";
+require_once __DIR__ . "/MPDException.php";
+
 
 class Socket
 {
@@ -103,7 +105,7 @@ class Socket
       return false;
     }
 
-    $cmd = $command.escape_params($params);
+    $cmd = $command.Utils::escape_params($params);
 
     if (fputs($this->socket, "$cmd\n") === false) {
       $this->set_error("Unable to write to socket!");
@@ -244,7 +246,7 @@ class Socket
   public function set_error($err) : bool
   {
     if(!$err instanceof MPDException){
-      $this->last_error = parse_error($err);
+      $this->last_error = Utils::parse_error($err);
     }else{
       $this->last_error = $err;
     }
@@ -302,7 +304,9 @@ class Socket
     stream_set_timeout($this->socket, $this->timeout);
 
     $helo = "";
-    $this->readl($helo);
+    if($this->readl($helo) === 0){
+      throw new MPDException("Unexpected error in fgets()");
+    }
 
     if(str_starts_with($helo, "OK MPD")){
       $this->version = trim(str_replace("OK MPD", "", $helo));
@@ -439,7 +443,7 @@ class Socket
     // parse lines first so we can look ahead later
     foreach($lines as $line){
       if(str_starts_with($line, "ACK")){
-        return parse_error($line);
+        return Utils::parse_error($line);
       }
       $ls = explode(":", $line, 2);
       if(count($ls) < 2){

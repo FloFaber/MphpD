@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
 
 // include class-less files
 require_once __DIR__ . "/inc/consts.php";
-require_once __DIR__ . "/inc/utils.php";
+require_once __DIR__ . "/classes/Utils.php";
 
 // include needed subclasses
 require_once __DIR__ . "/classes/Socket.php"; // Extended by the main class for socket communication
@@ -31,8 +31,7 @@ require_once __DIR__ . "/classes/mpd/Sticker.php"; // Mphpd::sticker()
 
 /**
  * The Main MphpD class.
- * @title MphpD
- * @usage new MphpD(array $config = []) : MphpD
+ * @example new MphpD(array $config = []) : MphpD
  */
 class MphpD extends Socket
 {
@@ -45,6 +44,9 @@ class MphpD extends Socket
   private array $bulk_list = [];
 
 
+  /**
+   * @param array $options Array of options. [Documentation](../guides/configuration)
+   */
   public function __construct(array $options = [])
   {
     $this->db = new DB($this);
@@ -432,7 +434,7 @@ class MphpD extends Socket
       return false;
     }
 
-    $cmd = $cmd.escape_params($params);
+    $cmd = $cmd.Utils::escape_params($params);
     $this->bulk_list[] = [
       "cmd" => $cmd,
       "mode" => $mode

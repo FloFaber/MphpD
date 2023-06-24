@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.0-rc.1
+
+* [BREAKING CHANGE] Reorganized Namespaces of nearly all classes.
+* [FIX] Cleaned up docblocks and added several docblocks for classes.
+* [FIX] The whole documentation is now in this repo including a rather ugly buildscript.
+* [MISC] Moved utils.php to classes/Utils.php therefore moved the functions inside into a new Utils class.
+
+
 ## v0.1.3
 
 * [BREAKING CHANGE] Renamed the main class file `mphpd.php` to `MphpD.php`.

@@ -7,12 +7,11 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
 
 /**
  * Subclass for [Stickers](https://mpd.readthedocs.io/en/latest/protocol.html#stickers).
- * @title Stickers
- * @usage MphpD::sticker(string $type, string $uri) : Sticker
+ * @example MphpD::sticker(string $type, string $uri) : Sticker
  */
 class Sticker
 {
@@ -21,6 +20,13 @@ class Sticker
   private string $type;
   private string $uri;
 
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::sticker() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   * @param string $type
+   * @param string $uri
+   */
   public function __construct(MphpD $mphpd, string $type, string $uri)
   {
     $this->mphpd = $mphpd;

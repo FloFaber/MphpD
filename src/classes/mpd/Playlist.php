@@ -7,12 +7,13 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
+
+require_once __DIR__ . "/../Filter.php";
 
 /**
  * Subclass to interact with stored Playlists.
- * @title Playlists
- * @usage MphpD::playlist(string $name) : Playlist
+ * @example MphpD::playlist(string $name) : Playlist
  */
 class Playlist
 {
@@ -26,6 +27,13 @@ class Playlist
   private MphpD $mphpd;
   private string $name;
 
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::playlist() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   * @param string $name
+   * @throws MPDException
+   */
   public function __construct(MphpD $mphpd, string $name)
   {
     $this->mphpd = $mphpd;
@@ -75,7 +83,7 @@ class Playlist
    */
   public function load(array $range = [], $pos = "") : bool
   {
-    return $this->mphpd->cmd("load", [ $this->name, pos_or_range($range), $pos ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("load", [ $this->name, Utils::pos_or_range($range), $pos ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -103,10 +111,10 @@ class Playlist
    */
   public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
   {
-    $name = escape_params([ $this->name ]);
+    $name = Utils::escape_params([ $this->name ]);
     return $this->mphpd->cmd("searchaddpl $name $filter", [
         ($sort ? "sort" : ""), ($sort ?: ""),
-        ($window ? "window" : ""), ($window ? pos_or_range($window) : ""),
+        ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
         ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
       ], MPD_CMD_READ_BOOL);
   }
@@ -129,7 +137,7 @@ class Playlist
    */
   public function remove_song($songpos = -1) : bool
   {
-    return $this->mphpd->cmd("playlistdelete", [ $this->name, pos_or_range($songpos) ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("playlistdelete", [ $this->name, Utils::pos_or_range($songpos) ], MPD_CMD_READ_BOOL);
   }
 
 

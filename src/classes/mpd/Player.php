@@ -7,20 +7,24 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
+namespace FloFaber\MphpD;
 
 
 /**
  * This subclass is used to control MPDs playback.
  * You may also want to have a look at the [MPD documentation](https://mpd.readthedocs.io/en/latest/protocol.html#playback-options).
- * @usage MphpD::player() : Player
- * @title The Player
+ * @example MphpD::player() : Player
  */
-
 class Player
 {
 
   private MphpD $mphpd;
+
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::player() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   */
   public function __construct(MphpD $mphpd)
   {
     $this->mphpd = $mphpd;

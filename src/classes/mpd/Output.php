@@ -7,15 +7,12 @@
  * http://www.flofaber.com
  */
 
-namespace FloFaber;
-
-//
+namespace FloFaber\MphpD;
 
 /**
  * This subclass is used to configure audio outputs.
  * Have a look at the [MPD doc](https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices) for more.
- * @title Audio Outputs
- * @usage MphpD::output(int $id) : Output
+ * @example MphpD::output(int $id) : Output
  */
 class Output
 {
@@ -24,6 +21,12 @@ class Output
   private int $id;
 
 
+  /**
+   * This class is not intended for direct usage.
+   * Use MphpD::output() instead to retrieve an instance of this class.
+   * @param MphpD $mphpd
+   * @param int $id
+   */
   public function __construct(MphpD $mphpd, int $id)
   {
     $this->mphpd = $mphpd;
