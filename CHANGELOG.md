@@ -3,6 +3,8 @@
 ## v1.0.0-rc.1
 
 * [BREAKING CHANGE] Reorganized Namespaces of nearly all classes.
+* [BREAKING CHANGE] Moved all classes to src/ directory.
+* [FIX] Updated namespace in composer.json for psr-4 autoloading.
 * [FIX] Cleaned up docblocks and added several docblocks for classes.
 * [FIX] The whole documentation is now in this repo including a rather ugly buildscript.
 * [MISC] Moved utils.php to classes/Utils.php therefore moved the functions inside into a new Utils class.
