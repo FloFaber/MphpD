@@ -6,10 +6,16 @@
  * http://www.flofaber.com
  */
 
-/* !!! DANGER !!!
- * This file may cause eye-cancer when read!
+/*
+ * This script is used to extract doc-blocks from MphpDs source code and convert them into nice markdown
+ * which is then used by pagenode (pagenode.org) to render a nice HTML page.
+ * That whole setup is far too complicated in my opinion.
+ * ---
+ * Needless to say there are still several things to do:
+ * * Cleanup, this code is a huge mess.
+ * * Preferably stop using Pagenode and instead build static HTML sites directly. Maybe we could then
+ *   also build a PDF and include that in the releases. Would be nice.
  */
-
 
 use phpDocumentor\Reflection\DocBlockFactory;
 
@@ -187,11 +193,10 @@ foreach($classes as $class){
   file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$classname_without_namespace.".md", $template_class);
 
   unlink(__DIR__ . "/www/build/latest");
-  symlink(__DIR__ . "/www/build/".VERSION, __DIR__ . "/www/build/latest");
+  chdir(__DIR__ . "/www/build/");
+  symlink(VERSION, "latest");
 
   foreach ($include_docs as $include_doc) {
-
-
 
     $s = $include_doc["src"]; //source
     $d = $include_doc["dst"]; //destination
