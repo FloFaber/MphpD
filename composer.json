@@ -6,7 +6,8 @@
     "ext-sockets": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "9.5.27"
+    "phpunit/phpunit": "9.5.27",
+    "phpdocumentor/reflection-docblock": "^5.3"
   },
   "license": "MIT",
   "authors": [
