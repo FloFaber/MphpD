@@ -17,17 +17,20 @@
  *   also build a PDF and include that in the releases. Would be nice.
  */
 
-use phpDocumentor\Reflection\DocBlockFactory;
 
 require_once __DIR__ . "/inc/docPHParser.php";
-require_once __DIR__ . "/inc/vendor/autoload.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
+use phpDocumentor\Reflection\DocBlockFactory;
+
+// we require a version number
 if(empty($argv[1])){
   echo "Version number required for build!";
   die(1);
 }
 
 define("VERSION", $argv[1]);
+
 
 const CONFIG = [
   "source" => __DIR__ . "/../src/"
@@ -37,8 +40,6 @@ const CONFIG = [
 $docparser = new docPHParser(CONFIG);
 
 $factory  = DocBlockFactory::createInstance();
-
-
 
 
 
@@ -60,31 +61,51 @@ mkdir(__DIR__ . "/www/build/".VERSION."/guides/");
 mkdir(__DIR__ . "/www/build/".VERSION."/classes/");
 
 
-$classes = $docparser->getClasses();
-foreach($classes as $class){
+// iterate through each class we found
+foreach($docparser->getClasses() as $class){
 
-  $methods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
-  $classname = $class->getName();
-  $cdc = $class->getDocComment();
+  $class_info = [
+    "name" => null,
+    "namespace" => null,
+    "methods" => null,
+    "docblock" => null,
+    "summary" => null,
+    "description" => null,
+    "text" => null,
+    "example" => null,
+  ];
 
-  $classsummary = "";
-  $classexample = "";
+  $tmp = explode("\\", $class->getName());
+  $class_info["name"] = array_pop($tmp); unset($tmp);
+  $class_info["namespace"] = $class->getNamespaceName();
+  $class_info["methods"] = $class->getMethods(Reflectionmethod::IS_PUBLIC);
+  $class_info["docblock"] = $class->getDocComment() ? $factory->create($class->getDocComment()) : null;
+  $class_info["summary"] = $class_info["docblock"]?->getSummary();
+  $class_info["description"] = $class_info["docblock"]?->getDescription();
+  $class_info["text"] = $class_info["summary"]."\n".$class_info["description"];
+  $class_info["example"] = $class_info["docblock"]?->getTagsByName("example");
 
-  if($cdc) {
-    $docblock = $factory->create($cdc);
+  continue;
 
-    $classsummary = $docblock->getSummary()."<br>".$docblock->getDescription()->render();
-    $classexample = $docblock->getTagsByName("example");
-  }
+  foreach($class_info["methods"] as $method){
 
-  $tmp = explode("\\", $classname);
-  $classname_without_namespace = array_pop($tmp);
+    $method_info = [
+      "name" => null,
+      "params" => null,
+      "docblock" => null,
+      "template_file" => null,
+      "returns" => null,
+    ];
 
-  $all_methods_text = "";
+    $method_info["name"] = $method->getName();
+    $method_info["params"] = $method->getParameters();
+    $method_info["docblock"] = $method->getDocComment() ? $factory->create($method->getDocComment()) : null;
+    $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
+    $method_info["return_text"] = $method_info["docblock"]?->getTagsByName("return");
+    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType() : "void";
 
-  foreach($methods as $method){
+    if($method_info["name"] === "__destruct"){ continue; }
 
-    if($method->getName() === "__destruct"){ continue; }
 
     $params = $method->getParameters();
 
