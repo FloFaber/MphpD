@@ -64,16 +64,7 @@ mkdir(__DIR__ . "/www/build/".VERSION."/classes/");
 // iterate through each class we found
 foreach($docparser->getClasses() as $class){
 
-  $class_info = [
-    "name" => null,
-    "namespace" => null,
-    "methods" => null,
-    "docblock" => null,
-    "summary" => null,
-    "description" => null,
-    "text" => null,
-    "example" => null,
-  ];
+  $class_info = [];
 
   $tmp = explode("\\", $class->getName());
   $class_info["name"] = array_pop($tmp); unset($tmp);
@@ -85,21 +76,18 @@ foreach($docparser->getClasses() as $class){
   $class_info["text"] = $class_info["summary"]."\n".$class_info["description"];
   $class_info["example"] = $class_info["docblock"]?->getTagsByName("example");
 
-  continue;
+  //continue;
 
   foreach($class_info["methods"] as $method){
 
-    $method_info = [
-      "name" => null,
-      "params" => null,
-      "docblock" => null,
-      "template_file" => null,
-      "returns" => null,
-    ];
+    $method_info = [];
 
     $method_info["name"] = $method->getName();
     $method_info["params"] = $method->getParameters();
     $method_info["docblock"] = $method->getDocComment() ? $factory->create($method->getDocComment()) : null;
+    $method_info["summary"] = $method_info["docblock"]?->getSummary();
+    $method_info["description"] = $method_info["docblock"]?->getDescription();
+    $method_info["text"] = $method_info["summary"]."\n".$method_info["description"];
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
     $method_info["return_text"] = $method_info["docblock"]?->getTagsByName("return");
     $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType() : "void";
@@ -107,55 +95,9 @@ foreach($docparser->getClasses() as $class){
     if($method_info["name"] === "__destruct"){ continue; }
 
 
-    $params = $method->getParameters();
-
-    $template_method_body = file_get_contents(__DIR__ . "/templates/method.template.html");
-    $template_method_head = file_get_contents(__DIR__ . "/templates/method.head.template.html");
-
-    $summary = "";
-    $methodparameters = "*none*\n";
-    $methodreturntext = "";
-
-    $return = false;
-    $dc = $method->getDocComment();
-
-    $returntype = false;
-    if($method->hasReturnType()){
-      $returntype = $method->getReturnType();
-    }
-
-    if($dc) {
-
-      $docblock = $factory->create($dc);
-      $return = $docblock->getTagsByName("return")[0] ?? false;
-      $summary = $docblock->getSummary()."<br>".$docblock->getDescription()->render();
-
-      if(count($docblock->getTagsByName("param"))){
-        $methodparameters = "";
-        foreach($docblock->getTagsByName("param") as $tag){
-          $methodparameters .= "* ".str_replace("@param", "", $tag->render())."\n";
-        }
-      }
-
-
-      foreach($docblock->getTagsByName("return") as $tag){
-        $x = $tag->render();
-        $matches = [];
-        preg_match("/(@return)(\s)([a-zA-Z0-9_|]*)\s?/", $x, $matches);
-        $returntype = $matches[3] ?? $returntype;
-        $x = preg_replace("/(@return)(\s)([a-zA-Z0-9_|]*)\s?/", "", $x);
-        $methodreturntext .= $x."\n";
-      }
-
-    }
-
-    if(!$return){
-      $return = $method->hasReturnType() ? $method->getReturnType() : "unknown";
-    }
-
     // www "usage"-line
-    $usage = $classname_without_namespace."::".$method->getName()."(";
-    foreach ($params as $param) {
+    $usage = $method_info["name"]."::".$method->getName()."(";
+    foreach ($method_info["params"] as $param) {
       $usage .= $param->getType()." ";
       $usage .= '$'.$param->getName();
       try{
@@ -165,7 +107,7 @@ foreach($docparser->getClasses() as $class){
       }catch (ReflectionException $e){
 
       } finally {
-        if($param !== $params[count($params)-1])
+        if($param !== $method_info["params"][count($method_info["params"])-1])
           $usage .= ", ";
       }
     }
