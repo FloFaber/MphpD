@@ -47,20 +47,20 @@ $factory  = DocBlockFactory::createInstance();
 // source -> target
 $include_docs = [
 //  [ "src" => __DIR__ . "/../README.md", "dst" => __DIR__ . "/www/build/".VERSION."/index.md" ],
-  [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/www/build/".VERSION."/guides/" ]
+  [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/../docs/".VERSION."/guides/" ]
 ];
 
-rrmdir(__DIR__ . "/www/build/".VERSION);
+rrmdir(__DIR__ . "/../docs/".VERSION);
 
 /*// rebuild www dir
 
 
 mkdir(__DIR__ . "/www/");
 mkdir(__DIR__ . "/www/build/");*/
-mkdir(__DIR__ . "/www/build/".VERSION."/");
-mkdir(__DIR__ . "/www/build/".VERSION."/methods/");
-mkdir(__DIR__ . "/www/build/".VERSION."/guides/");
-mkdir(__DIR__ . "/www/build/".VERSION."/classes/");
+mkdir(__DIR__ . "/../docs/".VERSION."/");
+mkdir(__DIR__ . "/../docs/".VERSION."/methods/");
+mkdir(__DIR__ . "/../docs/".VERSION."/guides/");
+mkdir(__DIR__ . "/../docs/".VERSION."/classes/");
 
 
 // iterate through each class we found
@@ -144,7 +144,7 @@ foreach($docparser->getClasses() as $class){
     }
 
     $class_info["methods_text"] .= $template_method;
-    file_put_contents(__DIR__ . "/www/build/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
+    file_put_contents(__DIR__ . "/../docs/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
 
   }
 
@@ -155,13 +155,7 @@ foreach($docparser->getClasses() as $class){
     $template_class = str_replace("{{class.$k}}", $v, $template_class);
   }
 
-  file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$class_info["name"].".html", $template_class);
-
-  if(VERSION !== "test"){
-    unlink(__DIR__ . "/www/build/latest");
-    chdir(__DIR__ . "/www/build/");
-    symlink(VERSION, "latest");
-  }
+  file_put_contents(__DIR__ . "/../docs/".VERSION."/classes/".$class_info["name"].".html", $template_class);
 
   foreach ($include_docs as $include_doc) {
     $s = $include_doc["src"]; //source
@@ -174,7 +168,24 @@ foreach($docparser->getClasses() as $class){
     }
   }
 
-  file_put_contents(__DIR__ . "/www/build/".VERSION."/index.html", $pd->text(file_get_contents(__DIR__ . "/../README.md")));
+
+  $template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
+  $template_page = str_replace("{{page.title}}", "MphpD", $template_page);
+  $template_page = str_replace("{{page.content}}", $pd->text(file_get_contents(__DIR__ . "/../README.md")), $template_page);
+
+  file_put_contents(__DIR__ . "/../docs/".VERSION."/index.html", $template_page);
+
+  // update symlinks
+  if(VERSION !== "test"){
+    unlink(__DIR__ . "/../docs/latest");
+    chdir(__DIR__ . "/../docs/");
+    symlink(VERSION, "latest");
+
+    unlink(__DIR__ . "/../docs/index.html");
+    chdir(__DIR__ . "/../docs");
+    symlink("latest/index.html", "index.html");
+  }
+
 
 }
 
