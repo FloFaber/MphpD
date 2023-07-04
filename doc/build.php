@@ -50,8 +50,10 @@ $include_docs = [
   [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/www/build/".VERSION."/guides/" ]
 ];
 
+rrmdir(__DIR__ . "/www/build/".VERSION);
+
 /*// rebuild www dir
-rrmdir(__DIR__ . "/www/build");
+
 
 mkdir(__DIR__ . "/www/");
 mkdir(__DIR__ . "/www/build/");*/
@@ -75,6 +77,10 @@ foreach($docparser->getClasses() as $class){
   $class_info["description"] = $class_info["docblock"]?->getDescription();
   $class_info["text"] = $class_info["summary"]."\n".$class_info["description"];
   $class_info["example"] = $class_info["docblock"]?->getTagsByName("example");
+  $class_info["template_file"] = __DIR__ . "/templates/class.template.html";
+
+  $template_class = file_get_contents($class_info["template_file"]);
+  $class_info["methods_text"] = ""; // holding filled templates of all methods in this class
 
   //continue;
 
@@ -89,8 +95,10 @@ foreach($docparser->getClasses() as $class){
     $method_info["description"] = $method_info["docblock"]?->getDescription();
     $method_info["text"] = $method_info["summary"]."\n".$method_info["description"];
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
-    $method_info["return_text"] = $method_info["docblock"]?->getTagsByName("return");
-    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType() : "void";
+    $method_info["return_text"] = $method_info["docblock"]?->getTagsByName("return")[0] ?? "";
+    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "void";
+
+    $template_method = file_get_contents($method_info["template_file"]);
 
     if($method_info["name"] === "__destruct"){ continue; }
 
@@ -102,7 +110,11 @@ foreach($docparser->getClasses() as $class){
       $usage .= '$'.$param->getName();
       try{
         $default = $param->getDefaultValue();
-        if(empty($default) AND is_string($default)){ $default = "''"; }
+        if(empty($default) AND is_string($default)){
+            $default = "''";
+        }elseif(is_array($default)){
+            $default = "[]";
+        }
         $usage .= " = $default";
       }catch (ReflectionException $e){
 
@@ -113,54 +125,33 @@ foreach($docparser->getClasses() as $class){
     }
     $usage .= ")";
 
-    if($returntype){
-      $usage .= " : $returntype";
+    if($method_info["return_type"]){
+      $usage .= " : ".$method_info["return_text"];
+    }
+    $method_info["usage"] = $usage; unset($usage);
+
+    foreach($method_info as $k => $v){
+        if(gettype($v) === "string")
+            $template_method = str_replace("{{method.$k}}", $v, $template_method);
     }
 
-    $template_method_body = str_replace("{{methodtext}}", $summary, $template_method_body);
-    $template_method_body = str_replace("{{methodparameters}}", $methodparameters, $template_method_body);
-    $template_method_body = str_replace("{{methodreturntext}}", $methodreturntext, $template_method_body);
-    $template_method_body = str_replace("{{classname}}", $classname_without_namespace, $template_method_body);
-    $template_method_body = str_replace("{{methodname}}", $method->getName(), $template_method_body);
-    $template_method_body = str_replace("{{methodreturns}}", $returntype, $template_method_body);
-    $template_method_body = str_replace("{{methodusage}}", $usage, $template_method_body);
-
-    $template_method_head = str_replace("{{methodtext}}", $summary, $template_method_head);
-    $template_method_head = str_replace("{{methodparameters}}", $methodparameters, $template_method_head);
-    $template_method_head = str_replace("{{methodreturntext}}", $methodreturntext, $template_method_head);
-    $template_method_head = str_replace("{{classname}}", $classname_without_namespace, $template_method_head);
-    $template_method_head = str_replace("{{methodname}}", $method->getName(), $template_method_head);
-    $template_method_head = str_replace("{{methodreturns}}", $returntype, $template_method_head);
-    $template_method_head = str_replace("{{methodusage}}", $usage, $template_method_head);
-
-    $template_method_whole = $template_method_head.$template_method_body;
-
-    $all_methods_text .= $template_method_body;
-    // write generated text into file
-    echo $template_method_body;
-    file_put_contents(__DIR__ . "/www/build/".VERSION."/methods/".$classname_without_namespace."-".$method->getName().".md", $template_method_whole);
-
+    $class_info["methods_text"] .= $template_method;
+    file_put_contents(__DIR__ . "/www/build/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
 
   }
 
 
-  // @ToDo
-  $template_class = file_get_contents(__DIR__ . "/templates/class.template.html");
-  $template_class = str_replace("{{classname}}", $classname, $template_class);
-  $template_class = str_replace("{{classtext}}", $classsummary, $template_class);
-  $template_class = str_replace("{{classexample}}", $classexample[0] ?? "", $template_class);
-
-
-  $template_class = str_replace("{{classmethods}}", $all_methods_text, $template_class);
-
-  file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$classname_without_namespace.".md", $template_class);
+  foreach($class_info as $k => $v){
+      if(gettype($v) === "string")
+        $template_class = str_replace("{{class.$k}}", $v, $template_class);
+  }
+  file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$class_info["name"].".html", $template_class);
 
   unlink(__DIR__ . "/www/build/latest");
   chdir(__DIR__ . "/www/build/");
   symlink(VERSION, "latest");
 
   foreach ($include_docs as $include_doc) {
-
     $s = $include_doc["src"]; //source
     $d = $include_doc["dst"]; //destination
 
@@ -169,7 +160,6 @@ foreach($docparser->getClasses() as $class){
     }else{
       copy($s, $d);
     }
-
   }
 
 }
