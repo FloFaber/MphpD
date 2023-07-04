@@ -78,7 +78,7 @@ foreach($docparser->getClasses() as $class){
   $class_info["summary"] = $class_info["docblock"]?->getSummary();
   $class_info["description"] = $class_info["docblock"]?->getDescription();
   $class_info["text"] = $class_info["summary"]."\n".$class_info["description"];
-  $class_info["example"] = $class_info["docblock"]?->getTagsByName("example");
+  $class_info["example"] = $class_info["docblock"]?->getTagsByName("example")[0];
   $class_info["template_file"] = __DIR__ . "/templates/class.template.html";
 
   $template_class = file_get_contents($class_info["template_file"]);
@@ -98,7 +98,7 @@ foreach($docparser->getClasses() as $class){
     $method_info["description"] = $method_info["docblock"]?->getDescription();
     $method_info["text"] = $method_info["summary"]."\n".$method_info["description"];
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
-    $method_info["return_text"] = $method_info["docblock"]?->getTagsByName("return")[0] ?? "";
+    $method_info["return_text"] = $pd->text($method_info["docblock"]?->getTagsByName("return")[0] ?? "");
     $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "void";
 
     $template_method = file_get_contents($method_info["template_file"]);
@@ -160,7 +160,10 @@ foreach($docparser->getClasses() as $class){
     $template_class = str_replace("{{class.$k}}", $v, $template_class);
   }
 
-  file_put_contents(__DIR__ . "/../docs/".VERSION."/classes/".$class_info["name"].".html", $template_class);
+  $template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
+  $template_page = str_replace("{{page.title}}", "MphpD - ".$class_info["name"], $template_page);
+  $template_page = str_replace("{{page.content}}", $template_class, $template_page);
+  file_put_contents(__DIR__ . "/../docs/".VERSION."/classes/".$class_info["name"].".html", $template_page);
 
   $classes[] = $class_info;
 
@@ -186,8 +189,9 @@ $template_page = str_replace("{{page.content}}", $pd->text(file_get_contents(__D
 file_put_contents(__DIR__ . "/../docs/".VERSION."/index.html", $template_page);
 
 $versions = [];
-foreach(scandir(__DIR__) as $f){
-    if(strpos(basename($f), "v") === 0 AND is_dir($f)){
+foreach(scandir(__DIR__ . "/../docs/") as $f){
+  echo "$f\n";
+    if(str_starts_with($f, "v") AND is_dir(__DIR__ . "/../docs/$f")){
         $versions[] = basename($f);
     }
 }
@@ -215,14 +219,22 @@ foreach($classes as $class){
 
 $methods_text = "";
 foreach($methods as $method){
-    $methods_text .= "<li><a href='classes/".$method["class_info"]["name"].".html#".$method["name"]."'>".$method["class_info"]["name"]."::".$method["name"]."</a></li>";
+    $methods_text .= "<li>
+<a href='classes/".$method["class_info"]["name"].".html#".$method["name"]."'>".$method["class_info"]["name"]."::".$method["name"]."</a>
+".($method["summary"] ? (" - ".$method["summary"]) : "") ."</li>";
 }
 
 $template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
 $template_overview = str_replace("{{overview.versions_text}}", $versions_text, $template_overview);
+$template_overview = str_replace("{{overview.guides_text}}", $guides_text, $template_overview);
 $template_overview = str_replace("{{overview.classes_text}}", $classes_text, $template_overview);
 $template_overview = str_replace("{{overview.methods_text}}", $methods_text, $template_overview);
 
+$template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
+$template_page = str_replace("{{page.title}}", "MphpD - Overview", $template_page);
+$template_page = str_replace("{{page.content}}", $template_overview, $template_page);
+
+file_put_contents(__DIR__ . "/../docs/".VERSION."/overview.html", $template_page);
 
 
 // update symlinks
