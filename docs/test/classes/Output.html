@@ -1,0 +1,96 @@
+<!-- class template start -->
+<h1 class="method-name">Output</h1>
+<p>This subclass is used to configure audio outputs.
+Have a look at the [MPD doc](https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices) for more.</p>
+
+<pre><code class="language-php">{{class.example}}</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<h3 class="method_name">__construct</h3>
+<p>
+    This class is not intended for direct usage.
+Use MphpD::output() instead to retrieve an instance of this class.
+</p>
+
+<pre><code class="language-php">Output::__construct(FloFaber\MphpD\MphpD $mphpd, int $id) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$mphpd</h5><h5>$id</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">disable</h3>
+<p>
+    Disable the given output
+
+</p>
+
+<pre><code class="language-php">Output::disable() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">enable</h3>
+<p>
+    Enable the given output
+
+</p>
+
+<pre><code class="language-php">Output::enable() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">toggle</h3>
+<p>
+    Enable/Disable the given output depending on the current state.
+
+</p>
+
+<pre><code class="language-php">Output::toggle() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">set</h3>
+<p>
+    Set a runtime attribute. Supported values can be retrieved from the `MphpD::outputs()` method.
+
+</p>
+
+<pre><code class="language-php">Output::set(string $name, string $value) : bool</code></pre>
+
+<h4>Parameters</h4>
+<h5>$name</h5><h5>$value</h5>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+
+<!-- class template end -->

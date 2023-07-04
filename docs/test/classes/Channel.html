@@ -1,0 +1,96 @@
+<!-- class template start -->
+<h1 class="method-name">Channel</h1>
+<p>This subclass is used for client-to-client communication over MPD
+</p>
+
+<pre><code class="language-php">{{class.example}}</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<h3 class="method_name">__construct</h3>
+<p>
+    This class is not intended for direct usage.
+Use MphpD::channel() instead to retrieve an instance of this class.
+</p>
+
+<pre><code class="language-php">Channel::__construct(FloFaber\MphpD\MphpD $mphpd, string $name) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$mphpd</h5><h5>$name</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">subscribe</h3>
+<p>
+    Subscribe to the channel.
+
+</p>
+
+<pre><code class="language-php">Channel::subscribe() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">unsubscribe</h3>
+<p>
+    Unsubscribe the channel.
+
+</p>
+
+<pre><code class="language-php">Channel::unsubscribe() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">read</h3>
+<p>
+    Returns a list of the channel's messages.
+
+</p>
+
+<pre><code class="language-php">Channel::read() : void</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>void</code></h4>
+<p>
+    array|false `Array` containing the messages on success. `False` otherwise.
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">send</h3>
+<p>
+    Send a message to the channel.
+
+</p>
+
+<pre><code class="language-php">Channel::send(string $message) : bool</code></pre>
+
+<h4>Parameters</h4>
+<h5>$message</h5>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+
+<!-- class template end -->

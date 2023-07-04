@@ -1,0 +1,22 @@
+<!-- method template start -->
+<h3 class="method_name">status</h3>
+<p>
+    Returns the value of the specified key(s) from MPD's status.
+
+</p>
+
+<pre><code class="language-php">MphpD::status(array $items = []) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$items</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    array|false|int|float|null Returns
+`false` on error
+
+`string`, `int`, `float` or `null` if `$items` contains only one item. If it does not exist `null` will be returned instead.
+
+Otherwise, an associative array containing all available (or specified) keys.
+</p>
+<!-- method template end -->

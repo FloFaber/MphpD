@@ -1,0 +1,96 @@
+<!-- class template start -->
+<h1 class="method-name">Partition</h1>
+<p>This subclass is used to create, switch and configure [partitions](https://mpd.readthedocs.io/en/latest/protocol.html#partition-commands)
+</p>
+
+<pre><code class="language-php">{{class.example}}</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<h3 class="method_name">__construct</h3>
+<p>
+    This class is not intended for direct usage.
+Use MphpD::partition() instead to retrieve an instance of this class.
+</p>
+
+<pre><code class="language-php">Partition::__construct(FloFaber\MphpD\MphpD $mphpd, string $name) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$mphpd</h5><h5>$name</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">switch</h3>
+<p>
+    Switch the client to the given partition
+
+</p>
+
+<pre><code class="language-php">Partition::switch() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">create</h3>
+<p>
+    Create a new partition
+
+</p>
+
+<pre><code class="language-php">Partition::create() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">delete</h3>
+<p>
+    Delete a given partition
+
+</p>
+
+<pre><code class="language-php">Partition::delete() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+<!-- method template start -->
+<h3 class="method_name">move_output</h3>
+<p>
+    Move a specific output to the current partition
+
+</p>
+
+<pre><code class="language-php">Partition::move_output(string $name) : bool</code></pre>
+
+<h4>Parameters</h4>
+<h5>$name</h5>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    bool
+</p>
+<!-- method template end -->
+
+<!-- class template end -->
