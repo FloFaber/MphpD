@@ -25,7 +25,7 @@ use phpDocumentor\Reflection\DocBlockFactory;
 
 // we require a version number
 if(empty($argv[1])){
-  echo "Version number required for build!";
+  echo "Usage: build.php <version>\n";
   die(1);
 }
 
@@ -102,9 +102,15 @@ foreach($docparser->getClasses() as $class){
 
     if($method_info["name"] === "__destruct"){ continue; }
 
+    $method_info["params_text"] = "";
+    // make parameter text
+    foreach($method_info["params"] as $param){
+      $method_info["params_text"] .= "<h5>\$".$param->getName()."</h5>";
+    }
+    if(!$method_info["params"]){ $method_info["params_text"] = "None."; }
 
     // www "usage"-line
-    $usage = $method_info["name"]."::".$method->getName()."(";
+    $usage = $class_info["name"]."::".$method_info["name"]."(";
     foreach ($method_info["params"] as $param) {
       $usage .= $param->getType()." ";
       $usage .= '$'.$param->getName();
@@ -126,13 +132,15 @@ foreach($docparser->getClasses() as $class){
     $usage .= ")";
 
     if($method_info["return_type"]){
-      $usage .= " : ".$method_info["return_text"];
+      $usage .= " : ".$method_info["return_type"];
     }
     $method_info["usage"] = $usage; unset($usage);
 
     foreach($method_info as $k => $v){
-        if(gettype($v) === "string")
-            $template_method = str_replace("{{method.$k}}", $v, $template_method);
+      if(gettype($v) === "array"){ continue; }
+      echo "Processing $k\n";
+      if(!str_contains($template_method, "{{method.$k}}")){ continue; }
+      $template_method = str_replace("{{method.$k}}", (string)$v, $template_method);
     }
 
     $class_info["methods_text"] .= $template_method;
@@ -142,9 +150,11 @@ foreach($docparser->getClasses() as $class){
 
 
   foreach($class_info as $k => $v){
-      if(gettype($v) === "string")
-        $template_class = str_replace("{{class.$k}}", $v, $template_class);
+    if(gettype($v) === "array"){ continue; }
+    if(!str_contains($template_class, "{{class.$k}}")){ continue; }
+    $template_class = str_replace("{{class.$k}}", $v, $template_class);
   }
+
   file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$class_info["name"].".html", $template_class);
 
   unlink(__DIR__ . "/www/build/latest");
@@ -163,6 +173,12 @@ foreach($docparser->getClasses() as $class){
   }
 
 }
+
+
+
+/*
+ * UTILITY FUNCTIONS
+*/
 
 function rrmdir($dir): void
 {
