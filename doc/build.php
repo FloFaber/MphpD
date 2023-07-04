@@ -64,6 +64,8 @@ mkdir(__DIR__ . "/../docs/".VERSION."/classes/");
 
 
 // iterate through each class we found
+$classes = [];
+$methods = [];
 foreach($docparser->getClasses() as $class){
 
   $class_info = [];
@@ -89,6 +91,7 @@ foreach($docparser->getClasses() as $class){
     $method_info = [];
 
     $method_info["name"] = $method->getName();
+    $method_info["class_info"] = $class_info;
     $method_info["params"] = $method->getParameters();
     $method_info["docblock"] = $method->getDocComment() ? $factory->create($method->getDocComment()) : null;
     $method_info["summary"] = $method_info["docblock"]?->getSummary();
@@ -146,6 +149,8 @@ foreach($docparser->getClasses() as $class){
     $class_info["methods_text"] .= $template_method;
     file_put_contents(__DIR__ . "/../docs/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
 
+    $methods[] = $method_info;
+
   }
 
 
@@ -157,26 +162,71 @@ foreach($docparser->getClasses() as $class){
 
   file_put_contents(__DIR__ . "/../docs/".VERSION."/classes/".$class_info["name"].".html", $template_class);
 
-  foreach ($include_docs as $include_doc) {
+  $classes[] = $class_info;
+
+}
+
+
+foreach ($include_docs as $include_doc) {
     $s = $include_doc["src"]; //source
     $d = $include_doc["dst"]; //destination
 
     if(is_dir($s)){
-      recurse_copy($s, $d);
+        recurse_copy($s, $d);
     }else{
-      copy($s, $d);
+        copy($s, $d);
     }
-  }
+}
 
 
-  $template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
-  $template_page = str_replace("{{page.title}}", "MphpD", $template_page);
-  $template_page = str_replace("{{page.content}}", $pd->text(file_get_contents(__DIR__ . "/../README.md")), $template_page);
+$template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
+$template_page = str_replace("{{page.title}}", "MphpD", $template_page);
+$template_page = str_replace("{{page.content}}", $pd->text(file_get_contents(__DIR__ . "/../README.md")), $template_page);
 
-  file_put_contents(__DIR__ . "/../docs/".VERSION."/index.html", $template_page);
+file_put_contents(__DIR__ . "/../docs/".VERSION."/index.html", $template_page);
 
-  // update symlinks
-  if(VERSION !== "test"){
+$versions = [];
+foreach(scandir(__DIR__) as $f){
+    if(strpos(basename($f), "v") === 0 AND is_dir($f)){
+        $versions[] = basename($f);
+    }
+}
+
+$versions_text = "";
+foreach($versions as $version){
+    $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>";
+}
+
+
+$guides_text = "";
+foreach(scandir(__DIR__ . "/guides/") as $f){
+    if(is_dir(__DIR__ . "/guides/$f")){ continue; }
+    $guide = file_get_contents(__DIR__ . "/guides/$f");
+    $guide = $pd->text($guide);
+    $dst = __DIR__ . "/../docs/".VERSION."/guides/".pathinfo($f, PATHINFO_FILENAME).".html";
+    $guides_text .= "<li><a href='guides/".pathinfo($f, PATHINFO_FILENAME).".html'>".pathinfo($f, PATHINFO_FILENAME)."</a></li>";
+    file_put_contents($dst, $guide);
+}
+
+$classes_text = "";
+foreach($classes as $class){
+    $classes_text .= "<li><a href='classes/".$class["name"].".html'>".$class["name"]."</a></li>";
+}
+
+$methods_text = "";
+foreach($methods as $method){
+    $methods_text .= "<li><a href='classes/".$method["class_info"]["name"].".html#".$method["name"]."'>".$method["class_info"]["name"]."::".$method["name"]."</a></li>";
+}
+
+$template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
+$template_overview = str_replace("{{overview.versions_text}}", $versions_text, $template_overview);
+$template_overview = str_replace("{{overview.classes_text}}", $classes_text, $template_overview);
+$template_overview = str_replace("{{overview.methods_text}}", $methods_text, $template_overview);
+
+
+
+// update symlinks
+if(VERSION !== "test"){
     unlink(__DIR__ . "/../docs/latest");
     chdir(__DIR__ . "/../docs/");
     symlink(VERSION, "latest");
@@ -184,9 +234,6 @@ foreach($docparser->getClasses() as $class){
     unlink(__DIR__ . "/../docs/index.html");
     chdir(__DIR__ . "/../docs");
     symlink("latest/index.html", "index.html");
-  }
-
-
 }
 
 
