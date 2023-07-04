@@ -38,7 +38,7 @@ const CONFIG = [
 
 
 $docparser = new docPHParser(CONFIG);
-
+$pd = new Parsedown();
 $factory  = DocBlockFactory::createInstance();
 
 
@@ -46,7 +46,7 @@ $factory  = DocBlockFactory::createInstance();
 // include custom docs
 // source -> target
 $include_docs = [
-  [ "src" => __DIR__ . "/../README.md", "dst" => __DIR__ . "/www/build/".VERSION."/index.md" ],
+//  [ "src" => __DIR__ . "/../README.md", "dst" => __DIR__ . "/www/build/".VERSION."/index.md" ],
   [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/www/build/".VERSION."/guides/" ]
 ];
 
@@ -157,9 +157,11 @@ foreach($docparser->getClasses() as $class){
 
   file_put_contents(__DIR__ . "/www/build/".VERSION."/classes/".$class_info["name"].".html", $template_class);
 
-  unlink(__DIR__ . "/www/build/latest");
-  chdir(__DIR__ . "/www/build/");
-  symlink(VERSION, "latest");
+  if(VERSION !== "test"){
+    unlink(__DIR__ . "/www/build/latest");
+    chdir(__DIR__ . "/www/build/");
+    symlink(VERSION, "latest");
+  }
 
   foreach ($include_docs as $include_doc) {
     $s = $include_doc["src"]; //source
@@ -171,6 +173,8 @@ foreach($docparser->getClasses() as $class){
       copy($s, $d);
     }
   }
+
+  file_put_contents(__DIR__ . "/www/build/".VERSION."/index.html", $pd->text(file_get_contents(__DIR__ . "/../README.md")));
 
 }
 
