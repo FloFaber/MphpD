@@ -1,8 +1,3 @@
-title: Commandlists
-date: 2018-01-01
-
----
-
 # Command lists
 
 MPD supports what's called command lists. You can start a command list,
