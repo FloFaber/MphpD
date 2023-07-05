@@ -83,7 +83,7 @@ $mphpd->player()->volume(40);
 $mphpd->player()->play();
 ```
 
-For further information have a look at the [Documentation](https://mphpd.org/doc).
+For further information have a look at the [Documentation](https://mphpd.org/latest/overview.html).
 
 
 ## Required PHP extensions
