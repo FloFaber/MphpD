@@ -179,7 +179,7 @@ foreach(scandir(__DIR__ . "/../docs/") as $f){
 
 $versions_text = "";
 foreach($versions as $version){
-    $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>";
+    $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>\n";
 }
 
 
@@ -189,7 +189,7 @@ foreach(scandir(__DIR__ . "/guides/") as $f){
     $guide = file_get_contents(__DIR__ . "/guides/$f");
     $guide = $pd->text($guide);
     $dst = __DIR__ . "/../docs/".VERSION."/guides/".pathinfo($f, PATHINFO_FILENAME).".html";
-    $guides_text .= "<li><a href='guides/".pathinfo($f, PATHINFO_FILENAME).".html'>".pathinfo($f, PATHINFO_FILENAME)."</a></li>";
+    $guides_text .= "<li><a href='guides/".pathinfo($f, PATHINFO_FILENAME).".html'>".pathinfo($f, PATHINFO_FILENAME)."</a></li>\n";
     $tmp = file_get_contents(__DIR__ . "/templates/page.template.html");
     $tmp = str_replace("{{page.title}}", "MphpD Guides - $f", $tmp);
     $tmp = str_replace("{{page.content}}", $guide, $tmp);
@@ -198,14 +198,14 @@ foreach(scandir(__DIR__ . "/guides/") as $f){
 
 $classes_text = "";
 foreach($classes as $class){
-    $classes_text .= "<li><a href='classes/".$class["name"].".html'>".$class["name"]."</a></li>";
+    $classes_text .= "<li><a href='classes/".$class["name"].".html'>".$class["name"]."</a></li>\n";
 }
 
 $methods_text = "";
 foreach($methods as $method){
     $methods_text .= "<li>
 <a href='classes/".$method["class_info"]["name"].".html#".$method["name"]."'>".$method["class_info"]["name"]."::".$method["name"]."</a>
-".($method["summary"] ? (" - ".$method["summary"]) : "") ."</li>";
+".($method["summary"] ? (" - ".$pd->text($method["summary"])) : "") ."</li>\n";
 }
 
 $template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
