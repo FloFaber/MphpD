@@ -205,7 +205,7 @@ $methods_text = "";
 foreach($methods as $method){
     $methods_text .= "<li>
 <a href='classes/".$method["class_info"]["name"].".html#".$method["name"]."'>".$method["class_info"]["name"]."::".$method["name"]."</a>
-".($method["summary"] ? (" - ".$pd->text($method["summary"])) : "") ."</li>\n";
+".($method["summary"] ? (" - ".$pd->line($method["summary"])) : "") ."</li>\n";
 }
 
 $template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
