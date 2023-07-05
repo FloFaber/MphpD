@@ -18,7 +18,7 @@ use Throwable;
  *
  * In case an error occurs at the protocol level the called methods simply return false.
  *
- * To retrieve the last occurred error call [MphpD::get_last_error](../methods/MphpD-get_last_error).
+ * To retrieve the last occurred error call [MphpD::get_last_error](../classes/MphpD#get_last_error).
  *
  * @example MphpD::get_last_error() : array
  */
@@ -59,7 +59,7 @@ class MPDException extends Exception
 
 
   /**
-   * Returns the command's list-number in case a [commandlist](../guides/commandlist) was used.
+   * Returns the command's list-number in case a [commandlist](../guides/Commandlist.html) was used.
    * @return int
    */
   public function getCommandlistNum() : int
