@@ -1,7 +1,3 @@
-title: MPDException
-
----
-
 # MPDException
 MPDException is a slightly modified version of a standard Exception.
 You may call `MPDException::getCode` and `MPDException::getMessage` to retrieve information about the error.

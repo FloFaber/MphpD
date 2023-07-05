@@ -43,13 +43,6 @@ $factory  = DocBlockFactory::createInstance();
 
 
 
-// include custom docs
-// source -> target
-$include_docs = [
-//  [ "src" => __DIR__ . "/../README.md", "dst" => __DIR__ . "/www/build/".VERSION."/index.md" ],
-  [ "src" => __DIR__ . "/guides/",      "dst" => __DIR__ . "/../docs/".VERSION."/guides/" ]
-];
-
 rrmdir(__DIR__ . "/../docs/".VERSION);
 
 /*// rebuild www dir
@@ -167,18 +160,6 @@ foreach($docparser->getClasses() as $class){
 
   $classes[] = $class_info;
 
-}
-
-
-foreach ($include_docs as $include_doc) {
-    $s = $include_doc["src"]; //source
-    $d = $include_doc["dst"]; //destination
-
-    if(is_dir($s)){
-        recurse_copy($s, $d);
-    }else{
-        copy($s, $d);
-    }
 }
 
 
