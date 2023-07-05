@@ -209,7 +209,10 @@ foreach(scandir(__DIR__ . "/guides/") as $f){
     $guide = $pd->text($guide);
     $dst = __DIR__ . "/../docs/".VERSION."/guides/".pathinfo($f, PATHINFO_FILENAME).".html";
     $guides_text .= "<li><a href='guides/".pathinfo($f, PATHINFO_FILENAME).".html'>".pathinfo($f, PATHINFO_FILENAME)."</a></li>";
-    file_put_contents($dst, $guide);
+    $tmp = file_get_contents(__DIR__ . "/templates/page.template.html");
+    $tmp = str_replace("{{page.title}}", "MphpD Guides - $f", $tmp);
+    $tmp = str_replace("{{page.content}}", $guide, $tmp);
+    file_put_contents($dst, $tmp); unset($tmp);
 }
 
 $classes_text = "";
