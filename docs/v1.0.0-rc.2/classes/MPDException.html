@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
     <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div id="header">
@@ -17,12 +20,10 @@
 <div id="body">
     <!-- class template start -->
 <h1 class="method-name">MPDException</h1>
-<p>MPDException is a slightly modified version of a standard Exception.
-You may call `MPDException::getCode` and `MPDException::getMessage` to retrieve information about the error.
-
-In case an error occurs at the protocol level the called methods simply return false.
-
-To retrieve the last occurred error call [MphpD::get_last_error](../methods/MphpD-get_last_error).</p>
+<p><p>MPDException is a slightly modified version of a standard Exception.
+You may call <code>MPDException::getCode</code> and <code>MPDException::getMessage</code> to retrieve information about the error.</p>
+<p>In case an error occurs at the protocol level the called methods simply return false.</p>
+<p>To retrieve the last occurred error call <a href="../methods/MphpD-get_last_error">MphpD::get_last_error</a>.</p></p>
 
 <pre><code class="language-php">MphpD::get_last_error() : array</code></pre>
 
@@ -33,7 +34,6 @@ To retrieve the last occurred error call [MphpD::get_last_error](../methods/Mphp
 <h3 class="method-name">__construct</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::__construct( $message = '',  $code = 0, ?Throwable $previous = , string $command = '', int $commandlist_num = 0) : void</code></pre>
@@ -51,8 +51,7 @@ To retrieve the last occurred error call [MphpD::get_last_error](../methods/Mphp
 <div class="method">
 <h3 class="method-name">__toString</h3>
 <p>
-    Returns all information as string
-
+    <p>Returns all information as string</p>
 </p>
 
 <pre><code class="language-php">MPDException::__toString() : string</code></pre>
@@ -70,8 +69,7 @@ None.
 <div class="method">
 <h3 class="method-name">getCommand</h3>
 <p>
-    Returns the command which caused the error.
-
+    <p>Returns the command which caused the error.</p>
 </p>
 
 <pre><code class="language-php">MPDException::getCommand() : string</code></pre>
@@ -89,8 +87,7 @@ None.
 <div class="method">
 <h3 class="method-name">getCommandlistNum</h3>
 <p>
-    Returns the command's list-number in case a [commandlist](../guides/commandlist) was used.
-
+    <p>Returns the command's list-number in case a <a href="../guides/commandlist">commandlist</a> was used.</p>
 </p>
 
 <pre><code class="language-php">MPDException::getCommandlistNum() : int</code></pre>
@@ -109,7 +106,6 @@ None.
 <h3 class="method-name">__wakeup</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::__wakeup() : void</code></pre>
@@ -128,7 +124,6 @@ None.
 <h3 class="method-name">getMessage</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getMessage() : string</code></pre>
@@ -147,7 +142,6 @@ None.
 <h3 class="method-name">getCode</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getCode() : void</code></pre>
@@ -166,7 +160,6 @@ None.
 <h3 class="method-name">getFile</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getFile() : string</code></pre>
@@ -185,7 +178,6 @@ None.
 <h3 class="method-name">getLine</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getLine() : int</code></pre>
@@ -204,7 +196,6 @@ None.
 <h3 class="method-name">getTrace</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getTrace() : array</code></pre>
@@ -223,7 +214,6 @@ None.
 <h3 class="method-name">getPrevious</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getPrevious() : Throwable</code></pre>
@@ -242,7 +232,6 @@ None.
 <h3 class="method-name">getTraceAsString</h3>
 <p>
     
-
 </p>
 
 <pre><code class="language-php">MPDException::getTraceAsString() : string</code></pre>

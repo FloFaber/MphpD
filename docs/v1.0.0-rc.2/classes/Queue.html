@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
     <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div id="header">
@@ -17,8 +20,7 @@
 <div id="body">
     <!-- class template start -->
 <h1 class="method-name">Queue</h1>
-<p>Subclass to control the Queue.
-</p>
+<p><p>Subclass to control the Queue.</p></p>
 
 <pre><code class="language-php">MphpD::queue() : Queue</code></pre>
 
@@ -28,8 +30,8 @@
 <div class="method">
 <h3 class="method-name">__construct</h3>
 <p>
-    This class is not intended for direct usage.
-Use MphpD::queue() instead to retrieve an instance of this class.
+    <p>This class is not intended for direct usage.
+Use MphpD::queue() instead to retrieve an instance of this class.</p>
 </p>
 
 <pre><code class="language-php">Queue::__construct(FloFaber\MphpD\MphpD $mphpd) : void</code></pre>
@@ -47,8 +49,7 @@ Use MphpD::queue() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">add</h3>
 <p>
-    Adds the file $uri to the queue (directories add recursively). $uri can also be a single file.
-
+    <p>Adds the file $uri to the queue (directories add recursively). $uri can also be a single file.</p>
 </p>
 
 <pre><code class="language-php">Queue::add(string $uri,  $pos = -1) : bool</code></pre>
@@ -66,8 +67,7 @@ Use MphpD::queue() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">add_id</h3>
 <p>
-    Adds a song to the playlist (non-recursive) and returns the song id.
-
+    <p>Adds a song to the playlist (non-recursive) and returns the song id.</p>
 </p>
 
 <pre><code class="language-php">Queue::add_id(string $uri,  $pos = -1) : void</code></pre>
@@ -85,8 +85,7 @@ Use MphpD::queue() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">add_search</h3>
 <p>
-    Same as `search()` but adds the songs into the Queue at position $pos.
-
+    <p>Same as <code>search()</code> but adds the songs into the Queue at position $pos.</p>
 </p>
 
 <pre><code class="language-php">Queue::add_search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = [], int $position = -1) : bool</code></pre>
@@ -104,8 +103,7 @@ Use MphpD::queue() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">add_find</h3>
 <p>
-    Same as `find()` but this adds the matching song to the Queue.
-
+    <p>Same as <code>find()</code> but this adds the matching song to the Queue.</p>
 </p>
 
 <pre><code class="language-php">Queue::add_find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = [], int $pos = -1) : bool</code></pre>
@@ -123,8 +121,7 @@ Use MphpD::queue() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">clear</h3>
 <p>
-    Clears the queue
-
+    <p>Clears the queue</p>
 </p>
 
 <pre><code class="language-php">Queue::clear() : bool</code></pre>
@@ -142,8 +139,7 @@ None.
 <div class="method">
 <h3 class="method-name">delete</h3>
 <p>
-    Deletes a song or a range of songs from the queue
-
+    <p>Deletes a song or a range of songs from the queue</p>
 </p>
 
 <pre><code class="language-php">Queue::delete( $p) : bool</code></pre>
@@ -161,8 +157,7 @@ None.
 <div class="method">
 <h3 class="method-name">delete_id</h3>
 <p>
-    Deletes the song with ID $songid from the Queue
-
+    <p>Deletes the song with ID $songid from the Queue</p>
 </p>
 
 <pre><code class="language-php">Queue::delete_id(int $songid) : bool</code></pre>
@@ -180,8 +175,7 @@ None.
 <div class="method">
 <h3 class="method-name">move</h3>
 <p>
-    Moves the song at $from to $to in the queue
-
+    <p>Moves the song at $from to $to in the queue</p>
 </p>
 
 <pre><code class="language-php">Queue::move( $from, string $to) : bool</code></pre>
@@ -199,8 +193,7 @@ None.
 <div class="method">
 <h3 class="method-name">move_id</h3>
 <p>
-    Moves the song with $from (songid) to $to (playlist index) in the queue
-
+    <p>Moves the song with $from (songid) to $to (playlist index) in the queue</p>
 </p>
 
 <pre><code class="language-php">Queue::move_id(int $from, string $to) : bool</code></pre>
@@ -218,8 +211,7 @@ None.
 <div class="method">
 <h3 class="method-name">find</h3>
 <p>
-    Same as Queue::search but case-sensitive
-
+    <p>Same as Queue::search but case-sensitive</p>
 </p>
 
 <pre><code class="language-php">Queue::find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : void</code></pre>
@@ -237,8 +229,7 @@ None.
 <div class="method">
 <h3 class="method-name">get_id</h3>
 <p>
-    Returns an associative arrays containing information about the song with ID $songid.
-
+    <p>Returns an associative arrays containing information about the song with ID $songid.</p>
 </p>
 
 <pre><code class="language-php">Queue::get_id(int $songid) : void</code></pre>
@@ -256,8 +247,8 @@ None.
 <div class="method">
 <h3 class="method-name">get</h3>
 <p>
-    If $p is omitted returns an array of associative arrays containing information about songs in the Queue.
-If $p is specified returns an associative array containing the given songs information only.
+    <p>If $p is omitted returns an array of associative arrays containing information about songs in the Queue.
+If $p is specified returns an associative array containing the given songs information only.</p>
 </p>
 
 <pre><code class="language-php">Queue::get( $p = -1) : array</code></pre>
@@ -275,8 +266,7 @@ If $p is specified returns an associative array containing the given songs infor
 <div class="method">
 <h3 class="method-name">search</h3>
 <p>
-    Search the queue for matching songs.
-
+    <p>Search the queue for matching songs.</p>
 </p>
 
 <pre><code class="language-php">Queue::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : void</code></pre>
@@ -294,8 +284,7 @@ If $p is specified returns an associative array containing the given songs infor
 <div class="method">
 <h3 class="method-name">changes</h3>
 <p>
-    Returns an array of changed songs currently in the playlist since $version.
-
+    <p>Returns an array of changed songs currently in the playlist since $version.</p>
 </p>
 
 <pre><code class="language-php">Queue::changes(int $version,  $range = -1, bool $metadata = ) : void</code></pre>
@@ -313,9 +302,9 @@ If $p is specified returns an associative array containing the given songs infor
 <div class="method">
 <h3 class="method-name">prio</h3>
 <p>
-    Sets the priority of given songs to $priority.
-This only has effect when the `random`-mode is enabled.
-A higher priority means that it will be played first when `random` is enabled.
+    <p>Sets the priority of given songs to $priority.
+This only has effect when the <code>random</code>-mode is enabled.
+A higher priority means that it will be played first when <code>random</code> is enabled.</p>
 </p>
 
 <pre><code class="language-php">Queue::prio(int $priority,  $range = -1) : bool</code></pre>
@@ -333,9 +322,9 @@ A higher priority means that it will be played first when `random` is enabled.
 <div class="method">
 <h3 class="method-name">prio_id</h3>
 <p>
-    Sets the priority of Song ID $id to $priority.
-This only has effect when the `random`-mode is enabled.
-A higher priority means that it will be played first when `random` is enabled.
+    <p>Sets the priority of Song ID $id to $priority.
+This only has effect when the <code>random</code>-mode is enabled.
+A higher priority means that it will be played first when <code>random</code> is enabled.</p>
 </p>
 
 <pre><code class="language-php">Queue::prio_id(int $priority, int $id) : bool</code></pre>
@@ -353,8 +342,8 @@ A higher priority means that it will be played first when `random` is enabled.
 <div class="method">
 <h3 class="method-name">range_id</h3>
 <p>
-    Set's the portion of the song that should be played.
-You can't edit the currently playing song!
+    <p>Set's the portion of the song that should be played.
+You can't edit the currently playing song!</p>
 </p>
 
 <pre><code class="language-php">Queue::range_id(int $songid, array $range = []) : bool</code></pre>
@@ -372,8 +361,7 @@ You can't edit the currently playing song!
 <div class="method">
 <h3 class="method-name">shuffle</h3>
 <p>
-    Shuffle the Queue.
-
+    <p>Shuffle the Queue.</p>
 </p>
 
 <pre><code class="language-php">Queue::shuffle(array $range = []) : bool</code></pre>
@@ -391,8 +379,7 @@ You can't edit the currently playing song!
 <div class="method">
 <h3 class="method-name">swap</h3>
 <p>
-    Swap two songs in Queue. By Position.
-
+    <p>Swap two songs in Queue. By Position.</p>
 </p>
 
 <pre><code class="language-php">Queue::swap(int $songpos_1, int $songpos_2) : bool</code></pre>
@@ -410,8 +397,7 @@ You can't edit the currently playing song!
 <div class="method">
 <h3 class="method-name">swap_id</h3>
 <p>
-    Swap two songs in Queue. By ID.
-
+    <p>Swap two songs in Queue. By ID.</p>
 </p>
 
 <pre><code class="language-php">Queue::swap_id(int $songid_1, int $songid_2) : bool</code></pre>
@@ -429,8 +415,7 @@ You can't edit the currently playing song!
 <div class="method">
 <h3 class="method-name">add_tag_id</h3>
 <p>
-    Adds a tag to the specified song
-
+    <p>Adds a tag to the specified song</p>
 </p>
 
 <pre><code class="language-php">Queue::add_tag_id(int $songid, string $tag, string $value) : bool</code></pre>
@@ -448,8 +433,7 @@ You can't edit the currently playing song!
 <div class="method">
 <h3 class="method-name">clear_tag_id</h3>
 <p>
-    Removes a tag from the specified song
-
+    <p>Removes a tag from the specified song</p>
 </p>
 
 <pre><code class="language-php">Queue::clear_tag_id(int $songid, string $tag) : bool</code></pre>

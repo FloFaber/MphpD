@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
     <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div id="header">
@@ -17,8 +20,7 @@
 <div id="body">
     <!-- class template start -->
 <h1 class="method-name">Sticker</h1>
-<p>Subclass for [Stickers](https://mpd.readthedocs.io/en/latest/protocol.html#stickers).
-</p>
+<p><p>Subclass for <a href="https://mpd.readthedocs.io/en/latest/protocol.html#stickers">Stickers</a>.</p></p>
 
 <pre><code class="language-php">MphpD::sticker(string $type, string $uri) : Sticker</code></pre>
 
@@ -28,8 +30,8 @@
 <div class="method">
 <h3 class="method-name">__construct</h3>
 <p>
-    This class is not intended for direct usage.
-Use MphpD::sticker() instead to retrieve an instance of this class.
+    <p>This class is not intended for direct usage.
+Use MphpD::sticker() instead to retrieve an instance of this class.</p>
 </p>
 
 <pre><code class="language-php">Sticker::__construct(FloFaber\MphpD\MphpD $mphpd, string $type, string $uri) : void</code></pre>
@@ -47,8 +49,7 @@ Use MphpD::sticker() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">get</h3>
 <p>
-    Returns the value of the specified sticker
-
+    <p>Returns the value of the specified sticker</p>
 </p>
 
 <pre><code class="language-php">Sticker::get(string $name) : void</code></pre>
@@ -66,8 +67,7 @@ Use MphpD::sticker() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">set</h3>
 <p>
-    Add a value to the specified sticker.
-
+    <p>Add a value to the specified sticker.</p>
 </p>
 
 <pre><code class="language-php">Sticker::set(string $name, string $value) : bool</code></pre>
@@ -85,8 +85,7 @@ Use MphpD::sticker() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">delete</h3>
 <p>
-    Deletes the value from the specified sticker.
-
+    <p>Deletes the value from the specified sticker.</p>
 </p>
 
 <pre><code class="language-php">Sticker::delete(string $name = '') : bool</code></pre>
@@ -104,8 +103,7 @@ Use MphpD::sticker() instead to retrieve an instance of this class.
 <div class="method">
 <h3 class="method-name">list</h3>
 <p>
-    Returns an associative array containing sticker names and values of the specified object.
-
+    <p>Returns an associative array containing sticker names and values of the specified object.</p>
 </p>
 
 <pre><code class="language-php">Sticker::list() : void</code></pre>
@@ -123,8 +121,7 @@ None.
 <div class="method">
 <h3 class="method-name">find</h3>
 <p>
-    Search the sticker database for sticker with the specified name and/or value in the specified $uri
-
+    <p>Search the sticker database for sticker with the specified name and/or value in the specified $uri</p>
 </p>
 
 <pre><code class="language-php">Sticker::find(string $name, string $operator = '', string $value = '') : void</code></pre>
