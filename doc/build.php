@@ -77,7 +77,7 @@ foreach($docparser->getClasses() as $class){
   $class_info["docblock"] = $class->getDocComment() ? $factory->create($class->getDocComment()) : null;
   $class_info["summary"] = $class_info["docblock"]?->getSummary();
   $class_info["description"] = $class_info["docblock"]?->getDescription();
-  $class_info["text"] = $class_info["summary"]."\n".$class_info["description"];
+  $class_info["text"] = $pd->text($class_info["summary"]."\n".$class_info["description"]);
   $class_info["example"] = $class_info["docblock"]?->getTagsByName("example")[0];
   $class_info["template_file"] = __DIR__ . "/templates/class.template.html";
 
@@ -96,7 +96,7 @@ foreach($docparser->getClasses() as $class){
     $method_info["docblock"] = $method->getDocComment() ? $factory->create($method->getDocComment()) : null;
     $method_info["summary"] = $method_info["docblock"]?->getSummary();
     $method_info["description"] = $method_info["docblock"]?->getDescription();
-    $method_info["text"] = $method_info["summary"]."\n".$method_info["description"];
+    $method_info["text"] = $pd->text($method_info["summary"]."\n".$method_info["description"]);
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
     $method_info["return_text"] = $pd->text($method_info["docblock"]?->getTagsByName("return")[0] ?? "");
     $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "void";
