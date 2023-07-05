@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - DB</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <script src="/highlight/highlight.min.js"></script>
+</head>
+<body>
+<div id="header">
+    <div><a href="/">MphpD</a></div>
+    <div id="header-right">
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">DB</h1>
+<p>This subclass is used to interact with and retrieve information from MPD's database.
+</p>
+
+<pre><code class="language-php">MphpD::db() : DB</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    This class is not intended for direct usage.
+Use MphpD::db() instead to retrieve an instance of this class.
+</p>
+
+<pre><code class="language-php">DB::__construct(FloFaber\MphpD\MphpD $mphpd) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$mphpd</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">albumart</h3>
+<p>
+    Returns the albumart (binary!) for given song.
+
+</p>
+
+<pre><code class="language-php">DB::albumart(string $songuri) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$songuri</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>false|string Returns binary data on success or false on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">count</h3>
+<p>
+    Counts the number of songs and their playtime matching the specified Filter.
+If $group is omitted returns an associative array containing a "songs" and "playtime" key.
+If $group is specified an array of associative array will be returned.
+</p>
+
+<pre><code class="language-php">DB::count(FloFaber\MphpD\Filter $filter, string $group = '') : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$filter</h5><h5>$group</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">fingerprint</h3>
+<p>
+    Calculate the song's fingerprint
+
+</p>
+
+<pre><code class="language-php">DB::fingerprint(string $uri) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$uri</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>string|false Returns the fingerprint on success or false on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">find</h3>
+<p>
+    Search for songs matching Filter and return an array of associative array of found songs.
+Case-sensitive!
+</p>
+
+<pre><code class="language-php">DB::find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$filter</h5><h5>$sort</h5><h5>$window</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false Returns array on success and false on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">list</h3>
+<p>
+    Lists unique tags values of the specified type. `$type` can be any tag supported by MPD.
+If group is omitted returns an array of unique tag values of the specified type.
+If group is specified returns an array of associative arrays containing the grouped result.
+</p>
+
+<pre><code class="language-php">DB::list(string $type, ?FloFaber\MphpD\Filter $filter = , string $group = '') : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$type</h5><h5>$filter</h5><h5>$group</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">ls</h3>
+<p>
+    List files,directories and playlists in $uri
+
+</p>
+
+<pre><code class="language-php">DB::ls(string $uri, bool $metadata = , bool $recursive = ) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$uri</h5><h5>$metadata</h5><h5>$recursive</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false Returns an array containing the keys <code>files</code>, <code>directories</code> and <code>playlists</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">read_comments</h3>
+<p>
+    Read "comments" from the specified file.
+The meaning of these "comments" depend on the codec. For an OGG file this lists the vorbis commands.
+</p>
+
+<pre><code class="language-php">DB::read_comments(string $uri) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$uri</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">read_picture</h3>
+<p>
+    Returns a picture of $uri by reading embedded pictures from binary tags.
+
+</p>
+
+<pre><code class="language-php">DB::read_picture(string $uri) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$uri</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>false|string Binary data on success and false on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">search</h3>
+<p>
+    Searches for matching songs and returns an array of associative arrays containing song information.
+NOT case-sensitive!
+</p>
+
+<pre><code class="language-php">DB::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$filter</h5><h5>$sort</h5><h5>$window</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">update</h3>
+<p>
+    Update the Database and return the Job-ID.
+
+</p>
+
+<pre><code class="language-php">DB::update(string $uri = '', bool $rescan = , bool $force = ) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$uri</h5><h5>$rescan</h5><h5>$force</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>int|false Returns the Job-ID on success or false on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

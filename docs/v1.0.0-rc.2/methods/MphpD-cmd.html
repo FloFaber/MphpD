@@ -1,0 +1,24 @@
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">cmd</h3>
+<p>
+    Send $command with $params to the MPD server.
+You, the library's user, are not intended to ever
+need this method. If you ever need it because the library does not support
+a specific command please file a [bug report](https://github.com/FloFaber/MphpD/issues).
+This method also parses MPDs response depending on the chosen mode.
+</p>
+
+<pre><code class="language-php">MphpD::cmd(string $command, array $params = [], int $mode = 2, array $list_start = []) : void</code></pre>
+
+<h4>Parameters</h4>
+<h5>$command</h5><h5>$params</h5><h5>$mode</h5><h5>$list_start</h5>
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>array|bool False on failure.
+Array on success.
+True on success if $mode is MPD_CMD_READ_BOOL</p>
+</p>
+</div>
+<!-- method template end -->
