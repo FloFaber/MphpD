@@ -1,5 +1,12 @@
+<script src="/js/versions.js"></script>
 <h1>Versions</h1>
-<iframe src="/versions.html"></iframe>
+<ul id="versions"></ul>
+<script>
+    for(let i = 0; i < window.versions.length; i++){
+      let version = window.versions[i];
+      document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
+    }
+</script>
 
 <h1>Guides</h1>
 <ul>
