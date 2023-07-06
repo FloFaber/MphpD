@@ -235,12 +235,11 @@ foreach($versions as $version){
     $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>\n";
 }
 
+
 $template_versions = file_get_contents(__DIR__ . "/templates/versions.template.html");
 $template_versions = str_replace("{{versions.versions_text}}", $versions_text, $template_versions);
-$tmp = file_get_contents(__DIR__ . "/templates/page.template.html");
-$tmp = str_replace("{{page.title}}", "MphpD Versions", $tmp);
-$tmp = str_replace("{{page.content}}", $template_versions, $tmp);
-file_put_contents(__DIR__ . "/../docs/versions.html", $tmp);
+file_put_contents(__DIR__ . "/../docs/versions.html", $template_versions);
+
 
 $template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
 $template_overview = str_replace("{{overview.guides_text}}", $guides_text, $template_overview);
