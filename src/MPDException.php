@@ -18,7 +18,7 @@ use Throwable;
  *
  * In case an error occurs at the protocol level the called methods simply return false.
  *
- * To retrieve the last occurred error call [MphpD::get_last_error](../classes/MphpD#get_last_error).
+ * To retrieve the last occurred error call [MphpD::get_last_error](../classes/MphpD.html#get_last_error).
  *
  * @example MphpD::get_last_error() : array
  */
