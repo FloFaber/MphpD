@@ -29,6 +29,12 @@ if(empty($argv[1])){
   die(1);
 }
 
+if(isset($argv[2])){
+    define("LINK", !!$argv[2]);
+}else{
+    define("LINK", false);
+}
+
 define("VERSION", $argv[1]);
 
 
@@ -156,6 +162,7 @@ foreach($docparser->getClasses() as $class){
   $template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
   $template_page = str_replace("{{page.title}}", "MphpD - ".$class_info["name"], $template_page);
   $template_page = str_replace("{{page.content}}", $template_class, $template_page);
+  $template_page = str_replace("{{page.version}}", VERSION, $template_page);
   file_put_contents(__DIR__ . "/../docs/".VERSION."/classes/".$class_info["name"].".html", $template_page);
 
   $classes[] = $class_info;
@@ -166,6 +173,7 @@ foreach($docparser->getClasses() as $class){
 $template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
 $template_page = str_replace("{{page.title}}", "MphpD", $template_page);
 $template_page = str_replace("{{page.content}}", $pd->text(file_get_contents(__DIR__ . "/../README.md")), $template_page);
+$template_page = str_replace("{{page.version}}", VERSION, $template_page);
 
 file_put_contents(__DIR__ . "/../docs/".VERSION."/index.html", $template_page);
 
@@ -177,10 +185,7 @@ foreach(scandir(__DIR__ . "/../docs/") as $f){
     }
 }
 
-$versions_text = "";
-foreach($versions as $version){
-    $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>\n";
-}
+
 
 
 $guides_text = "";
@@ -193,6 +198,7 @@ foreach(scandir(__DIR__ . "/guides/") as $f){
     $tmp = file_get_contents(__DIR__ . "/templates/page.template.html");
     $tmp = str_replace("{{page.title}}", "MphpD Guides - $f", $tmp);
     $tmp = str_replace("{{page.content}}", $guide, $tmp);
+    $tmp = str_replace("{{page.version}}", VERSION, $tmp);
     file_put_contents($dst, $tmp); unset($tmp);
 }
 
@@ -208,21 +214,10 @@ foreach($methods as $method){
 ".($method["summary"] ? (" - ".$pd->line($method["summary"])) : "") ."</li>\n";
 }
 
-$template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
-$template_overview = str_replace("{{overview.versions_text}}", $versions_text, $template_overview);
-$template_overview = str_replace("{{overview.guides_text}}", $guides_text, $template_overview);
-$template_overview = str_replace("{{overview.classes_text}}", $classes_text, $template_overview);
-$template_overview = str_replace("{{overview.methods_text}}", $methods_text, $template_overview);
-
-$template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
-$template_page = str_replace("{{page.title}}", "MphpD - Overview", $template_page);
-$template_page = str_replace("{{page.content}}", $template_overview, $template_page);
-
-file_put_contents(__DIR__ . "/../docs/".VERSION."/overview.html", $template_page);
-
 
 // update symlinks
-if(VERSION !== "test"){
+var_dump(LINK);
+if(VERSION !== "test" AND LINK === true){
     unlink(__DIR__ . "/../docs/latest");
     chdir(__DIR__ . "/../docs/");
     symlink(VERSION, "latest");
@@ -232,6 +227,26 @@ if(VERSION !== "test"){
     symlink("latest/index.html", "index.html");
 }
 
+
+//$versions_text = "<li><a href='/latest/overview.html'>latest (".readlink(__DIR__ . "/../docs/latest").")</a>";
+$versions_text = "";
+rsort($versions);
+foreach($versions as $version){
+    $versions_text .= "<li><a href='/$version/overview.html'>$version</a></li>\n";
+}
+
+$template_overview = file_get_contents(__DIR__ . "/templates/overview.template.html");
+$template_overview = str_replace("{{overview.versions_text}}", $versions_text, $template_overview);
+$template_overview = str_replace("{{overview.guides_text}}", $guides_text, $template_overview);
+$template_overview = str_replace("{{overview.classes_text}}", $classes_text, $template_overview);
+$template_overview = str_replace("{{overview.methods_text}}", $methods_text, $template_overview);
+
+$template_page = file_get_contents(__DIR__ . "/templates/page.template.html");
+$template_page = str_replace("{{page.title}}", "MphpD - Overview", $template_page);
+$template_page = str_replace("{{page.content}}", $template_overview, $template_page);
+$template_page = str_replace("{{page.version}}", VERSION, $template_page);
+
+file_put_contents(__DIR__ . "/../docs/".VERSION."/overview.html", $template_page);
 
 
 /*
