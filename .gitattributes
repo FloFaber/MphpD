@@ -1,3 +1,4 @@
+/doc		export-ignore
 /test		export-ignore
 /phpunit.xml	export-ignore
 /.gitignore	export-ignore
