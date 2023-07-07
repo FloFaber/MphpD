@@ -1,0 +1,24 @@
+<script src="/js/versions.js"></script>
+<h1>Versions</h1>
+<ul id="versions"></ul>
+<script>
+    for(let i = 0; i < window.versions.length; i++){
+      let version = window.versions[i];
+      document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
+    }
+</script>
+
+<h1>Guides</h1>
+<ul>
+{{overview.guides_text}}
+</ul>
+
+<h1>Classes</h1>
+<ul>
+{{overview.classes_text}}
+</ul>
+
+<h1>Methods</h1>
+<ul>
+    {{overview.methods_text}}
+</ul>

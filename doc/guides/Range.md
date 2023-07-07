@@ -1,8 +1,3 @@
-title: Ranges
-date: 2019-01-01
-
----
-
 # Ranges
 
 Some methods, like [Queue::delete](../classes/Queue#delete) allow specifying a `Range` of songs instead of a single position.

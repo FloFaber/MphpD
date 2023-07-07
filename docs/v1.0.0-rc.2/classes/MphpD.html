@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - MphpD</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.0.0-rc.2</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">MphpD</h1>
+<p><p>The Main MphpD class.</p></p>
+
+<pre><code class="language-php">new MphpD(array $config = []) : MphpD</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MphpD::__construct(array $options = []) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param array $options Array of options. <a href="../guides/configuration">Documentation</a></p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">db</h3>
+<p>
+    <p>Return the DB instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::db() : FloFaber\MphpD\DB</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>FloFaber\MphpD\DB</code></h4>
+<p>
+    <p>\DB</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">player</h3>
+<p>
+    <p>Return the Player instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::player() : FloFaber\MphpD\Player</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>FloFaber\MphpD\Player</code></h4>
+<p>
+    <p>\Player</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">queue</h3>
+<p>
+    <p>Return the Queue instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::queue() : FloFaber\MphpD\Queue</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>FloFaber\MphpD\Queue</code></h4>
+<p>
+    <p>\Queue</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">playlist</h3>
+<p>
+    <p>Returns a Playlist instance with the given name or null if the name is empty</p>
+</p>
+
+<pre><code class="language-php">MphpD::playlist(string $name) : FloFaber\MphpD\Playlist</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $name The name of the playlist. Must not be empty.</p>
+
+<h4>Returns <code>FloFaber\MphpD\Playlist</code></h4>
+<p>
+    <p>\Playlist|null</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">playlists</h3>
+<p>
+    <p>If $metadata is set to <code>true</code> an Array of associative arrays containing information about the playlists will be returned.
+If $metadata is omitted or set to <code>false</code> a list containing all playlists names is returned.</p>
+</p>
+
+<pre><code class="language-php">MphpD::playlists(bool $metadata = ) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param bool $metadata Include/Exclude additional information like &quot;last-modified&quot;,...</p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">output</h3>
+<p>
+    <p>Return a new output instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::output(int $id) : FloFaber\MphpD\Output</code></pre>
+
+<h4>Parameters</h4>
+<p>@param int $id The ID of the output</p>
+
+<h4>Returns <code>FloFaber\MphpD\Output</code></h4>
+<p>
+    <p>\Output</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">outputs</h3>
+<p>
+    <p>Returns an Array of associative arrays of all available outputs</p>
+</p>
+
+<pre><code class="language-php">MphpD::outputs() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">neighbors</h3>
+<p>
+    <p>Return neighbors on the network like available SMB servers</p>
+</p>
+
+<pre><code class="language-php">MphpD::neighbors() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">partition</h3>
+<p>
+    <p>Return a new Partition instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::partition(string $name) : FloFaber\MphpD\Partition</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $name The name of the partition</p>
+
+<h4>Returns <code>FloFaber\MphpD\Partition</code></h4>
+<p>
+    <p>\Partition</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">partitions</h3>
+<p>
+    <p>Return a list of all available partitions</p>
+</p>
+
+<pre><code class="language-php">MphpD::partitions() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">channel</h3>
+<p>
+    <p>Return a new Channel instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::channel(string $name = '') : FloFaber\MphpD\Channel</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $name The name of the channel</p>
+
+<h4>Returns <code>FloFaber\MphpD\Channel</code></h4>
+<p>
+    <p>\Channel</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">channels</h3>
+<p>
+    <p>Return a list of available channels</p>
+</p>
+
+<pre><code class="language-php">MphpD::channels() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">clear_error</h3>
+<p>
+    <p>Clears the current error</p>
+</p>
+
+<pre><code class="language-php">MphpD::clear_error() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">status</h3>
+<p>
+    <p>Returns the value of the specified key(s) from MPD's status.</p>
+</p>
+
+<pre><code class="language-php">MphpD::status(array $items = []) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param array $items Optional. Array containing the wanted key(s) like <code>status</code>, <code>songid</code>,...</p>
+<p>If only one item is given only it's value will be returned instead of an associative array.</p>
+<p>If the given item(s) do not exist <code>null</code> will be set as their value.</p>
+<p>If omitted, an associative array containing all status information will be returned.</p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false|int|float|null Returns
+<code>false</code> on error</p>
+<p><code>string</code>, <code>int</code>, <code>float</code> or <code>null</code> if <code>$items</code> contains only one item. If it does not exist <code>null</code> will be returned instead.</p>
+<p>Otherwise, an associative array containing all available (or specified) keys.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">stats</h3>
+<p>
+    <p>Returns the value of the specified key from MPD's stats.</p>
+</p>
+
+<pre><code class="language-php">MphpD::stats(array $items = []) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param array $items Optional. Array containing the wanted stat(s). Example: <code>[ "artists", "uptime", "playtime" ]</code></p>
+<p>If only one item is given only it's value will be returned instead of an associative array.</p>
+<p>If the given item(s) do not exist <code>null</code> will be set as their value.</p>
+<p>If omitted, an associative array containing all stats will be returned.</p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false|int|null Returns
+<code>false</code> on error</p>
+<p><code>string</code>, <code>int</code> or <code>null</code> if $items contains only one item. If it does not exist <code>null</code> will be returned instead.</p>
+<p>Otherwise, an associative array containing all available (or specified) stats.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">sticker</h3>
+<p>
+    <p>Returns a Sticker instance</p>
+</p>
+
+<pre><code class="language-php">MphpD::sticker(string $type, string $uri) : FloFaber\MphpD\Sticker</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $type</p><p>@param string $uri</p>
+
+<h4>Returns <code>FloFaber\MphpD\Sticker</code></h4>
+<p>
+    <p>\Sticker</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">mounts</h3>
+<p>
+    <p>Return all mounts.</p>
+</p>
+
+<pre><code class="language-php">MphpD::mounts() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">mount</h3>
+<p>
+    <p>Mount $uri to path</p>
+</p>
+
+<pre><code class="language-php">MphpD::mount(string $path, string $uri) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $path</p><p>@param string $uri The URI to mount</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">unmount</h3>
+<p>
+    <p>Unmount the path</p>
+</p>
+
+<pre><code class="language-php">MphpD::unmount(string $path) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $path</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">bulk_start</h3>
+<p>
+    <p>Function to start a command-list.</p>
+</p>
+
+<pre><code class="language-php">MphpD::bulk_start() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">bulk_end</h3>
+<p>
+    <p>Function to end a command-list and execute its commands
+The command list is stopped in case an error occurs.</p>
+</p>
+
+<pre><code class="language-php">MphpD::bulk_end() : array</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>array</code></h4>
+<p>
+    <p>array|false Returns an array containing the commands responses.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">bulk_abort</h3>
+<p>
+    <p>Function to abort the current command list.
+We can do that because we only start the list at protocol level when bulk_end() is called.</p>
+</p>
+
+<pre><code class="language-php">MphpD::bulk_abort() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">bulk_add</h3>
+<p>
+    <p>Function to add a command to the bulk_list.</p>
+</p>
+
+<pre><code class="language-php">MphpD::bulk_add(string $cmd, array $params = [], int $mode = 32) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $cmd</p><p>@param array $params</p><p>@param int $mode</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">tagtypes</h3>
+<p>
+    <p>Return a list of all available tag types.</p>
+</p>
+
+<pre><code class="language-php">MphpD::tagtypes() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">tagtypes_disable</h3>
+<p>
+    <p>Disable specified tag types.</p>
+</p>
+
+<pre><code class="language-php">MphpD::tagtypes_disable(array $tagtypes) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param array $tagtypes A list of tag types to disable.</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">tagtypes_enable</h3>
+<p>
+    <p>Enable specified tag types.</p>
+</p>
+
+<pre><code class="language-php">MphpD::tagtypes_enable(array $tagtypes) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param array $tagtypes A list of tag types to enable.</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">tagtypes_clear</h3>
+<p>
+    <p>Remove all tag types from responses.</p>
+</p>
+
+<pre><code class="language-php">MphpD::tagtypes_clear() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">tagtypes_all</h3>
+<p>
+    <p>Enable all available tag types.</p>
+</p>
+
+<pre><code class="language-php">MphpD::tagtypes_all() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">ping</h3>
+<p>
+    <p>Ping.</p>
+</p>
+
+<pre><code class="language-php">MphpD::ping() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">config</h3>
+<p>
+    <p>Returns an associative array of configuration values.
+This function is only available for client connected via Unix Socket!</p>
+</p>
+
+<pre><code class="language-php">MphpD::config() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">commands</h3>
+<p>
+    <p>Returns a list of all available commands.</p>
+</p>
+
+<pre><code class="language-php">MphpD::commands() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">notcommands</h3>
+<p>
+    <p>Returns a list of all not-available commands.</p>
+</p>
+
+<pre><code class="language-php">MphpD::notcommands() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">urlhandlers</h3>
+<p>
+    <p>Returns a list of all available urlhandlers. Like smb://, sftp://, http://.
+..</p>
+</p>
+
+<pre><code class="language-php">MphpD::urlhandlers() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">decoders</h3>
+<p>
+    <p>Returns a list of available decoder plugins and their supported suffixes and mimetypes.</p>
+</p>
+
+<pre><code class="language-php">MphpD::decoders() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">cmd</h3>
+<p>
+    <p>Send $command with $params to the MPD server.
+You, the library's user, are not intended to ever
+need this method. If you ever need it because the library does not support
+a specific command please file a <a href="https://github.com/FloFaber/MphpD/issues">bug report</a>.
+This method also parses MPDs response depending on the chosen mode.</p>
+</p>
+
+<pre><code class="language-php">MphpD::cmd(string $command, array $params = [], int $mode = 2, array $list_start = []) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $command The command</p><p>@param array $params Parameters, automatically escaped</p><p>@param int $mode One of the following constants:</p>
+<ul>
+<li>
+<p>MPD_CMD_READ_NONE        - Do not read anything from the answer. Returns an empty array.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_NORMAL      - Parses the answer as a one-dimensional &quot;key=&gt;value&quot; array.
+If a key already existed its value gets overwritten.
+Used for commands like &quot;status&quot; where only unique keys are given.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_LIST        - Parses the answer as a list of &quot;key=&gt;value&quot; arrays.
+Used for commands like &quot;listplaylists&quot; where keys are not unique.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple &quot;indexed&quot; array.
+Used for commands like &quot;idle&quot; where there is
+only a single possible &quot;key&quot;.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_BOOL        - Parses the answer into <code>true</code> on OK and list_OK and <code>false</code> on <code>ACK</code>.
+Used for commands which do not return anything but OK or ACK.</p>
+</li>
+</ul><p>@param array $list_start In combination with <code>$mode = MPD_CMD_READ_LIST</code> indicates on which <code>key</code> a new list starts.</p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|bool False on failure.
+Array on success.
+True on success if $mode is MPD_CMD_READ_BOOL</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_socket</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MphpD::get_socket() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_version</h3>
+<p>
+    <p>Returns MPDs version as string</p>
+</p>
+
+<pre><code class="language-php">MphpD::get_version() : string</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>string</code></h4>
+<p>
+    <p>string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">version_bte</h3>
+<p>
+    <p>Function to compare a given version string with the current version of MPD</p>
+</p>
+
+<pre><code class="language-php">MphpD::version_bte(string $version) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $version</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool Returns true if MPDs version is equal to or newer than the given version. False otherwise.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">idle</h3>
+<p>
+    <p>Waits until there is a noteworthy change in one or more of MPD’s subsystems.</p>
+</p>
+
+<pre><code class="language-php">MphpD::idle(string $subsystem = '', int $timeout = 60) : mixed</code></pre>
+
+<h4>Parameters</h4>
+<p>@param string $subsystem</p><p>@param int $timeout Specifies how long to wait for MPD to return an answer.</p>
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>array|false Returns an array of changed subsystems or false on timeout.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">close</h3>
+<p>
+    <p>Close the connection to the MPD socket</p>
+</p>
+
+<pre><code class="language-php">MphpD::close() : void</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">kill</h3>
+<p>
+    <p>Kill MPD.</p>
+</p>
+
+<pre><code class="language-php">MphpD::kill() : void</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>void</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_binarylimit</h3>
+<p>
+    <p>Returns the current binarylimit</p>
+</p>
+
+<pre><code class="language-php">MphpD::get_binarylimit() : int</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>int</code></h4>
+<p>
+    <p>int</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">set_error</h3>
+<p>
+    <p>Function to set the last occurred error.
+Should only be used inside the library!</p>
+</p>
+
+<pre><code class="language-php">MphpD::set_error( $err) : bool</code></pre>
+
+<h4>Parameters</h4>
+<p>@param \MPDException|string $err</p>
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_last_error</h3>
+<p>
+    <p>Return an array containing information about the last error</p>
+</p>
+
+<pre><code class="language-php">MphpD::get_last_error() : array</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>array</code></h4>
+<p>
+    <p>array associative array containing the following keys:</p>
+<pre>
+[
+  "code" => (int),
+  "message" => (string),
+  "command" => (string),
+  "commandlistnum" => (int)
+]
+</pre>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">connect</h3>
+<p>
+    <p>Initiate connection to MPD with the parameters given at instantiation.</p>
+</p>
+
+<pre><code class="language-php">MphpD::connect() : bool</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">disconnect</h3>
+<p>
+    <p>Disconnect from MPD</p>
+</p>
+
+<pre><code class="language-php">MphpD::disconnect() : mixed</code></pre>
+
+<h4>Parameters</h4>
+None.
+
+<h4>Returns <code>mixed</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
