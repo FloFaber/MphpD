@@ -39,12 +39,12 @@ Have a look at the <a href="https://mpd.readthedocs.io/en/latest/protocol.html#a
 Use MphpD::output() instead to retrieve an instance of this class.</p>
 </p>
 
-<pre><code class="language-php">Output::__construct(FloFaber\MphpD\MphpD $mphpd, int $id) : void</code></pre>
+<pre><code class="language-php">Output::__construct(FloFaber\MphpD\MphpD $mphpd, int $id) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$mphpd</h5><h5>$id</h5>
+<p>@param \MphpD $mphpd</p><p>@param int $id</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     
 </p>
@@ -114,7 +114,7 @@ None.
 <pre><code class="language-php">Output::set(string $name, string $value) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$name</h5><h5>$value</h5>
+<p>@param string $name</p><p>@param string $value</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>

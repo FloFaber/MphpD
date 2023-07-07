@@ -8,7 +8,9 @@
 <pre><code class="language-php">Queue::move( $from, string $to) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$from</h5><h5>$to</h5>
+<p>@param int|array $from Song position or Range</p><p>@param string $to If starting with + or -, then it is relative to the current song
+e.g. +0 moves to right after the current song and -0 moves to right before the current song
+(i.e. zero songs between the current song and the moved range).</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>

@@ -5,12 +5,13 @@
     <p>Returns an array of changed songs currently in the playlist since $version.</p>
 </p>
 
-<pre><code class="language-php">Queue::changes(int $version,  $range = -1, bool $metadata = ) : void</code></pre>
+<pre><code class="language-php">Queue::changes(int $version,  $range = -1, bool $metadata = ) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$version</h5><h5>$range</h5><h5>$metadata</h5>
+<p>@param int $version The current version can be retrieved with MphpD::status([ &quot;playlist&quot; ]).</p><p>@param int|array $range Position of song or Range</p><p>@param bool $metadata If set to true the metadata will be included.</p>
+<p>If set to false only the position and ID of the changed songs will be returned.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false Returns array on success and false on failure.</p>
 </p>

@@ -7,12 +7,12 @@ If $group is omitted returns an associative array containing a &quot;songs&quot;
 If $group is specified an array of associative array will be returned.</p>
 </p>
 
-<pre><code class="language-php">DB::count(FloFaber\MphpD\Filter $filter, string $group = '') : void</code></pre>
+<pre><code class="language-php">DB::count(FloFaber\MphpD\Filter $filter, string $group = '') : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$filter</h5><h5>$group</h5>
+<p>@param \Filter $filter</p><p>@param string $group A tag name like <code>artist</code>. If specified the results will be grouped by this tag.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false</p>
 </p>

@@ -5,12 +5,12 @@
     <p>Search the queue for matching songs.</p>
 </p>
 
-<pre><code class="language-php">Queue::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : void</code></pre>
+<pre><code class="language-php">Queue::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$filter</h5><h5>$sort</h5><h5>$window</h5>
+<p>@param \Filter $filter The Filter.</p><p>@param string $sort If specified the results are sorted by the specified tag.</p><p>@param array $window If specified returns only the given portion.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false Returns array on success and false on failure.</p>
 </p>

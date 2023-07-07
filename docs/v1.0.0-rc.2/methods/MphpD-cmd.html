@@ -9,12 +9,35 @@ a specific command please file a <a href="https://github.com/FloFaber/MphpD/issu
 This method also parses MPDs response depending on the chosen mode.</p>
 </p>
 
-<pre><code class="language-php">MphpD::cmd(string $command, array $params = [], int $mode = 2, array $list_start = []) : void</code></pre>
+<pre><code class="language-php">MphpD::cmd(string $command, array $params = [], int $mode = 2, array $list_start = []) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$command</h5><h5>$params</h5><h5>$mode</h5><h5>$list_start</h5>
+<p>@param string $command The command</p><p>@param array $params Parameters, automatically escaped</p><p>@param int $mode One of the following constants:</p>
+<ul>
+<li>
+<p>MPD_CMD_READ_NONE        - Do not read anything from the answer. Returns an empty array.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_NORMAL      - Parses the answer as a one-dimensional &quot;key=&gt;value&quot; array.
+If a key already existed its value gets overwritten.
+Used for commands like &quot;status&quot; where only unique keys are given.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_LIST        - Parses the answer as a list of &quot;key=&gt;value&quot; arrays.
+Used for commands like &quot;listplaylists&quot; where keys are not unique.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple &quot;indexed&quot; array.
+Used for commands like &quot;idle&quot; where there is
+only a single possible &quot;key&quot;.</p>
+</li>
+<li>
+<p>MPD_CMD_READ_BOOL        - Parses the answer into <code>true</code> on OK and list_OK and <code>false</code> on <code>ACK</code>.
+Used for commands which do not return anything but OK or ACK.</p>
+</li>
+</ul><p>@param array $list_start In combination with <code>$mode = MPD_CMD_READ_LIST</code> indicates on which <code>key</code> a new list starts.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|bool False on failure.
 Array on success.

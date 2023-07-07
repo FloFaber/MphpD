@@ -8,7 +8,20 @@
 <pre><code class="language-php">Playlist::save(int $mode = 1) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$mode</h5>
+<p>@param int $mode Optional. One of the following:</p>
+<ul>
+<li>
+<p>MPD_MODE_CREATE: The default. Create a new playlist. Fails if a playlist with name $name already exists.</p>
+</li>
+<li>
+<p>MPD_MODE_APPEND: Append an existing playlist. Fails if a playlist with name $name doesn't already exist.
+Only supported on MPD v0.24 and newer.</p>
+</li>
+<li>
+<p>MPD_MODE_REPLACE: Replace an existing playlist. Fails if a playlist with name $name doesn't already exist.
+Only supported on MPD v0.24 and newer.</p>
+</li>
+</ul>
 
 <h4>Returns <code>bool</code></h4>
 <p>

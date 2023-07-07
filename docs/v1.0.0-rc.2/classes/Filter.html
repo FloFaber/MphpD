@@ -39,12 +39,12 @@ Refer to the <a href="https://mpd.readthedocs.io/en/latest/protocol.html#filters
     <p>Creates a new filter.</p>
 </p>
 
-<pre><code class="language-php">Filter::__construct(string $tag, string $operator, string $value) : void</code></pre>
+<pre><code class="language-php">Filter::__construct(string $tag, string $operator, string $value) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$tag</h5><h5>$operator</h5><h5>$value</h5>
+<p>@param string $tag Tag to be searched for. Like artist, title,...</p><p>@param string $operator Comparison operator. Like ==, contains, ~=,...</p><p>@param string $value The value to search for. Unescaped.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     
 </p>
@@ -60,7 +60,7 @@ Refer to the <a href="https://mpd.readthedocs.io/en/latest/protocol.html#filters
 <pre><code class="language-php">Filter::and(string $tag, string $operator, string $value) : FloFaber\MphpD\Filter</code></pre>
 
 <h4>Parameters</h4>
-<h5>$tag</h5><h5>$operator</h5><h5>$value</h5>
+<p>@param string $tag</p><p>@param string $operator</p><p>@param string $value</p>
 
 <h4>Returns <code>FloFaber\MphpD\Filter</code></h4>
 <p>

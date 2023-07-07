@@ -39,12 +39,12 @@ You may also want to have a look at the <a href="https://mpd.readthedocs.io/en/l
 Use MphpD::player() instead to retrieve an instance of this class.</p>
 </p>
 
-<pre><code class="language-php">Player::__construct(FloFaber\MphpD\MphpD $mphpd) : void</code></pre>
+<pre><code class="language-php">Player::__construct(FloFaber\MphpD\MphpD $mphpd) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$mphpd</h5>
+<p>@param \MphpD $mphpd</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     
 </p>
@@ -60,7 +60,19 @@ Use MphpD::player() instead to retrieve an instance of this class.</p>
 <pre><code class="language-php">Player::consume(int $state) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$state</h5>
+<p>@param int $state One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Enables consume mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Disables consume mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_ONESHOT</code> - Enables consume mode for a single song.
+This is only supported on MPD version 0.24 and newer.</p>
+</li>
+</ul>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -78,7 +90,7 @@ Use MphpD::player() instead to retrieve an instance of this class.</p>
 <pre><code class="language-php">Player::crossfade(int $seconds) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$seconds</h5>
+<p>@param int $seconds</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -97,7 +109,7 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::mixramp_db(int $dB) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$dB</h5>
+<p>@param int $dB</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -115,7 +127,7 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::mixramp_delay(float $seconds) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$seconds</h5>
+<p>@param float $seconds</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -133,7 +145,7 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::random(int $state) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$state</h5>
+<p>@param int $state Either <code>MPD_STATE_OFF</code> or <code>MPD_STATE_ON</code></p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -151,7 +163,7 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::repeat(int $state) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$state</h5>
+<p>@param int $state Either <code>MPD_STATE_OFF</code> or <code>MPD_STATE_ON</code></p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -166,12 +178,13 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
     <p>Sets volume to <code>$volume</code> or returns the current volume if <code>$volume</code> is omitted.</p>
 </p>
 
-<pre><code class="language-php">Player::volume(int $volume = -1) : void</code></pre>
+<pre><code class="language-php">Player::volume(int $volume = -1) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$volume</h5>
+<p>@param int $volume If specified the current volume is set to $volume.</p>
+<p>If omitted the current volume is returned.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>int|bool Returns <code>true</code> on success, <code>false</code> on failure and <code>int</code> if $volume was omitted.</p>
 </p>
@@ -187,7 +200,19 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::single(int $state) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$state</h5>
+<p>@param int $state One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Enables single mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Disables single mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_ONESHOT</code> - Enables single mode for only a single time.
+This is only supported on MPD version 0.21 and newer.</p>
+</li>
+</ul>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -205,7 +230,7 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
 <pre><code class="language-php">Player::replay_gain_mode(string $mode) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$mode</h5>
+<p>@param string $mode One of <code>off</code>, <code>track</code>, <code>album</code>, <code>auto</code></p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -220,12 +245,12 @@ See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd
     <p>Get the current replay gain</p>
 </p>
 
-<pre><code class="language-php">Player::replay_gain_status() : void</code></pre>
+<pre><code class="language-php">Player::replay_gain_status() : mixed</code></pre>
 
 <h4>Parameters</h4>
 None.
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false</p>
 </p>
@@ -238,12 +263,12 @@ None.
     <p>Returns an associative array containing information about the currently playing song.</p>
 </p>
 
-<pre><code class="language-php">Player::current_song() : void</code></pre>
+<pre><code class="language-php">Player::current_song() : mixed</code></pre>
 
 <h4>Parameters</h4>
 None.
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false</p>
 </p>
@@ -274,10 +299,19 @@ None.
     <p>Pause or resume playback.</p>
 </p>
 
-<pre><code class="language-php">Player::pause(?int $state = ) : bool</code></pre>
+<pre><code class="language-php">Player::pause(?int $state = null) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$state</h5>
+<p>@param int|null $state Optional. One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Pause</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Resume</p>
+</li>
+</ul>
+<p>If omitted or <code>null</code> the pause state is toggled.</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -295,7 +329,7 @@ None.
 <pre><code class="language-php">Player::play(int $pos) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$pos</h5>
+<p>@param int $pos Song position. Starting at 0</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -313,7 +347,7 @@ None.
 <pre><code class="language-php">Player::play_id(int $id) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$id</h5>
+<p>@param int $id ID of the song.</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -349,7 +383,7 @@ None.
 <pre><code class="language-php">Player::seek(int $songpos, float $time) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$songpos</h5><h5>$time</h5>
+<p>@param int $songpos</p><p>@param float $time</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -367,7 +401,7 @@ None.
 <pre><code class="language-php">Player::seek_id(int $songid, float $time) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$songid</h5><h5>$time</h5>
+<p>@param int $songid</p><p>@param float $time</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>
@@ -385,7 +419,7 @@ None.
 <pre><code class="language-php">Player::seek_cur( $time) : bool</code></pre>
 
 <h4>Parameters</h4>
-<h5>$time</h5>
+<p>@param string|int|float $time If prefixed with <code>+</code> or <code>-</code> the time is relative to the current playing position.</p>
 
 <h4>Returns <code>bool</code></h4>
 <p>

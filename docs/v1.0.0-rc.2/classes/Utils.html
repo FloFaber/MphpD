@@ -40,7 +40,13 @@
 <pre><code class="language-php">Utils::escape_params(array $params, int $flags = 4) : string</code></pre>
 
 <h4>Parameters</h4>
-<h5>$params</h5><h5>$flags</h5>
+<p>@param array $params Array of strings.</p><p>@param int $flags One or multiple OR-ed together of the following:</p>
+<ul>
+<li>MPD_ESCAPE_NORMAL        - &quot;beetle's juice&quot; becomes &quot;\&quot;beetle\'s juice\&quot;&quot;</li>
+<li>MPD_ESCAPE_DOUBLE_QUOTES - &quot;beetle's juice&quot; becomes &quot;\\&quot;beetle\'s juice\\&quot;&quot;</li>
+<li>MPD_ESCAPE_PREFIX_SPACE  - Adds a space at the params beginning</li>
+<li>MPD_ESCAPE_SUFFIX_SPACE  - Adds a space at the params ending</li>
+</ul>
 
 <h4>Returns <code>string</code></h4>
 <p>
@@ -55,12 +61,12 @@
     <p>Function to &quot;convert&quot; int or array to a pos or range argument</p>
 </p>
 
-<pre><code class="language-php">Utils::pos_or_range( $p) : void</code></pre>
+<pre><code class="language-php">Utils::pos_or_range( $p) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$p</h5>
+<p>@param int|array $p</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>int|string</p>
 </p>
@@ -76,7 +82,7 @@
 <pre><code class="language-php">Utils::parse_error(string $error) : FloFaber\MphpD\MPDException</code></pre>
 
 <h4>Parameters</h4>
-<h5>$error</h5>
+<p>@param string $error The error string. For example &quot;ACK [error@command_listNum] {current_command} message_text&quot;</p>
 
 <h4>Returns <code>FloFaber\MphpD\MPDException</code></h4>
 <p>

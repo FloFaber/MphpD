@@ -5,12 +5,13 @@
     <p>Update the Database and return the Job-ID.</p>
 </p>
 
-<pre><code class="language-php">DB::update(string $uri = '', bool $rescan = , bool $force = ) : void</code></pre>
+<pre><code class="language-php">DB::update(string $uri = '', bool $rescan = , bool $force = ) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$uri</h5><h5>$rescan</h5><h5>$force</h5>
+<p>@param string $uri Optional. Only update the given path. Omit or specify an empty string to update everything.</p><p>@param bool $rescan If set to <code>true</code> also rescan unmodified files.</p><p>@param bool $force If set to <code>false</code> and an update Job is already running, just return its ID.</p>
+<p>If true and an update Job is already running it starts another one and returns the ID of the new Job.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>int|false Returns the Job-ID on success or false on failure.</p>
 </p>

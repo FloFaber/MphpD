@@ -5,12 +5,12 @@
     <p>Waits until there is a noteworthy change in one or more of MPD’s subsystems.</p>
 </p>
 
-<pre><code class="language-php">MphpD::idle(string $subsystem = '', int $timeout = 60) : void</code></pre>
+<pre><code class="language-php">MphpD::idle(string $subsystem = '', int $timeout = 60) : mixed</code></pre>
 
 <h4>Parameters</h4>
-<h5>$subsystem</h5><h5>$timeout</h5>
+<p>@param string $subsystem</p><p>@param int $timeout Specifies how long to wait for MPD to return an answer.</p>
 
-<h4>Returns <code>void</code></h4>
+<h4>Returns <code>mixed</code></h4>
 <p>
     <p>array|false Returns an array of changed subsystems or false on timeout.</p>
 </p>
