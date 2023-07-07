@@ -20,7 +20,7 @@ for(let i = 0; i < headings.length; i++){
 
 function jump2heading(){
     let hash = window.location.hash.replace("#", "");
-    let el = document.querySelector("[data-url='"+hash+"']");
+    let el = document.querySelector("[data-url='"+hash.toLowerCase()+"']");
     if(hash !== "" && el){
         el.scrollIntoView({ behavior: 'smooth' });
     }
