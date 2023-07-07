@@ -57,7 +57,6 @@ rrmdir(__DIR__ . "/../docs/".VERSION);
 mkdir(__DIR__ . "/www/");
 mkdir(__DIR__ . "/www/build/");*/
 mkdir(__DIR__ . "/../docs/".VERSION."/");
-mkdir(__DIR__ . "/../docs/".VERSION."/methods/");
 mkdir(__DIR__ . "/../docs/".VERSION."/guides/");
 mkdir(__DIR__ . "/../docs/".VERSION."/classes/");
 
@@ -151,7 +150,7 @@ foreach($docparser->getClasses() as $class){
     }
 
     $class_info["methods_text"] .= $template_method;
-    file_put_contents(__DIR__ . "/../docs/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
+    //file_put_contents(__DIR__ . "/../docs/".VERSION."/methods/".$class_info["name"]."-".$method_info["name"].".html", $template_method);
 
     $methods[] = $method_info;
 
