@@ -98,7 +98,7 @@ foreach($docparser->getClasses() as $class){
     $method_info["text"] = $pd->text($method_info["summary"]."\n".$method_info["description"]);
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
     $method_info["return_text"] = $pd->text($method_info["docblock"]?->getTagsByName("return")[0] ?? "");
-    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "void";
+    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "mixed";
 
     $template_method = file_get_contents($method_info["template_file"]);
 
@@ -106,10 +106,15 @@ foreach($docparser->getClasses() as $class){
 
     $method_info["params_text"] = "";
     // make parameter text
-    foreach($method_info["params"] as $param){
+    /*foreach($method_info["params"] as $param){
       $method_info["params_text"] .= "<h5>\$".$param->getName()."</h5>";
+    }*/
+    foreach($method_info["docblock"]?->getTagsByName("param") as $param){
+      $method_info["params_text"] .= $pd->text(($param)?->render());
     }
     if(!$method_info["params"]){ $method_info["params_text"] = "None."; }
+
+
 
     // www "usage"-line
     $usage = $class_info["name"]."::".$method_info["name"]."(";
@@ -123,7 +128,7 @@ foreach($docparser->getClasses() as $class){
         }elseif(is_array($default)){
             $default = "[]";
         }
-        $usage .= " = $default";
+        $usage .= " = ".($default === null ? "null" : $default);
       }catch (ReflectionException $e){
 
       } finally {
