@@ -127,3 +127,9 @@ div.method h3:before{
     text-align: center;
     color: var(--white);
 }
+
+blockquote{
+    margin:0;
+    padding:16px 40px;
+    border-left: 2px solid #d5d5d5;
+}
