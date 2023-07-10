@@ -1,9 +1,3 @@
-> **Warning**
->
-> This Library as well as it's documentation is still in development and not yet fully released but you're still welcome to test it out.
->
-> Please report any bugs or issues you encounter [here](https://github.com/FloFaber/MphpD/issues).
-
 # A fully-featured, dependency-free PHP library for MPD
 
 MphpD is a library for the Music Player Daemon.
@@ -14,7 +8,11 @@ painful stuff.
 
 The whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is supported!
 
-
+> **Warning**
+>
+> This Library as well as it's documentation is still in development and not yet fully released but you're still welcome to test it out.
+>
+> Please report any bugs or issues you encounter [here](https://github.com/FloFaber/MphpD/issues).
 
 ## Installation
 
