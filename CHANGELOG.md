@@ -2,7 +2,7 @@
 
 ## v1.0.0
 
-You may now consider the majority of this library as "stable".
+You may now consider the majority of this library stable.
 
 * [FIX] Improved documentation.
 * [FIX] Fixed return type of Playlist::get_songs()
