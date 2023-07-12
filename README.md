@@ -10,7 +10,7 @@ The whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is 
 
 > **Warning**
 >
-> This Library as well as it's documentation is rather young and therefor not perfect.
+> This Library as well as it's documentation is rather young and therefore not perfect.
 >
 > Please report any bugs or issues you encounter [here](https://github.com/FloFaber/MphpD/issues). Thanks.
 
