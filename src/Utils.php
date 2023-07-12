@@ -18,6 +18,10 @@ if(!function_exists("str_starts_with")){
   }
 }
 
+
+/**
+ * Class containing several utility or helper functions.
+ */
 class Utils
 {
 

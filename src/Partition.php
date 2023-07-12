@@ -20,7 +20,7 @@ class Partition
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::partition() instead to retrieve an instance of this class.
+   * Use `MphpD::partition()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    * @param string $name
    */
@@ -33,7 +33,7 @@ class Partition
 
   /**
    * Switch the client to the given partition
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function switch(): bool
   {
@@ -42,8 +42,8 @@ class Partition
 
 
   /**
-   * Create a new partition
-   * @return bool
+   * Create a new partition with the given name.
+   * @return bool `true` on success or `false` on failure.
    */
   public function create(): bool
   {
@@ -52,8 +52,8 @@ class Partition
 
 
   /**
-   * Delete a given partition
-   * @return bool
+   * Delete the given partition
+   * @return bool `true` on success or `false` on failure.
    */
   public function delete(): bool
   {
@@ -63,8 +63,8 @@ class Partition
 
   /**
    * Move a specific output to the current partition
-   * @param string $name Name of the output
-   * @return bool
+   * @param string $name Name of the output.
+   * @return bool `true` on success or `false` on failure.
    */
   public function move_output(string $name): bool
   {

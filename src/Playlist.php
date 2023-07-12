@@ -28,7 +28,7 @@ class Playlist
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::playlist() instead to retrieve an instance of this class.
+   * Use `MphpD::playlist()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    * @param string $name
    * @throws MPDException
@@ -44,7 +44,7 @@ class Playlist
 
   /**
    * Function to determine if the specified playlist exists.
-   * @return bool True if it exists. False if it doesn't.
+   * @return bool `true` if it exists, otherwise `false`.
    */
   public function exists(): bool
   {
@@ -63,8 +63,8 @@ class Playlist
 
   /**
    * Returns a list of all songs in the specified playlist.
-   * @param bool $metadata If set to true metadata like duration, last-modified,... will be included.
-   * @return array|false On success returns an Array of associative Arrays containing song information. False on failure.
+   * @param bool $metadata If set to `true` metadata like duration, last-modified,... will be included.
+   * @return array|false `array` of associative Arrays containing song information on success or `false` on failure.
    */
   public function get_songs(bool $metadata = false) : array
   {
@@ -75,10 +75,10 @@ class Playlist
   /**
    * Loads the specified playlist into the Queue.
    * @param array $range Range. If specified only the requested portion of the playlist is loaded. Starts at 0.
-   * @param int|string $pos The $pos parameter specifies where the songs will be inserted into the queue.
+   * @param int|string $pos Specifies where the songs will be inserted into the queue.
    *
    *                    Can be relative if prefixed with + or -
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function load(array $range = [], $pos = "") : bool
   {
@@ -87,11 +87,11 @@ class Playlist
 
 
   /**
-   * Adds $uri to the specified playlist at position $pos.
+   * Adds `$uri` to the specified playlist at position `$pos`.
    * @param string $uri Relative file path or other supported URIs.
    * @param int|string $pos Specifies where the songs will be inserted into the playlist.
    *                    Can be relative if prefixed with + or -
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success and `false` on failure.
    */
   public function add(string $uri, $pos = "") : bool
   {
@@ -100,7 +100,7 @@ class Playlist
 
 
   /**
-   * Search for songs using Filter and add them into the Playlist at position $pos.
+   * Search for songs using Filter and add them into the Playlist at position `$pos`.
    * @see DB::search()
    * @param Filter $filter
    * @param string $sort
@@ -121,7 +121,7 @@ class Playlist
 
   /**
    * Removes all songs from the specified playlist.
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success and `false` on failure.
    */
   public function clear() : bool
   {
@@ -130,9 +130,9 @@ class Playlist
 
 
   /**
-   * Deletes $songpos from the specified playlist.
+   * Deletes `$songpos` from the specified playlist.
    * @param int|array $songpos Position of the song or Range
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function remove_song($songpos = -1) : bool
   {
@@ -141,10 +141,10 @@ class Playlist
 
 
   /**
-   * Moves the song at position $from in the specified playlist to the position $to.
-   * @param int $from
-   * @param int $to
-   * @return bool
+   * Moves the song at position `$from` in the specified playlist to the position `$to`.
+   * @param int $from Current song position
+   * @param int $to New song position
+   * @return bool `true` on success and `false` on failure.
    */
   public function move_song(int $from, int $to) : bool
   {
@@ -153,9 +153,9 @@ class Playlist
 
 
   /**
-   * Renames the specified playlist to $new_name
+   * Renames the specified playlist to `$new_name`
    * @param string $new_name New playlist name
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure.
    */
   public function rename(string $new_name) : bool
   {
@@ -165,7 +165,7 @@ class Playlist
 
   /**
    * Removes the specified playlist from the playlist directory.
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function delete() : bool
   {
@@ -184,8 +184,8 @@ class Playlist
    *
    *                  * MPD_MODE_REPLACE: Replace an existing playlist. Fails if a playlist with name $name doesn't already exist.
    *                                      Only supported on MPD v0.24 and newer.
-   * @return bool True on success. False on failure.
-   * @throws MPDException if $mode is not supported.
+   * @return bool `true` on success and `false` on failure.
+   * @throws MPDException If `$mode` is not supported.
    */
   public function save(int $mode = MPD_MODE_CREATE) : bool
   {

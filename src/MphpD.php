@@ -45,7 +45,7 @@ class MphpD extends Socket
 
 
   /**
-   * @param array $options Array of options. [Documentation](../guides/configuration)
+   * @param array $options Array of options. [Documentation](../guides/Configuration.html)
    */
   public function __construct(array $options = [])
   {
@@ -109,10 +109,11 @@ class MphpD extends Socket
 
 
   /**
-   * If $metadata is set to `true` an Array of associative arrays containing information about the playlists will be returned.
-   * If $metadata is omitted or set to `false` a list containing all playlists names is returned.
-   * @param bool $metadata Include/Exclude additional information like "last-modified",...
-   * @return array|false
+   * Returns a list of playlists.
+   * @param bool $metadata If `true` an `array` of associative arrays containing information about the playlists (like last-modified,...) will be returned.
+   *
+   *                       If `false` or omitted an `array` containing all playlists names is returned.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function playlists(bool $metadata = false)
   {
@@ -135,8 +136,8 @@ class MphpD extends Socket
 
 
   /**
-   * Returns an Array of associative arrays of all available outputs
-   * @return array|false
+   * Returns an Array of associative arrays containing all available outputs
+   * @return array|false `array` on success or `false` on failure.
    */
   public function outputs()
   {
@@ -146,7 +147,7 @@ class MphpD extends Socket
 
   /**
    * Return neighbors on the network like available SMB servers
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function neighbors()
   {
@@ -167,7 +168,7 @@ class MphpD extends Socket
 
   /**
    * Return a list of all available partitions
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function partitions()
   {
@@ -186,9 +187,10 @@ class MphpD extends Socket
   }
 
 
-  /**
-   * Return a list of available channels
-   */
+    /**
+     * Return a list of available channels
+     * @return array|bool `array` on success or `false` on failure.
+     */
   public function channels()
   {
     return $this->cmd("channels", [], MPD_CMD_READ_LIST_SINGLE);
@@ -197,7 +199,7 @@ class MphpD extends Socket
 
   /**
    * Clears the current error
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function clear_error() : bool
   {
@@ -213,14 +215,14 @@ class MphpD extends Socket
    *
    *                     If the given item(s) do not exist `null` will be set as their value.
    *
-   *                     If omitted, an associative array containing all status information will be returned.
+   *                     If omitted, an associative `array` containing all status information will be returned.
    *
-   * @return array|false|int|float|null Returns
+   * @return array|false|int|float|null
    *                     `false` on error
    *
    *                     `string`, `int`, `float` or `null` if `$items` contains only one item. If it does not exist `null` will be returned instead.
    *
-   *                     Otherwise, an associative array containing all available (or specified) keys.
+   *                     Otherwise, an associative `array` containing all available (or specified) keys.
    */
   public function status(array $items = [])
   {
@@ -255,14 +257,14 @@ class MphpD extends Socket
    *
    *                    If the given item(s) do not exist `null` will be set as their value.
    *
-   *                    If omitted, an associative array containing all stats will be returned.
+   *                    If omitted, an associative `array` containing all stats will be returned.
    *
    * @return array|false|int|null Returns
    *                     `false` on error
    *
    *                     `string`, `int` or `null` if $items contains only one item. If it does not exist `null` will be returned instead.
    *
-   *                     Otherwise, an associative array containing all available (or specified) stats.
+   *                     Otherwise, an associative `array` containing all available (or specified) stats.
    */
   public function stats(array $items = [])
   {
@@ -302,7 +304,7 @@ class MphpD extends Socket
 
 
   /**
-   * Return all mounts.
+   * Return a list of all mounts.
    * @return array|false
    */
   public function mounts()
@@ -312,10 +314,10 @@ class MphpD extends Socket
 
 
   /**
-   * Mount $uri to path
+   * Mount `$uri` to path
    * @param string $path
    * @param string $uri The URI to mount
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function mount(string $path, string $uri) : bool
   {
@@ -324,9 +326,9 @@ class MphpD extends Socket
 
 
   /**
-   * Unmount the path
-   * @param string $path
-   * @return bool
+   * Unmount a path
+   * @param string $path The path to unmount
+   * @return bool `true` on success or `false` on failure.
    */
   public function unmount(string $path): bool
   {
@@ -337,7 +339,6 @@ class MphpD extends Socket
   /**
    * Function to start a command-list.
    * @return void
-   * @tags commandlist
    */
   public function bulk_start()
   {
@@ -347,10 +348,9 @@ class MphpD extends Socket
 
 
   /**
-   * Function to end a command-list and execute its commands
+   * Function to end a command-list and execute its commands.
    * The command list is stopped in case an error occurs.
-   * @return array|false Returns an array containing the commands responses.
-   * @tags commandlist
+   * @return array|false `array` containing the commands responses or `false` on failure.
    */
   public function bulk_end(): array
   {
@@ -409,7 +409,6 @@ class MphpD extends Socket
    * Function to abort the current command list.
    * We can do that because we only start the list at protocol level when bulk_end() is called.
    * @return void
-   * @tags commandlist
    */
   public function bulk_abort()
   {
@@ -425,7 +424,6 @@ class MphpD extends Socket
    * @param array $params
    * @param int $mode
    * @return bool
-   * @tags commandlist
    */
   public function bulk_add(string $cmd, array $params = [], int $mode = MPD_CMD_READ_BOOL) : bool
   {
@@ -446,7 +444,7 @@ class MphpD extends Socket
 
   /**
    * Return a list of all available tag types.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function tagtypes()
   {
@@ -457,7 +455,7 @@ class MphpD extends Socket
   /**
    * Disable specified tag types.
    * @param array $tagtypes A list of tag types to disable.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function tagtypes_disable(array $tagtypes) : bool
   {
@@ -468,7 +466,7 @@ class MphpD extends Socket
   /**
    * Enable specified tag types.
    * @param array $tagtypes A list of tag types to enable.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function tagtypes_enable(array $tagtypes) : bool
   {
@@ -478,7 +476,7 @@ class MphpD extends Socket
 
   /**
    * Remove all tag types from responses.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function tagtypes_clear() : bool
   {
@@ -488,7 +486,7 @@ class MphpD extends Socket
 
   /**
    * Enable all available tag types.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function tagtypes_all() : bool
   {
@@ -498,7 +496,7 @@ class MphpD extends Socket
 
   /**
    * Ping.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function ping() :  bool
   {
@@ -516,7 +514,7 @@ class MphpD extends Socket
   /**
    * Returns an associative array of configuration values.
    * This function is only available for client connected via Unix Socket!
-   * @return array|false
+   * @return array|false `array` containing configuration parameters on success or `false` on failure.
    */
   public function config()
   {
@@ -526,7 +524,7 @@ class MphpD extends Socket
 
   /**
    * Returns a list of all available commands.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function commands()
   {
@@ -536,7 +534,7 @@ class MphpD extends Socket
 
   /**
    * Returns a list of all not-available commands.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function notcommands()
   {
@@ -546,7 +544,7 @@ class MphpD extends Socket
 
   /**
    * Returns a list of all available urlhandlers. Like smb://, sftp://, http://...
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function urlhandlers()
   {
@@ -556,7 +554,7 @@ class MphpD extends Socket
 
   /**
    * Returns a list of available decoder plugins and their supported suffixes and mimetypes.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function decoders()
   {

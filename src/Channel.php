@@ -29,7 +29,7 @@ class Channel
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::channel() instead to retrieve an instance of this class.
+   * Use `MphpD::channel()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    * @param string $name
    */
@@ -42,7 +42,7 @@ class Channel
 
   /**
    * Subscribe to the channel.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function subscribe(): bool
   {
@@ -52,7 +52,7 @@ class Channel
 
   /**
    * Unsubscribe the channel.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function unsubscribe(): bool
   {
@@ -62,7 +62,7 @@ class Channel
 
   /**
    * Returns a list of the channel's messages.
-   * @return array|false `Array` containing the messages on success. `False` otherwise.
+   * @return array|false `array` containing the messages on success or `false` on failure.
    */
   public function read()
   {
@@ -98,8 +98,8 @@ class Channel
 
   /**
    * Send a message to the channel.
-   * @param string $message
-   * @return bool
+   * @param string $message The message text.
+   * @return bool `true` on success or `false` on failure.
    */
   public function send(string $message) : bool
   {

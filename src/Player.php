@@ -22,7 +22,7 @@ class Player
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::player() instead to retrieve an instance of this class.
+   * Use `MphpD::player()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    */
   public function __construct(MphpD $mphpd)
@@ -41,7 +41,7 @@ class Player
    *
    *                   * `MPD_STATE_ONESHOT` - Enables consume mode for a single song.
    *                                         This is only supported on MPD version 0.24 and newer.
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure
    * @throws MPDException if `$state` is not supported.
    */
   public function consume(int $state) : bool
@@ -58,8 +58,8 @@ class Player
 
   /**
    * Sets crossfade to `$seconds` seconds.
-   * @param int $seconds
-   * @return bool Returns true on success and false on failure
+   * @param int $seconds Crossfade duration in seconds.
+   * @return bool `true` on success or `false` on failure.
    */
   public function crossfade(int $seconds) : bool
   {
@@ -71,7 +71,7 @@ class Player
    * Sets the threshold at which songs will be overlapped.
    * See https://mpd.readthedocs.io/en/latest/user.html#mixramp for more information
    * @param int $dB
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success or `false` on failure.
    */
   public function mixramp_db(int $dB) : bool
   {
@@ -80,8 +80,10 @@ class Player
 
 
   /**
+   * Additional time subtracted from the overlap calculated by mixrampdb.
+   * A value of `nan` disables MixRamp overlapping and falls back to crossfading. See [MixRamp](https://mpd.readthedocs.io/en/latest/user.html#mixramp).
    * @param float $seconds
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success or `false` on failure.
    */
   public function mixramp_delay(float $seconds) : bool
   {
@@ -92,7 +94,7 @@ class Player
   /**
    * Specified if MPD should play the queue in random order
    * @param int $state Either `MPD_STATE_OFF` or `MPD_STATE_ON`
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success or `false` on failure.
    */
   public function random(int $state) : bool
   {
@@ -103,7 +105,7 @@ class Player
   /**
    * Specifies if MPD should start from the top again when reaching the end of the queue.
    * @param int $state Either `MPD_STATE_OFF` or `MPD_STATE_ON`
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success or `false` on failure.
    */
   public function repeat(int $state) : bool
   {
@@ -113,10 +115,10 @@ class Player
 
   /**
    * Sets volume to `$volume` or returns the current volume if `$volume` is omitted.
-   * @param int $volume If specified the current volume is set to $volume.
+   * @param int $volume If specified the current volume is set to `$volume`.
    *
    *                    If omitted the current volume is returned.
-   * @return int|bool Returns `true` on success, `false` on failure and `int` if $volume was omitted.
+   * @return int|bool `true` on success, `false` on failure and `int` if `$volume` was omitted.
    */
   public function volume(int $volume = -1)
   {
@@ -147,8 +149,8 @@ class Player
    *
    *                   * `MPD_STATE_ONESHOT` - Enables single mode for only a single time.
    *                     This is only supported on MPD version 0.21 and newer.
-   * @return bool
-   * @throws MPDException if $state is not supported.
+   * @return bool `true` on success or `false` on failure.
+   * @throws MPDException if `$state` is not supported.
    */
   public function single(int $state) : bool
   {
@@ -166,7 +168,7 @@ class Player
   /**
    * Specifies whether MPD shall adjust the volume of songs played using ReplayGain tags.
    * @param string $mode One of `off`, `track`, `album`, `auto`
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success or `false` on failure.
    */
   public function replay_gain_mode(string $mode): bool
   {
@@ -175,8 +177,8 @@ class Player
 
 
   /**
-   * Get the current replay gain
-   * @return array|false
+   * Get the current replay gain. Currently only the variable `replay_gain_mode` is returned by MPD.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function replay_gain_status()
   {
@@ -192,17 +194,18 @@ class Player
    */
 
   /**
-   * Returns an associative array containing information about the currently playing song.
-   * @return array|false
+   * Returns an associative `array` containing information about the currently playing song.
+   * @return array|false `array` containing song information on success or `false` on failure.
    */
   public function current_song()
   {
     return $this->mphpd->cmd("currentsong");
   }
 
+
   /**
    * Plays the next song in the Queue
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure.
    */
   public function next() : bool
   {
@@ -219,7 +222,7 @@ class Player
    *                   * `MPD_STATE_OFF` - Resume
    *
    *                   If omitted or `null` the pause state is toggled.
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure.
    */
   public function pause(int $state = null) : bool
   {
@@ -229,8 +232,8 @@ class Player
 
   /**
    * Plays the song position `$pos` in the Queue
-   * @param int $pos Song position. Starting at 0
-   * @return bool Returns true on success and false on failure
+   * @param int $pos Song position starting at 0.
+   * @return bool `true` on success and `false` on failure.
    */
   public function play(int $pos) : bool
   {
@@ -240,8 +243,8 @@ class Player
 
   /**
    * Begins playing the playlist at song `$id`
-   * @param int $id
-   * @return bool Returns true on success and false on failure
+   * @param int $id ID of the song.
+   * @return bool `true` on success and `false` on failure.
    */
   public function play_id(int $id) : bool
   {
@@ -251,6 +254,7 @@ class Player
 
   /**
    * Plays the previous song in the Queue
+   * @return bool `true` on success and `false` on failure.
    */
   public function previous() : bool
   {
@@ -260,9 +264,9 @@ class Player
 
   /**
    * Seeks to `$seconds` of song `$songpos` in the Queue.
-   * @param int $songpos
-   * @param float $time
-   * @return bool Returns true on success and false on failure
+   * @param int $songpos Queue-position of the song.
+   * @param float $time Seconds to seek to.
+   * @return bool `true` on success and `false` on failure.
    */
   public function seek(int $songpos, float $time) : bool
   {
@@ -271,10 +275,10 @@ class Player
 
 
   /**
-   * Seeks to `$seconds` of song `$songid`
-   * @param int $songid
-   * @param float $time
-   * @return bool Returns true on success and false on failure
+   * Seeks to `$seconds` of song `$songid`. Same as `Player::seek()` but with a song ID instead of a position.
+   * @param int $songid ID of the song.
+   * @param float $time Seconds to seek to.
+   * @return bool `true` on success and `false` on failure.
    */
   public function seek_id(int $songid, float $time) : bool
   {
@@ -285,7 +289,7 @@ class Player
   /**
    * Seeks to `$seconds` of the current song.
    * @param string|int|float $time If prefixed with `+` or `-` the time is relative to the current playing position.
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure.
    */
   public function seek_cur($time) : bool
   {
@@ -295,7 +299,7 @@ class Player
 
   /**
    * Stops playing.
-   * @return bool Returns true on success and false on failure
+   * @return bool `true` on success and `false` on failure.
    */
   public function stop() : bool
   {
