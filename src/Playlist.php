@@ -66,7 +66,7 @@ class Playlist
    * @param bool $metadata If set to `true` metadata like duration, last-modified,... will be included.
    * @return array|false `array` of associative Arrays containing song information on success or `false` on failure.
    */
-  public function get_songs(bool $metadata = false) : array
+  public function get_songs(bool $metadata = false)
   {
     return $this->mphpd->cmd("listplaylist".($metadata ? "info" : ""), [$this->name], MPD_CMD_READ_LIST);
   }
