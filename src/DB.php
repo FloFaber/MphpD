@@ -35,7 +35,7 @@ class DB
   /**
    * Returns the albumart (binary!) for given song.
    * @param string $songuri
-   * @return false|string Returns binary data on success or false on failure.
+   * @return false|string Binary data on success or false on failure.
    */
   public function albumart(string $songuri)
   {
@@ -58,12 +58,12 @@ class DB
 
 
   /**
-   * Counts the number of songs and their playtime matching the specified Filter.
-   * If $group is omitted returns an associative array containing a "songs" and "playtime" key.
-   * If $group is specified an array of associative array will be returned.
+   * Counts the number of songs and their playtime matching the specified `$filter`.
    * @param Filter $filter
    * @param string $group A tag name like `artist`. If specified the results will be grouped by this tag.
-   * @return array|false
+   * @return array|false If `$group` is omitted: Associative array containing a "songs" and "playtime" key.
+   *
+   *                     If `$group` is specified: Array of associative arrays containing a "songs" and "playtime".
    */
   public function count(Filter $filter, string $group = "")
   {
@@ -79,8 +79,8 @@ class DB
 
   /**
    * Calculate the song's fingerprint
-   * @param string $uri
-   * @return string|false Returns the fingerprint on success or false on failure.
+   * @param string $uri Path / URI to song.
+   * @return string|false fingerprint on success or `false` on failure.
    */
   public function fingerprint(string $uri)
   {
@@ -91,14 +91,13 @@ class DB
 
 
   /**
-   * Search for songs matching Filter and return an array of associative array of found songs.
-   * Case-sensitive!
+   * Case-sensitive search for songs matching `Filter` and return an array of associative array of found songs.
    * @param Filter $filter
-   * @param string $sort Tag name to sort by. Like artist. If prefixed with `-` it will be sorted descending.
+   * @param string $sort Tag name to sort by. Like artist. If prefixed with `-` the result will be sorted descending.
    *
    *                     If omitted the order is undefined.
-   * @param array $window Retrieve only a given portion
-   * @return array|false Returns array on success and false on failure.
+   * @param array $window `Range` to retrieve only a given portion.
+   * @return array|false Returns `array` on success or `false` on failure.
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
@@ -111,12 +110,12 @@ class DB
 
   /**
    * Lists unique tags values of the specified type. `$type` can be any tag supported by MPD.
-   * If group is omitted returns an array of unique tag values of the specified type.
-   * If group is specified returns an array of associative arrays containing the grouped result.
    * @param string $type Any tag supported by MPD. Like artist or album.
    * @param Filter|null $filter
    * @param string $group Tag name to group the result by. Like artist or album.
-   * @return array|false
+   * @return array|false    If `$group` is omitted: `array` of unique tag values of the specified type.
+   *
+   *                        If `$group` is specified: `array` of associative arrays containing the grouped result.
    */
   public function list(string $type, Filter $filter = null, string $group = "")
   {
@@ -133,11 +132,11 @@ class DB
 
 
   /**
-   * List files,directories and playlists in $uri
-   * @param string $uri
+   * List files,directories and playlists in `$uri`
+   * @param string $uri Path / URI to a folder.
    * @param bool $metadata Specifies if additional information should be included.
-   * @param bool $recursive Specified if files and directories should be listed recursively.
-   * @return array|false Returns an array containing the keys `files`, `directories` and `playlists` on success and `false` on failure.
+   * @param bool $recursive Specifies if files and directories should be listed recursively.
+   * @return array|false Returns an `array` containing the keys `files`, `directories` and `playlists` on success or `false` on failure.
    */
   public function ls(string $uri, bool $metadata = false, bool $recursive = false)
   {
@@ -184,8 +183,8 @@ class DB
   /**
    * Read "comments" from the specified file.
    * The meaning of these "comments" depend on the codec. For an OGG file this lists the vorbis commands.
-   * @param string $uri
-   * @return array|false
+   * @param string $uri Path / URI to file.
+   * @return array|false `array` containing the comments on success or `false` on failure.
    */
   public function read_comments(string $uri)
   {
@@ -194,9 +193,9 @@ class DB
 
 
   /**
-   * Returns a picture of $uri by reading embedded pictures from binary tags.
-   * @param string $uri
-   * @return false|string Binary data on success and false on failure.
+   * Returns a picture of `$uri` by reading embedded pictures from binary tags.
+   * @param string $uri Path / URI to file.
+   * @return string|false Binary data on success or `false` on failure.
    */
   public function read_picture(string $uri)
   {
@@ -219,13 +218,12 @@ class DB
 
 
   /**
-   * Searches for matching songs and returns an array of associative arrays containing song information.
-   * NOT case-sensitive!
+   * Case-INsensitive search for matching songs and returns an .
    * @see DB::find()
    * @param Filter $filter
    * @param string $sort
-   * @param array $window
-   * @return array|false
+   * @param array $window `Range` to return only a specified portion.
+   * @return array|false `array` of associative arrays containing song information on success or `false` on failure.
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {
@@ -242,8 +240,8 @@ class DB
    * @param bool $rescan If set to `true` also rescan unmodified files.
    * @param bool $force If set to `false` and an update Job is already running, just return its ID.
    *
-   *                    If true and an update Job is already running it starts another one and returns the ID of the new Job.
-   * @return int|false Returns the Job-ID on success or false on failure.
+   *                    If `true` and an update Job is already running it starts another one and returns the ID of the new Job.
+   * @return int|false Job-ID on success or `false` on failure.
    */
   public function update(string $uri = "", bool $rescan = false, bool $force = false)
   {

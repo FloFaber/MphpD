@@ -86,5 +86,4 @@ class Filter
     return $s."\"";
   }
 
-} // End MPDFilter
-
+}

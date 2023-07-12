@@ -42,7 +42,7 @@ class Channel
 
   /**
    * Subscribe to the channel.
-   * @return bool
+   * @return bool `true` on success and `false` on error.
    */
   public function subscribe(): bool
   {
@@ -52,7 +52,7 @@ class Channel
 
   /**
    * Unsubscribe the channel.
-   * @return bool
+   * @return bool `true` on success and `false` on error.
    */
   public function unsubscribe(): bool
   {
@@ -99,7 +99,7 @@ class Channel
   /**
    * Send a message to the channel.
    * @param string $message
-   * @return bool
+   * @return bool `true` on success and `false` on error.
    */
   public function send(string $message) : bool
   {
