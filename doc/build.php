@@ -142,6 +142,26 @@ foreach($docparser->getClasses() as $class){
     }
     $method_info["usage"] = $usage; unset($usage);
 
+
+    $method_info["params_text"] = "";
+    foreach($method_info["docblock"]?->getTagsByName("param") as $param){
+        $pa = [];
+        $ps = "";
+        $pr = $param->render();
+        $p = explode(" ", $pr, 4);
+        if(count($p) === 4){
+            $pa["type"] = $p[1];
+            $pa["name"] = $p[2];
+            $pa["text"] = $pd->text($p[3]);
+            $ps = "<li><h5>".$pa["name"]."</h5>";
+            $ps .= $pa["text"] . "</li>";
+        }else{
+            $ps = $pd->text($pr);
+        }
+        $method_info["params_text"] .= $ps;
+    }
+
+
     foreach($method_info as $k => $v){
       if(gettype($v) === "array"){ continue; }
       echo "Processing $k\n";
