@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.0
+
+You may now consider the majority of this library as "stable".
+
+* [FIX] Improved documentation.
+* [FIX] Fixed return type of Playlist::get_songs()
+
+
 ## v1.0.0-rc.2
 
 * [FIX] Fixed critical unnoticed typo in composer.json

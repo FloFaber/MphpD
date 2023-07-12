@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Output</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.0.0</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Output</h1>
+<p><p>This subclass is used to configure audio outputs.
+Have a look at the <a href="https://mpd.readthedocs.io/en/latest/protocol.html#audio-output-devices">MPD doc</a> for more.</p></p>
+
+<pre><code class="language-php">MphpD::output(int $id) : Output</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::output()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">Output::__construct(FloFaber\MphpD\MphpD $mphpd, int $id) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <p>@param \MphpD $mphpd</p><p>@param int $id</p>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">disable</h3>
+<p>
+    <p>Disable the given output</p>
+</p>
+
+<pre><code class="language-php">Output::disable() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">enable</h3>
+<p>
+    <p>Enable the given output</p>
+</p>
+
+<pre><code class="language-php">Output::enable() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">toggle</h3>
+<p>
+    <p>Enable/Disable the given output depending on the current state.</p>
+</p>
+
+<pre><code class="language-php">Output::toggle() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">set</h3>
+<p>
+    <p>Set a runtime attribute. Supported values can be retrieved from the <code>MphpD::outputs()</code> method.</p>
+</p>
+
+<pre><code class="language-php">Output::set(string $name, string $value) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <p>@param string $name</p><p>@param string $value</p>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
