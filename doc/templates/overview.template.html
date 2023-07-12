@@ -2,11 +2,18 @@
 <h1>Versions</h1>
 <ul id="versions"></ul>
 <script>
-    for(let i = 0; i < window.versions.length; i++){
-      let version = window.versions[i];
+    let sorted = window.versions.sort();
+    for(let i = 0; i < sorted.length; i++){
+      let version = sorted[i];
       document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
     }
 </script>
+
+
+<h2>Changelog</h2>
+<ul><li>
+<p><a href="https://raw.githubusercontent.com/FloFaber/MphpD/master/CHANGELOG.md">CHANGELOG.md</a></p>
+</li></ul>
 
 <h1>Guides</h1>
 <ul>
