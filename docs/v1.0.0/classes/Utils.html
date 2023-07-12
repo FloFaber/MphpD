@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Utils</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.0.0</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Utils</h1>
+<p><p>Class containing several utility or helper functions.</p></p>
+
+<pre><code class="language-php"></code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">escape_params</h3>
+<p>
+    <p>Function to parse an array of given parameters.</p>
+</p>
+
+<pre><code class="language-php">Utils::escape_params(array $params, int $flags = 4) : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$params</h5><p>Array of strings.</p></li><li><h5>$flags</h5><p>One or multiple OR-ed together of the following:</p>
+<ul>
+<li>MPD_ESCAPE_NORMAL        - &quot;beetle's juice&quot; becomes &quot;\&quot;beetle\'s juice\&quot;&quot;</li>
+<li>MPD_ESCAPE_DOUBLE_QUOTES - &quot;beetle's juice&quot; becomes &quot;\\&quot;beetle\'s juice\\&quot;&quot;</li>
+<li>MPD_ESCAPE_PREFIX_SPACE  - Adds a space at the params beginning</li>
+<li>MPD_ESCAPE_SUFFIX_SPACE  - Adds a space at the params ending</li>
+</ul></li>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    <p>string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">pos_or_range</h3>
+<p>
+    <p>Function to &quot;convert&quot; int or array to a pos or range argument</p>
+</p>
+
+<pre><code class="language-php">Utils::pos_or_range( $p) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <p>@param int|array $p</p>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>int|string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">parse_error</h3>
+<p>
+    <p>Function to parse an MPD error string to an array</p>
+</p>
+
+<pre><code class="language-php">Utils::parse_error(string $error) : FloFaber\MphpD\MPDException</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$error</h5><p>The error string. For example &quot;ACK [error@command_listNum] {current_command} message_text&quot;</p></li>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>FloFaber\MphpD\MPDException</code></h4>
+<p>
+    <p>\MPDException</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

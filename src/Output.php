@@ -23,7 +23,7 @@ class Output
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::output() instead to retrieve an instance of this class.
+   * Use `MphpD::output()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    * @param int $id
    */
@@ -36,7 +36,7 @@ class Output
 
   /**
    * Disable the given output
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function disable() : bool
   {
@@ -46,7 +46,7 @@ class Output
 
   /**
    * Enable the given output
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function enable(): bool
   {
@@ -56,7 +56,7 @@ class Output
 
   /**
    * Enable/Disable the given output depending on the current state.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function toggle(): bool
   {
@@ -68,7 +68,7 @@ class Output
    * Set a runtime attribute. Supported values can be retrieved from the `MphpD::outputs()` method.
    * @param string $name
    * @param string $value
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function set(string $name, string $value): bool
   {

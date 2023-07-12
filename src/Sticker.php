@@ -22,7 +22,7 @@ class Sticker
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::sticker() instead to retrieve an instance of this class.
+   * Use `MphpD::sticker()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    * @param string $type
    * @param string $uri
@@ -43,8 +43,8 @@ class Sticker
 
   /**
    * Returns the value of the specified sticker
-   * @param string $name
-   * @return false|string Returns string on success and false on failure
+   * @param string $name Name of the sticker.
+   * @return false|string `string` on success or `false` on failure.
    */
   public function get(string $name)
   {
@@ -64,9 +64,9 @@ class Sticker
 
   /**
    * Add a value to the specified sticker.
-   * @param string $name
-   * @param string $value
-   * @return bool
+   * @param string $name Name of the value.
+   * @param string $value Value of the value.
+   * @return bool `true` on success or `false` on failure.
    */
   public function set(string $name, string $value) : bool
   {
@@ -77,7 +77,7 @@ class Sticker
   /**
    * Deletes the value from the specified sticker.
    * @param string $name If omitted all sticker values will be deleted.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function delete(string $name = ""): bool
   {
@@ -87,7 +87,7 @@ class Sticker
 
   /**
    * Returns an associative array containing sticker names and values of the specified object.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function list()
   {
@@ -110,11 +110,11 @@ class Sticker
 
 
   /**
-   * Search the sticker database for sticker with the specified name and/or value in the specified $uri
+   * Search the sticker database for sticker with the specified name and/or value in the specified `$uri`
    * @param string $name The sticker name
    * @param string $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
    * @param string $value Optional. The value to search for. Only in combination with $operator.
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function find(string $name, string $operator = "", string $value = "")
   {

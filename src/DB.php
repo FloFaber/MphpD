@@ -23,7 +23,7 @@ class DB
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::db() instead to retrieve an instance of this class.
+   * Use `MphpD::db()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    */
   public function __construct(MphpD $mphpd)
@@ -35,7 +35,7 @@ class DB
   /**
    * Returns the albumart (binary!) for given song.
    * @param string $songuri
-   * @return false|string Binary data on success or false on failure.
+   * @return false|string binary `string` on success or `false` on failure.
    */
   public function albumart(string $songuri)
   {
@@ -58,12 +58,14 @@ class DB
 
 
   /**
-   * Counts the number of songs and their playtime matching the specified `$filter`.
+   * Counts the number of songs and their playtime matching the specified Filter.
    * @param Filter $filter
-   * @param string $group A tag name like `artist`. If specified the results will be grouped by this tag.
-   * @return array|false If `$group` is omitted: Associative array containing a "songs" and "playtime" key.
+   * @param string $group A tag name like `artist` by which the results will be grouped.
    *
-   *                     If `$group` is specified: Array of associative arrays containing a "songs" and "playtime".
+   *                      If omitted returns an associative array containing a "songs" and "playtime" key.
+   *
+   *                      If specified an array of associative array will be returned.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function count(Filter $filter, string $group = "")
   {
@@ -79,7 +81,7 @@ class DB
 
   /**
    * Calculate the song's fingerprint
-   * @param string $uri Path / URI to song.
+   * @param string $uri URI to the file.
    * @return string|false fingerprint on success or `false` on failure.
    */
   public function fingerprint(string $uri)
@@ -91,13 +93,13 @@ class DB
 
 
   /**
-   * Case-sensitive search for songs matching `Filter` and return an array of associative array of found songs.
+   * Case-sensitive search for songs matching Filter and return an array of associative array of found songs.
    * @param Filter $filter
-   * @param string $sort Tag name to sort by. Like artist. If prefixed with `-` the result will be sorted descending.
+   * @param string $sort Tag name to sort by. Like artist. If prefixed with `-` it will be sorted descending.
    *
    *                     If omitted the order is undefined.
-   * @param array $window `Range` to retrieve only a given portion.
-   * @return array|false Returns `array` on success or `false` on failure.
+   * @param array $window Retrieve only a given portion
+   * @return array|false `array` on success and `false` on failure.
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
@@ -110,12 +112,15 @@ class DB
 
   /**
    * Lists unique tags values of the specified type. `$type` can be any tag supported by MPD.
+   *
    * @param string $type Any tag supported by MPD. Like artist or album.
    * @param Filter|null $filter
-   * @param string $group Tag name to group the result by. Like artist or album.
-   * @return array|false    If `$group` is omitted: `array` of unique tag values of the specified type.
+   * @param string $group Tag name by which the result gets grouped. Like artist or album.
    *
-   *                        If `$group` is specified: `array` of associative arrays containing the grouped result.
+   *                      If omitted returns an array of unique tag values of the specified type.
+   *
+   *                      If specified returns an array of associative arrays containing the grouped result.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function list(string $type, Filter $filter = null, string $group = "")
   {
@@ -133,10 +138,10 @@ class DB
 
   /**
    * List files,directories and playlists in `$uri`
-   * @param string $uri Path / URI to a folder.
+   * @param string $uri Directory URI.
    * @param bool $metadata Specifies if additional information should be included.
-   * @param bool $recursive Specifies if files and directories should be listed recursively.
-   * @return array|false Returns an `array` containing the keys `files`, `directories` and `playlists` on success or `false` on failure.
+   * @param bool $recursive Specified if files and directories should be listed recursively.
+   * @return array|false `array` containing the keys `files`, `directories` and `playlists` on success or `false` on failure.
    */
   public function ls(string $uri, bool $metadata = false, bool $recursive = false)
   {
@@ -183,8 +188,8 @@ class DB
   /**
    * Read "comments" from the specified file.
    * The meaning of these "comments" depend on the codec. For an OGG file this lists the vorbis commands.
-   * @param string $uri Path / URI to file.
-   * @return array|false `array` containing the comments on success or `false` on failure.
+   * @param string $uri Song URI.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function read_comments(string $uri)
   {
@@ -194,8 +199,8 @@ class DB
 
   /**
    * Returns a picture of `$uri` by reading embedded pictures from binary tags.
-   * @param string $uri Path / URI to file.
-   * @return string|false Binary data on success or `false` on failure.
+   * @param string $uri Song URI.
+   * @return false|string binary-data `string` on success and `false` on failure.
    */
   public function read_picture(string $uri)
   {
@@ -218,12 +223,12 @@ class DB
 
 
   /**
-   * Case-INsensitive search for matching songs and returns an .
+   * Case-INsensitive search for matching songs and returns an array of associative arrays containing song information.
    * @see DB::find()
    * @param Filter $filter
    * @param string $sort
-   * @param array $window `Range` to return only a specified portion.
-   * @return array|false `array` of associative arrays containing song information on success or `false` on failure.
+   * @param array $window
+   * @return array|false `array` on success or `false` on failure.
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {
@@ -240,7 +245,7 @@ class DB
    * @param bool $rescan If set to `true` also rescan unmodified files.
    * @param bool $force If set to `false` and an update Job is already running, just return its ID.
    *
-   *                    If `true` and an update Job is already running it starts another one and returns the ID of the new Job.
+   *                    If true and an update Job is already running it starts another one and returns the ID of the new Job.
    * @return int|false Job-ID on success or `false` on failure.
    */
   public function update(string $uri = "", bool $rescan = false, bool $force = false)

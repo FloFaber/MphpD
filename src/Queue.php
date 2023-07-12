@@ -20,7 +20,7 @@ class Queue
 
   /**
    * This class is not intended for direct usage.
-   * Use MphpD::queue() instead to retrieve an instance of this class.
+   * Use `MphpD::queue()` instead to retrieve an instance of this class.
    * @param MphpD $mphpd
    */
   public function __construct(MphpD $mphpd)
@@ -30,13 +30,13 @@ class Queue
 
 
   /**
-   * Adds the file $uri to the queue (directories add recursively). $uri can also be a single file.
+   * Adds the file `$uri` to the queue (directories add recursively). `$uri` can also be a single file.
    * @param string $uri Can be a single file or folder.
    *                    If connected via Unix socket you may add arbitrary local files (absolute paths)
    * @param int|string $pos If set the song is inserted at the specified position.
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
-   * @return bool Returns `true` on success and `false` on failure.
+   * @return bool `true` on success and `false` on failure.
    */
   public function add(string $uri, $pos = -1) : bool
   {
@@ -50,7 +50,7 @@ class Queue
    * @param int|string $pos If set the song is inserted at the specified position.
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
-   * @return int|false Returns the song ID on success or false on failure.
+   * @return int|false The song ID on success or `false` on failure.
    */
   public function add_id(string $uri, $pos = -1)
   {
@@ -61,13 +61,13 @@ class Queue
 
 
   /**
-   * Same as `search()` but adds the songs into the Queue at position $pos.
+   * Same as `search()` but adds the songs into the Queue at position `$pos`.
    * @see DB::search()
    * @param Filter $filter
    * @param string $sort
    * @param array $window
    * @param int $position
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
   {
@@ -86,7 +86,7 @@ class Queue
    * @param string $sort
    * @param array $window
    * @param int $pos Optional. If specified the matched songs will be added to this position in the Queue.
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1): bool
   {
@@ -100,7 +100,7 @@ class Queue
 
   /**
    * Clears the queue
-   * @return bool Returns true on success and false on failure.
+   * @return bool `true` on success and `false` on failure.
    */
   public function clear() : bool
   {
@@ -111,7 +111,7 @@ class Queue
   /**
    * Deletes a song or a range of songs from the queue
    * @param int|array $p The song position or Range
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function delete($p) : bool
   {
@@ -120,9 +120,9 @@ class Queue
 
 
   /**
-   * Deletes the song with ID $songid from the Queue
-   * @param int $songid
-   * @return bool
+   * Deletes the song with ID `$songid` from the Queue
+   * @param int $songid The song ID
+   * @return bool `true` on success and `false` on failure.
    */
   public function delete_id(int $songid) : bool
   {
@@ -131,12 +131,12 @@ class Queue
 
 
   /**
-   * Moves the song at $from to $to in the queue
+   * Moves the song at `$from` to `$to` in the queue
    * @param int|array $from Song position or Range
    * @param string $to If starting with + or -, then it is relative to the current song
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved range).
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function move($from, string $to) : bool
   {
@@ -148,12 +148,12 @@ class Queue
 
 
   /**
-   * Moves the song with $from (songid) to $to (playlist index) in the queue
-   * @param int $from
-   * @param string $to If starting with + or -, then it is relative to the current song
+   * Moves the song with `$from` (songid) to `$to` (playlist index) in the queue.
+   * @param int $from Song ID
+   * @param string $to Playlist Index. If starting with + or -, then it is relative to the current song
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved song).
-   * @return bool
+   * @return bool `true` on success and `false` on failure.
    */
   public function move_id(int $from, string $to) : bool
   {
@@ -168,7 +168,7 @@ class Queue
    * @param Filter $filter
    * @param string $sort
    * @param array $window
-   * @return array|false
+   * @return array|false `array` on success or `false` on failure.
    */
   public function find(Filter $filter, string $sort = "", array $window = [])
   {
@@ -180,9 +180,9 @@ class Queue
 
 
   /**
-   * Returns an associative arrays containing information about the song with ID $songid.
-   * @param int $songid
-   * @return array|false Associative array containing song information or false on failure.
+   * Returns an associative arrays containing information about the song with ID `$songid`.
+   * @param int $songid Song ID
+   * @return array|false Associative `array` containing song information or `false` on failure.
    */
   public function get_id(int $songid)
   {
@@ -191,12 +191,11 @@ class Queue
 
 
   /**
-   * If $p is omitted returns an array of associative arrays containing information about songs in the Queue.
-   * If $p is specified returns an associative array containing the given songs information only.
+   * Returns information about all or specific songs in the Queue.
    * @param $p int|array Optional. Song Position or Range.
-   *
-   *                     If omitted all songs in the queue will be returned.
-   * @return array|false Array on success. False on failure.
+   *                     If omitted returns an array of associative arrays containing information about all songs in the Queue.
+   *                     If specified returns an associative array containing the given songs information only.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function get($p = -1) : array
   {
@@ -217,7 +216,7 @@ class Queue
    * @param Filter $filter The Filter.
    * @param string $sort If specified the results are sorted by the specified tag.
    * @param array $window If specified returns only the given portion.
-   * @return array|false Returns array on success and false on failure.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function search(Filter $filter, string $sort = "", array $window = [])
   {
@@ -229,13 +228,13 @@ class Queue
 
 
   /**
-   * Returns an array of changed songs currently in the playlist since $version.
-   * @param int $version The current version can be retrieved with MphpD::status([ "playlist" ]).
+   * Returns an array of changed songs currently in the playlist since `$version`.
+   * @param int $version The current version can be retrieved with `MphpD::status([ "playlist" ])`.
    * @param int|array $range Position of song or Range
    * @param bool $metadata If set to true the metadata will be included.
    *
    *                       If set to false only the position and ID of the changed songs will be returned.
-   * @return array|false Returns array on success and false on failure.
+   * @return array|false `array` on success or `false` on failure.
    */
   public function changes(int $version, $range = -1, bool $metadata = false)
   {
@@ -248,12 +247,12 @@ class Queue
 
 
   /**
-   * Sets the priority of given songs to $priority.
+   * Sets the priority of given songs to `$priority`.
    * This only has effect when the `random`-mode is enabled.
    * A higher priority means that it will be played first when `random` is enabled.
-   * @param int $priority Priority. 0-255.
+   * @param int $priority Priority 0-255.
    * @param int|array $range Position of song or Range
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function prio(int $priority, $range = -1) : bool
   {
@@ -262,12 +261,12 @@ class Queue
 
 
   /**
-   * Sets the priority of Song ID $id to $priority.
+   * Sets the priority of Song ID `$id` to $priority.
    * This only has effect when the `random`-mode is enabled.
    * A higher priority means that it will be played first when `random` is enabled.
-   * @param int $priority
-   * @param int $id
-   * @return bool
+   * @param int $priority Priority 0-255.
+   * @param int $id Song ID.
+   * @return bool `true` on success or `false` on failure.
    */
   public function prio_id(int $priority, int $id) : bool
   {
@@ -278,9 +277,9 @@ class Queue
   /**
    * Set's the portion of the song that should be played.
    * You can't edit the currently playing song!
-   * @param int $songid
+   * @param int $songid Song ID.
    * @param array $range Range. Start and End are offsets in seconds. If omitted the "play-range" will be removed from the song.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function range_id(int $songid, array $range = []) : bool
   {
@@ -295,7 +294,7 @@ class Queue
   /**
    * Shuffle the Queue.
    * @param array $range If specified only this portion will be shuffled.
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function shuffle(array $range = []) : bool
   {
@@ -307,7 +306,7 @@ class Queue
    * Swap two songs in Queue. By Position.
    * @param int $songpos_1
    * @param int $songpos_2
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function swap(int $songpos_1, int $songpos_2) : bool
   {
@@ -317,9 +316,9 @@ class Queue
 
   /**
    * Swap two songs in Queue. By ID.
-   * @param int $songid_1
-   * @param int $songid_2
-   * @return bool
+   * @param int $songid_1 First song ID
+   * @param int $songid_2 Second song ID
+   * @return bool `true` on success or `false` on failure.
    */
   public function swap_id(int $songid_1, int $songid_2) : bool
   {
@@ -329,10 +328,10 @@ class Queue
 
   /**
    * Adds a tag to the specified song
-   * @param int $songid
+   * @param int $songid Song ID
    * @param string $tag Tag name
    * @param string $value Tag value
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function add_tag_id(int $songid, string $tag, string $value) : bool
   {
@@ -342,9 +341,9 @@ class Queue
 
   /**
    * Removes a tag from the specified song
-   * @param int $songid
+   * @param int $songid Song ID
    * @param string $tag Tag name
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   public function clear_tag_id(int $songid, string $tag) : bool
   {

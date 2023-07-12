@@ -13,6 +13,10 @@ require_once __DIR__ . "/Utils.php";
 require_once __DIR__ . "/MPDException.php";
 
 
+/**
+ * Class which is used for socket communication and extended by the MphpD class.
+ * Is and should only be used inside the library.
+ */
 class Socket
 {
 
@@ -64,7 +68,7 @@ class Socket
 
 
   /**
-   * Send $command with $params to the MPD server.
+   * Send `$command` with `$params` to the MPD server.
    *
    * You, the library's user, are not intended to ever
    * need this method. If you ever need it because the library does not support
@@ -94,8 +98,7 @@ class Socket
    * @param array $list_start In combination with `$mode = MPD_CMD_READ_LIST` indicates on which `key` a new list starts.
    * @return array|bool  False on failure.
    *                     Array on success.
-   *                     True on success if $mode is MPD_CMD_READ_BOOL
-   * @link https://mphpd.org/doc/methods/cmd
+   *                     True on success if `$mode` is `MPD_CMD_READ_BOOL`.
    */
   public function cmd(string $command, array $params = [], int $mode = MPD_CMD_READ_NORMAL, array $list_start = [])
   {
@@ -136,6 +139,10 @@ class Socket
   }
 
 
+  /**
+   * Returns the socket resource.
+   * @return Resource
+   */
   public function get_socket()
   {
     return $this->socket;
@@ -154,7 +161,7 @@ class Socket
 
   /**
    * Function to compare a given version string with the current version of MPD
-   * @param string $version
+   * @param string $version Version to compare to.
    * @return bool Returns true if MPDs version is equal to or newer than the given version. False otherwise.
    */
   public function version_bte(string $version): bool
@@ -167,7 +174,7 @@ class Socket
    * Waits until there is a noteworthy change in one or more of MPD’s subsystems.
    * @param string $subsystem
    * @param int $timeout Specifies how long to wait for MPD to return an answer.
-   * @return array|false Returns an array of changed subsystems or false on timeout.
+   * @return array|false `array` of changed subsystems or `false` on timeout.
    */
   public function idle(string $subsystem = "", int $timeout = 60)
   {
@@ -207,9 +214,9 @@ class Socket
 
 
   /**
-   * Sets the max. binary response size to $limit bytes for the current connection.
-   * @param int $limit
-   * @return bool
+   * Sets the max. binary response size to `$limit` bytes for the current connection.
+   * @param int $limit The limit in bytes.
+   * @return bool `true` on success or `false` on failure.
    */
   private function set_binarylimit(int $limit) : bool
   {
@@ -219,7 +226,7 @@ class Socket
 
   /**
    * Returns the current binarylimit
-   * @return int
+   * @return int The current binarylimit.
    */
   public function get_binarylimit() : int
   {
@@ -229,7 +236,7 @@ class Socket
 
   /**
    * Send the password for authentication
-   * @return bool
+   * @return bool `true` on success or `false` on failure.
    */
   private function password(string $password)
   {
@@ -255,7 +262,7 @@ class Socket
 
 
   /**
-   * Return an array containing information about the last error
+   * Return an array containing information about the last error.
    * @return array associative array containing the following keys:
    * <pre>
    * [
@@ -282,8 +289,8 @@ class Socket
 
   /**
    * Initiate connection to MPD with the parameters given at instantiation.
-   * @throws MPDException Throws MPDException when a connection error occurs.
-   * @return bool
+   * @throws MPDException In case a connection error occurs.
+   * @return bool `true` on success or `false` on failure.
    */
   public function connect() : bool
   {
@@ -353,7 +360,7 @@ class Socket
 
 
   /**
-   * Function to read only a single line. Stops on '\n', 'OK', 'ACK' and 'list_OK'
+   * Function to read only a single line. Stops on `\n`, `OK`, `ACK` and `list_OK`
    * @param string $lb "Line Buffer"
    * @return int  0 => Failure
    *
