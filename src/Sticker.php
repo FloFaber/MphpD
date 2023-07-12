@@ -110,7 +110,7 @@ class Sticker
 
 
   /**
-   * Search the sticker database for sticker with the specified name and/or value in the specified $uri
+   * Search the sticker database for sticker with the specified name and/or value in the specified `$uri`
    * @param string $name The sticker name
    * @param string $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
    * @param string $value Optional. The value to search for. Only in combination with $operator.

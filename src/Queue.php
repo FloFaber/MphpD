@@ -191,11 +191,10 @@ class Queue
 
 
   /**
-   * If $p is omitted returns an array of associative arrays containing information about songs in the Queue.
-   * If $p is specified returns an associative array containing the given songs information only.
+   * Returns information about all or specific songs in the Queue.
    * @param $p int|array Optional. Song Position or Range.
-   *
-   *                     If omitted all songs in the queue will be returned.
+   *                     If omitted returns an array of associative arrays containing information about all songs in the Queue.
+   *                     If specified returns an associative array containing the given songs information only.
    * @return array|false `array` on success or `false` on failure.
    */
   public function get($p = -1) : array
