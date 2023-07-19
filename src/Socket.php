@@ -88,9 +88,12 @@ class Socket
    *                  * MPD_CMD_READ_LIST        - Parses the answer as a list of "key=>value" arrays.
    *                                               Used for commands like "listplaylists" where keys are not unique.
    *
-   *                  * MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple "indexed" array.
+   *                  * MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple "list"-array.
    *                                               Used for commands like "idle" where there is
    *                                               only a single possible "key".
+   *
+   *                                               If used for commands where more than a single key is possible e.g. `listplaylists` only the value of the first seen key is added to the returned list.
+   *                                               All other keys are ignored. In this case you probably want to use `MPD_CMD_READ_LIST`.
    *
    *                  * MPD_CMD_READ_BOOL        - Parses the answer into `true` on OK and list_OK and `false` on `ACK`.
    *                                               Used for commands which do not return anything but OK or ACK.
@@ -500,9 +503,8 @@ class Socket
         $b[] = $tmp;
         $tmp = [];
 
-        // If we only parse a list with a single possible key just push its value to the result array.
-        // If this is used in a command which returns more than one possible key the result will look a little funky.
-        // We can, however, simple blame the user.
+        // If we only parse a list with a single possible key make sure $first_key is already set OR $first_key equals the current key.
+        // If true push the value to the result array. That way we eliminate the risk of funky responses if this mode is used incorrectly.
       }elseif($mode === MPD_CMD_READ_LIST_SINGLE){
         $b[] = $v;
       }
