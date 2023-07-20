@@ -20,7 +20,7 @@ jobs:
     - name: rename src
       run: mv ./src ./MphpD
     - name: move .md files to MphpD
-      run: mv ./LICENSE.md ./README.md ./CHANGELOG.md ./MphpD/
+      run: cp ./LICENSE.md ./README.md ./CHANGELOG.md ./MphpD/
     - name: parse changelog
       run: |
         echo "# Changelog" > CHANGES.md
