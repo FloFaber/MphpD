@@ -2,9 +2,8 @@
 <h1>Versions</h1>
 <ul id="versions"></ul>
 <script>
-    let sorted = window.versions.sort();
-    for(let i = 0; i < sorted.length; i++){
-      let version = sorted[i];
+    for(let i = 0; i < window.versions.length; i++){
+      let version = window.versions[i];
       document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
     }
 </script>
