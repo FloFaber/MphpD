@@ -108,7 +108,7 @@ foreach($docparser->getClasses() as $class){
     /*foreach($method_info["params"] as $param){
       $method_info["params_text"] .= "<h5>\$".$param->getName()."</h5>";
     }*/
-    foreach($method_info["docblock"]?->getTagsByName("param") as $param){
+    foreach($method_info["docblock"]?->getTagsByName("param") ?? [] as $param){
       $method_info["params_text"] .= $pd->text(($param)?->render());
     }
     if(!$method_info["params"]){ $method_info["params_text"] = "None."; }
@@ -144,21 +144,24 @@ foreach($docparser->getClasses() as $class){
 
 
     $method_info["params_text"] = "";
-    foreach($method_info["docblock"]?->getTagsByName("param") as $param){
+    foreach($method_info["docblock"]?->getTagsByName("param") ?? [] as $param){
         $pa = [];
         $ps = "";
         $pr = $param->render();
         $p = explode(" ", $pr, 4);
-        if(count($p) === 4){
+        if(count($p) >= 3){
             $pa["type"] = $p[1];
             $pa["name"] = $p[2];
-            $pa["text"] = $pd->text($p[3]);
+            $pa["text"] = (!empty($p[3]) ? $pd->text($p[3]) : "");
             $ps = "<li><h5>".$pa["name"]."</h5>";
-            $ps .= $pa["text"] . "</li>";
+            $ps .= $pa["text"] . "</li>\n";
         }else{
             $ps = $pd->text($pr);
         }
         $method_info["params_text"] .= $ps;
+    }
+    if(count($method_info["docblock"]?->getTagsByName("param") ?? []) === 0){
+      $method_info["params_text"] = "<i>None.</i>";
     }
 
 
