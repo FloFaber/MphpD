@@ -24,7 +24,7 @@ jobs:
     - name: parse changelog
       run: |
         echo "# Changelog" > CHANGES.md
-        awk -v version="${{ env.TAGNAME }}" '/## /{printit = $2 == version}; printit;' CHANGELOG.md >> CHANGES.md
+        awk -v version="${{ env.TAGNAME }}" '/## /{printit = $2 == version}; printit;' ./CHANGELOG.md >> CHANGES.md
     - name: Zip Folder
       run: zip -r "${{ env.OUTFILE }}.zip" ${{ env.INCLUDE }}
     - name: Tar Folder
