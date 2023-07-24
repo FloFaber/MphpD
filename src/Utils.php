@@ -52,7 +52,7 @@ class Utils
       // @ToDo make sure this works aka. test this
       if(strlen($param) === 0){ continue; }
       //$param = str_replace("\\", "\\\\", $param);
-      $param = escapeshellcmd(escapeshellcmd($param));
+      $param = escapeshellcmd($param);
       $parsed .= $prefix.$quote.$param.$quote.$suffix;
     }
     return $parsed;
