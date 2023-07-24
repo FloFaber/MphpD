@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.2
+
+* [FIX] command parameters are not double-escaped anymore. This caused a lot of problems with special chars.
+
+
 ## v1.0.1
 
 * [FIX] Fix parsing behaviour for mode `MPD_CMD_READ_LIST_SINGLE`. We do not [blame the user](https://github.com/FloFaber/MphpD/commit/e0db40675e56d96fddcde8a889c2cde72a907cc8#diff-0b6cfa6f8773aba0062f7e069cd25c530c73b6d545dfa3bbbb04baee77cb19eeL505) anymore.
