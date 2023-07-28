@@ -79,23 +79,43 @@ class Socket
    * @param array $params Parameters, automatically escaped
    * @param int $mode One of the following constants:
    *
-   *                  * MPD_CMD_READ_NONE        - Do not read anything from the answer. Returns an empty array.
+   *                  * <b>MPD_CMD_READ_NONE</b>   - Do not read anything from the answer. Returns an empty array.
    *
-   *                  * MPD_CMD_READ_NORMAL      - Parses the answer as a one-dimensional "key=>value" array.
+   *                  * <b>MPD_CMD_READ_NORMAL</b> - Parses the answer as a one-dimensional "key=>value" array.
    *                                               If a key already existed its value gets overwritten.
    *                                               Used for commands like "status" where only unique keys are given.
    *
-   *                  * MPD_CMD_READ_LIST        - Parses the answer as a list of "key=>value" arrays.
+   *                  * <b>MPD_CMD_READ_GROUP</b>  - Used for parsing grouped responses like `list album group albumartist`.
+   *                                               Example:
+   *                                               <code>
+   *                                               Albumartist: Eternal Decision
+   *                                               Album: E.D.III
+   *                                               Album: Eternal Decision
+   *                                               Album: Ghost in the machine
+   *                                               Albumartist: Black Sabbath
+   *                                               Album: Paranoid
+   *                                               Album: Reunion
+   *                                               </code>
+   *                                               Will become<code>
+   *                                               [
+   *                                                 "Eternal Decision" => [
+   *                                                   "album" => [ "E.D.III", "Eternal Decision", "Ghost in the machine" ]
+   *                                                 ], "Black Sabbath" => [
+   *                                                   "album" => [ "Paranoid", "Reunion" ]
+   *                                                 ]
+   *                                               ]</code>
+   *
+   *                  * <b>MPD_CMD_READ_LIST</b>   - Parses the answer as a list of "key=>value" arrays.
    *                                               Used for commands like "listplaylists" where keys are not unique.
    *
-   *                  * MPD_CMD_READ_LIST_SINGLE - Parses the answer into a simple "list"-array.
+   *                  * <b>MPD_CMD_READ_LIST_SINGLE</b> - Parses the answer into a simple "list"-array.
    *                                               Used for commands like "idle" where there is
    *                                               only a single possible "key".
    *
    *                                               If used for commands where more than a single key is possible e.g. `listplaylists` only the value of the first seen key is added to the returned list.
    *                                               All other keys are ignored. In this case you probably want to use `MPD_CMD_READ_LIST`.
    *
-   *                  * MPD_CMD_READ_BOOL        - Parses the answer into `true` on OK and list_OK and `false` on `ACK`.
+   *                  * <b>MPD_CMD_READ_BOOL</b>   - Parses the answer into `true` on OK and list_OK and `false` on `ACK`.
    *                                               Used for commands which do not return anything but OK or ACK.
    *
    * @param array $list_start In combination with `$mode = MPD_CMD_READ_LIST` indicates on which `key` a new list starts.
@@ -267,14 +287,14 @@ class Socket
   /**
    * Return an array containing information about the last error.
    * @return array associative array containing the following keys:
-   * <pre>
+   * <code>
    * [
    *   "code" => (int),
    *   "message" => (string),
    *   "command" => (string),
    *   "commandlistnum" => (int)
    * ]
-   * </pre>
+   * </code>
    */
   public function get_last_error() : array
   {
@@ -400,8 +420,8 @@ class Socket
 
     // return stop code if that was all to read
     if(str_starts_with($lb, "OK") OR
-       str_starts_with($lb, "ACK") OR
-       str_starts_with($lb, "list_OK"))
+      str_starts_with($lb, "ACK") OR
+      str_starts_with($lb, "list_OK"))
     {
       return 3;
     }
@@ -445,6 +465,8 @@ class Socket
   {
 
     $b = [];
+    $groups = [];
+    $last_group = NULL;
     $tmp = [];
     $first_key = NULL;
 
@@ -479,10 +501,6 @@ class Socket
       $k = $line["k"];
       $v = $line["v"];
 
-      // push to current key-value pair to a tmp array which we later will at to the list of items.
-      $tmp[$k] = $v;
-
-      // on the last key (the one after the first key) we push the stored data to the result array
       // Example:
       // channel: test    <- First key
       // message: hi      <- The last key
@@ -492,6 +510,25 @@ class Socket
       // message: goodbye
       // OK
 
+      // in group mode @ToDo comment.
+      if($mode === MPD_CMD_READ_GROUP){
+
+        if(!empty($v) AND ($k === $first_key || $first_key === null)){
+          $groups[$v] = [];
+          $last_group = $v;
+        }elseif(!empty($last_group)){
+          if(!isset($groups[$last_group][$k])){
+            $groups[$last_group][$k] = [];
+          }
+          if(!empty($v)){
+            $groups[$last_group][$k][] = $v;
+          }
+        }
+
+      }else{
+        // push to current key-value pair to a tmp array which we later will at to the list of items.
+        $tmp[$k] = $v;
+      }
 
       // omfg
       // ok,ok. If we read a list and the `key` of the next line is either in `$list_starts` or is equal to `$first_key` we push the list-item to the list of items.
@@ -510,7 +547,7 @@ class Socket
       }
 
       // set the first encountered key if there isn't already one
-      if(($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE) && $first_key === NULL){
+      if(($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE || $mode === MPD_CMD_READ_GROUP) && $first_key === NULL){
         $first_key = $k;
       }
 
@@ -518,9 +555,14 @@ class Socket
 
     if($mode === MPD_CMD_READ_BOOL){
       return true;
+    }elseif($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE){
+      return $b;
+    }elseif($mode === MPD_CMD_READ_GROUP){
+      return $groups;
+    }else{
+      return $tmp;
     }
 
-    return ($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE ? $b : $tmp);
   }
 
 }
