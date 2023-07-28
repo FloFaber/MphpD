@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.1.0-rc.1
+
+### Improvements
+* Added `$case_sensitive`-parameter to `DB::count`. MPD command `searchcount` is therefore supported as well.
+* Added new parse-mode `MPD_CMD_READ_GROUP` for grouped responses.
+
+### Fixes
+* `DB::count` and `DB::list` now return correct values when `$group` is set. This is probably a breaking change but it was broken before.
+
+
 ## v1.0.2
 
 * [FIX] command parameters are not double-escaped anymore. This caused a lot of problems with special chars.
