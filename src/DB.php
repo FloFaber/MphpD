@@ -71,7 +71,7 @@ class DB
   {
     $m = MPD_CMD_READ_NORMAL;
     if(!empty($group)){
-      $m = MPD_CMD_READ_LIST;
+      $m = MPD_CMD_READ_GROUP;
     }
     return $this->mphpd->cmd("count $filter", [
       ($group ? "group" : ""), ($group ?: "")
@@ -126,7 +126,7 @@ class DB
   {
     $m = MPD_CMD_READ_LIST_SINGLE;
     if(!empty($group)){
-      $m = MPD_CMD_READ_LIST;
+      $m = MPD_CMD_READ_GROUP;
     }
 
     $type = Utils::escape_params([ $type ]);
