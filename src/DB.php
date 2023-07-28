@@ -65,15 +65,22 @@ class DB
    *                      If omitted returns an associative array containing a "songs" and "playtime" key.
    *
    *                      If specified an array of associative array will be returned.
+   * @param bool $case_sensitive If `true` the search will be case-sensitive, If `false` the search will be case-insensitive.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function count(Filter $filter, string $group = "")
+  public function count(Filter $filter, string $group = "", bool $case_sensitive = true)
   {
     $m = MPD_CMD_READ_NORMAL;
     if(!empty($group)){
       $m = MPD_CMD_READ_GROUP;
     }
-    return $this->mphpd->cmd("count $filter", [
+
+    $cmd = "count";
+    if($case_sensitive === false){
+      $cmd = "searchcount";
+    }
+
+    return $this->mphpd->cmd("$cmd $filter", [
       ($group ? "group" : ""), ($group ?: "")
     ], $m);
   }
