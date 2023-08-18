@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.0-rc.1
+## v1.1.0
 
 ### Improvements
 * Added `$case_sensitive`-parameter to `DB::count`. MPD command `searchcount` is therefore supported as well.
