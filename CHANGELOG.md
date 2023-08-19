@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.0-rc.3
+
+### Fixes
+
+* Fixed `MPD_CMD_READ_LIST_SINGLE` for real this time.
+
+
 ## v1.1.0-rc.2
 
 ### Fixes
