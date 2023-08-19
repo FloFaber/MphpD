@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.1.0-rc.3</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <h1>A fully-featured, dependency-free PHP library for MPD</h1>
+<p>MphpD is a library for the Music Player Daemon.
+It lets you control MPD from within your PHP application in a simple and object-oriented
+way while also taking care of escaping, parsing, error reporting and all the other
+painful stuff.</p>
+<p>The whole MPD <a href="https://mpd.readthedocs.io/en/latest/protocol.html">protocol</a> is supported!</p>
+<blockquote>
+<p><strong>Warning</strong></p>
+<p>This Library as well as it's documentation is rather young and therefore not perfect.</p>
+<p>Please report any bugs or issues you encounter <a href="https://github.com/FloFaber/MphpD/issues">here</a>. Thanks.</p>
+</blockquote>
+<h2>Installation</h2>
+<p>You can either install this library by using composer:</p>
+<pre><code>composer require flofaber/mphpd</code></pre>
+<p>and then autoload it:</p>
+<pre><code class="language-PHP">require_once __DIR__ . "/vendor/autoload.php";</code></pre>
+<p>or by simply <a href="https://github.com/FloFaber/MphpD/releases">downloading</a> it and including it in your code like so:</p>
+<pre><code class="language-PHP">require_once __DIR__ . "/MphpD/MphpD.php";</code></pre>
+<h2>Usage</h2>
+<p>Create a new MphpD instance:</p>
+<pre><code class="language-PHP">use FloFaber\MphpD\MphpD;
+use FloFaber\MphpD\MPDException;
+
+$mphpd = new MphpD([
+  "host" =&gt; "127.0.0.1",
+  "port" =&gt; 6600,
+  "timeout" =&gt; 5
+]);</code></pre>
+<p>and connect to MPD</p>
+<pre><code class="language-PHP">try{
+  $mphpd-&gt;connect();
+}catch (MPDException $e){
+  echo $e-&gt;getMessage();
+  return false;
+}</code></pre>
+<h2>Example</h2>
+<p>Here are some examples of what you can do with it:</p>
+<pre><code class="language-PHP">// get MPD's status like current song, volume, state, etc...
+$status = $mphpd-&gt;status();
+
+// if you only want to retrieve only one (or more) values
+// you can pass it a list of keys.
+$state = $mphpd-&gt;status([ "state" ]);
+
+// clear the queue
+$mphpd-&gt;queue()-&gt;clear();
+
+// load the first 10 songs of a playlist into the queue and exit on failure.
+if(!$mphpd-&gt;playlist("some-playlist")-&gt;load([0,10])){
+  echo $mphpd-&gt;get_last_error()["message"]; // prints "No such playlist"
+  return false;
+}
+
+// shuffle the queue
+$mphpd-&gt;queue()-&gt;shuffle();
+
+// adjust volume to 40%
+$mphpd-&gt;player()-&gt;volume(40);
+
+// start playing
+$mphpd-&gt;player()-&gt;play();</code></pre>
+<p>For further information have a look at the <a href="https://mphpd.org/latest/overview.html">Documentation</a>.</p>
+<h2>Required PHP extensions</h2>
+<ul>
+<li>Only <code>sockets</code> which is included by default on most PHP installations.</li>
+</ul>
+<h2>Required PHP functions</h2>
+<p>A list of PHP functions required by MphpD for socket communication:</p>
+<ul>
+<li><code>fgets</code></li>
+<li><code>fputs</code></li>
+<li><code>fread</code></li>
+<li><code>stream_get_meta_data</code></li>
+<li><code>stream_set_chunk_size</code></li>
+<li><code>stream_set_timeout</code></li>
+<li><code>stream_socket_client</code></li>
+</ul>
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

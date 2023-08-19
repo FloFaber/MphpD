@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - MPDException</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.1.0-rc.3</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">MPDException</h1>
+<p><p>MPDException is a slightly modified version of a standard Exception.
+You may call <code>MPDException::getCode</code> and <code>MPDException::getMessage</code> to retrieve information about the error.</p>
+<p>In case an error occurs at the protocol level the called methods simply return false.</p>
+<p>To retrieve the last occurred error call <a href="../classes/MphpD.html#get_last_error">MphpD::get_last_error</a>.</p></p>
+
+<pre><code class="language-php">MphpD::get_last_error() : array</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::__construct( $message = '',  $code = 0, ?Throwable $previous = null, string $command = '', int $commandlist_num = 0) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__toString</h3>
+<p>
+    <p>Returns all information as string</p>
+</p>
+
+<pre><code class="language-php">MPDException::__toString() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    <p>string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getCommand</h3>
+<p>
+    <p>Returns the command which caused the error.</p>
+</p>
+
+<pre><code class="language-php">MPDException::getCommand() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    <p>string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getCommandlistNum</h3>
+<p>
+    <p>Returns the command's list-number in case a <a href="../guides/Commandlist.html">commandlist</a> was used.</p>
+</p>
+
+<pre><code class="language-php">MPDException::getCommandlistNum() : int</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>int</code></h4>
+<p>
+    <p>int</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__wakeup</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::__wakeup() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getMessage</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getMessage() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getCode</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getCode() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getFile</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getFile() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getLine</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getLine() : int</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>int</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getTrace</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getTrace() : array</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>array</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getPrevious</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getPrevious() : Throwable</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>Throwable</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">getTraceAsString</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">MPDException::getTraceAsString() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
