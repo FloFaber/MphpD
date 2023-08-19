@@ -542,7 +542,7 @@ class Socket
 
         // If we only parse a list with a single possible key make sure $first_key is already set OR $first_key equals the current key.
         // If true push the value to the result array. That way we eliminate the risk of funky responses if this mode is used incorrectly.
-      }elseif($mode === MPD_CMD_READ_LIST_SINGLE){
+      }elseif($mode === MPD_CMD_READ_LIST_SINGLE && ($first_key === $k || in_array($k, $list_starts))){
         $b[] = $v;
       }
 
