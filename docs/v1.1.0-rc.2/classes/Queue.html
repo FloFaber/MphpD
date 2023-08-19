@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Queue</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.1.0-rc.2</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Queue</h1>
+<p><p>Subclass to control the Queue.</p></p>
+
+<pre><code class="language-php">MphpD::queue() : Queue</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::queue()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">Queue::__construct(FloFaber\MphpD\MphpD $mphpd) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mphpd</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add</h3>
+<p>
+    <p>Adds the file <code>$uri</code> to the queue (directories add recursively). <code>$uri</code> can also be a single file.</p>
+</p>
+
+<pre><code class="language-php">Queue::add(string $uri,  $pos = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Can be a single file or folder.
+If connected via Unix socket you may add arbitrary local files (absolute paths)</p></li>
+<li><h5>$pos</h5><p>If set the song is inserted at the specified position.
+If the parameter starts with + or -, then it is relative to the current song.
+e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add_id</h3>
+<p>
+    <p>Adds a song to the playlist (non-recursive) and returns the song id.</p>
+</p>
+
+<pre><code class="language-php">Queue::add_id(string $uri,  $pos = -1) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Is always a single file or URL</p></li>
+<li><h5>$pos</h5><p>If set the song is inserted at the specified position.
+If the parameter starts with + or -, then it is relative to the current song.
+e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>int|false The song ID on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add_search</h3>
+<p>
+    <p>Same as <code>search()</code> but adds the songs into the Queue at position <code>$pos</code>.</p>
+</p>
+
+<pre><code class="language-php">Queue::add_search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = [], int $position = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5></li>
+<li><h5>$window</h5></li>
+<li><h5>$position</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add_find</h3>
+<p>
+    <p>Same as <code>find()</code> but this adds the matching song to the Queue.</p>
+</p>
+
+<pre><code class="language-php">Queue::add_find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = [], int $pos = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5></li>
+<li><h5>$window</h5></li>
+<li><h5>$pos</h5><p>Optional. If specified the matched songs will be added to this position in the Queue.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">clear</h3>
+<p>
+    <p>Clears the queue</p>
+</p>
+
+<pre><code class="language-php">Queue::clear() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">delete</h3>
+<p>
+    <p>Deletes a song or a range of songs from the queue</p>
+</p>
+
+<pre><code class="language-php">Queue::delete( $p) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$p</h5><p>The song position or Range</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">delete_id</h3>
+<p>
+    <p>Deletes the song with ID <code>$songid</code> from the Queue</p>
+</p>
+
+<pre><code class="language-php">Queue::delete_id(int $songid) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>The song ID</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">move</h3>
+<p>
+    <p>Moves the song at <code>$from</code> to <code>$to</code> in the queue</p>
+</p>
+
+<pre><code class="language-php">Queue::move( $from, string $to) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$from</h5><p>Song position or Range</p></li>
+<li><h5>$to</h5><p>If starting with + or -, then it is relative to the current song
+e.g. +0 moves to right after the current song and -0 moves to right before the current song
+(i.e. zero songs between the current song and the moved range).</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">move_id</h3>
+<p>
+    <p>Moves the song with <code>$from</code> (songid) to <code>$to</code> (playlist index) in the queue.</p>
+</p>
+
+<pre><code class="language-php">Queue::move_id(int $from, string $to) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$from</h5><p>Song ID</p></li>
+<li><h5>$to</h5><p>Playlist Index. If starting with + or -, then it is relative to the current song
+e.g. +0 moves to right after the current song and -0 moves to right before the current song
+(i.e. zero songs between the current song and the moved song).</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">find</h3>
+<p>
+    <p>Same as Queue::search but case-sensitive</p>
+</p>
+
+<pre><code class="language-php">Queue::find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5></li>
+<li><h5>$window</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_id</h3>
+<p>
+    <p>Returns an associative arrays containing information about the song with ID <code>$songid</code>.</p>
+</p>
+
+<pre><code class="language-php">Queue::get_id(int $songid) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>Song ID</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false Associative <code>array</code> containing song information or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get</h3>
+<p>
+    <p>Returns information about all or specific songs in the Queue.</p>
+</p>
+
+<pre><code class="language-php">Queue::get( $p = -1) : array</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>int|array</h5><p>Optional. Song Position or Range.
+If omitted returns an array of associative arrays containing information about all songs in the Queue.
+If specified returns an associative array containing the given songs information only.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>array</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">search</h3>
+<p>
+    <p>Search the queue for matching songs.</p>
+</p>
+
+<pre><code class="language-php">Queue::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5><p>The Filter.</p></li>
+<li><h5>$sort</h5><p>If specified the results are sorted by the specified tag.</p></li>
+<li><h5>$window</h5><p>If specified returns only the given portion.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">changes</h3>
+<p>
+    <p>Returns an array of changed songs currently in the playlist since <code>$version</code>.</p>
+</p>
+
+<pre><code class="language-php">Queue::changes(int $version,  $range = -1, bool $metadata = ) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$version</h5><p>The current version can be retrieved with <code>MphpD::status([ "playlist" ])</code>.</p></li>
+<li><h5>$range</h5><p>Position of song or Range</p></li>
+<li><h5>$metadata</h5><p>If set to true the metadata will be included.</p>
+<p>If set to false only the position and ID of the changed songs will be returned.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">prio</h3>
+<p>
+    <p>Sets the priority of given songs to <code>$priority</code>.
+This only has effect when the <code>random</code>-mode is enabled.
+A higher priority means that it will be played first when <code>random</code> is enabled.</p>
+</p>
+
+<pre><code class="language-php">Queue::prio(int $priority,  $range = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$priority</h5><p>Priority 0-255.</p></li>
+<li><h5>$range</h5><p>Position of song or Range</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">prio_id</h3>
+<p>
+    <p>Sets the priority of Song ID <code>$id</code> to $priority.
+This only has effect when the <code>random</code>-mode is enabled.
+A higher priority means that it will be played first when <code>random</code> is enabled.</p>
+</p>
+
+<pre><code class="language-php">Queue::prio_id(int $priority, int $id) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$priority</h5><p>Priority 0-255.</p></li>
+<li><h5>$id</h5><p>Song ID.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">range_id</h3>
+<p>
+    <p>Set's the portion of the song that should be played.
+You can't edit the currently playing song!</p>
+</p>
+
+<pre><code class="language-php">Queue::range_id(int $songid, array $range = []) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>Song ID.</p></li>
+<li><h5>$range</h5><p>Range. Start and End are offsets in seconds. If omitted the &quot;play-range&quot; will be removed from the song.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">shuffle</h3>
+<p>
+    <p>Shuffle the Queue.</p>
+</p>
+
+<pre><code class="language-php">Queue::shuffle(array $range = []) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$range</h5><p>If specified only this portion will be shuffled.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">swap</h3>
+<p>
+    <p>Swap two songs in Queue. By Position.</p>
+</p>
+
+<pre><code class="language-php">Queue::swap(int $songpos_1, int $songpos_2) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songpos_1</h5></li>
+<li><h5>$songpos_2</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">swap_id</h3>
+<p>
+    <p>Swap two songs in Queue. By ID.</p>
+</p>
+
+<pre><code class="language-php">Queue::swap_id(int $songid_1, int $songid_2) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid_1</h5><p>First song ID</p></li>
+<li><h5>$songid_2</h5><p>Second song ID</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add_tag_id</h3>
+<p>
+    <p>Adds a tag to the specified song</p>
+</p>
+
+<pre><code class="language-php">Queue::add_tag_id(int $songid, string $tag, string $value) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>Song ID</p></li>
+<li><h5>$tag</h5><p>Tag name</p></li>
+<li><h5>$value</h5><p>Tag value</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">clear_tag_id</h3>
+<p>
+    <p>Removes a tag from the specified song</p>
+</p>
+
+<pre><code class="language-php">Queue::clear_tag_id(int $songid, string $tag) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>Song ID</p></li>
+<li><h5>$tag</h5><p>Tag name</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

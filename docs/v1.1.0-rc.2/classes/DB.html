@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - DB</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.1.0-rc.2</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">DB</h1>
+<p><p>This subclass is used to interact with and retrieve information from MPD's database.</p></p>
+
+<pre><code class="language-php">MphpD::db() : DB</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::db()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">DB::__construct(FloFaber\MphpD\MphpD $mphpd) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mphpd</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">albumart</h3>
+<p>
+    <p>Returns the albumart (binary!) for given song.</p>
+</p>
+
+<pre><code class="language-php">DB::albumart(string $songuri) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songuri</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>false|string binary <code>string</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">count</h3>
+<p>
+    <p>Counts the number of songs and their playtime matching the specified Filter.</p>
+</p>
+
+<pre><code class="language-php">DB::count(FloFaber\MphpD\Filter $filter, string $group = '', bool $case_sensitive = 1) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$group</h5><p>A tag name like <code>artist</code> by which the results will be grouped.</p>
+<p>If omitted returns an associative array containing a &quot;songs&quot; and &quot;playtime&quot; key.</p>
+<p>If specified an array of associative array will be returned.</p></li>
+<li><h5>$case_sensitive</h5><p>If <code>true</code> the search will be case-sensitive, If <code>false</code> the search will be case-insensitive.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">fingerprint</h3>
+<p>
+    <p>Calculate the song's fingerprint</p>
+</p>
+
+<pre><code class="language-php">DB::fingerprint(string $uri) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>URI to the file.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>string|false fingerprint on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">find</h3>
+<p>
+    <p>Case-sensitive search for songs matching Filter and return an array of associative array of found songs.</p>
+</p>
+
+<pre><code class="language-php">DB::find(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5><p>Tag name to sort by. Like artist. If prefixed with <code>-</code> it will be sorted descending.</p>
+<p>If omitted the order is undefined.</p></li>
+<li><h5>$window</h5><p>Retrieve only a given portion</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">list</h3>
+<p>
+    <p>Lists unique tags values of the specified type. <code>$type</code> can be any tag supported by MPD.</p>
+</p>
+
+<pre><code class="language-php">DB::list(string $type, ?FloFaber\MphpD\Filter $filter = null, string $group = '') : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$type</h5><p>Any tag supported by MPD. Like artist or album.</p></li>
+<li><h5>$filter</h5></li>
+<li><h5>$group</h5><p>Tag name by which the result gets grouped. Like artist or album.</p>
+<p>If omitted returns an array of unique tag values of the specified type.</p>
+<p>If specified returns an array of associative arrays containing the grouped result.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">ls</h3>
+<p>
+    <p>List files,directories and playlists in <code>$uri</code></p>
+</p>
+
+<pre><code class="language-php">DB::ls(string $uri, bool $metadata = , bool $recursive = ) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Directory URI.</p></li>
+<li><h5>$metadata</h5><p>Specifies if additional information should be included.</p></li>
+<li><h5>$recursive</h5><p>Specified if files and directories should be listed recursively.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> containing the keys <code>files</code>, <code>directories</code> and <code>playlists</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">read_comments</h3>
+<p>
+    <p>Read &quot;comments&quot; from the specified file.
+The meaning of these &quot;comments&quot; depend on the codec. For an OGG file this lists the vorbis commands.</p>
+</p>
+
+<pre><code class="language-php">DB::read_comments(string $uri) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Song URI.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">read_picture</h3>
+<p>
+    <p>Returns a picture of <code>$uri</code> by reading embedded pictures from binary tags.</p>
+</p>
+
+<pre><code class="language-php">DB::read_picture(string $uri) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Song URI.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>false|string <code>false</code> on failure otherwise <code>string</code> containing either the picture or an empty string in case the file does not contain a picture.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">search</h3>
+<p>
+    <p>Case-INsensitive search for matching songs and returns an array of associative arrays containing song information.</p>
+</p>
+
+<pre><code class="language-php">DB::search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5></li>
+<li><h5>$window</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">update</h3>
+<p>
+    <p>Update the Database and return the Job-ID.</p>
+</p>
+
+<pre><code class="language-php">DB::update(string $uri = '', bool $rescan = , bool $force = ) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Optional. Only update the given path. Omit or specify an empty string to update everything.</p></li>
+<li><h5>$rescan</h5><p>If set to <code>true</code> also rescan unmodified files.</p></li>
+<li><h5>$force</h5><p>If set to <code>false</code> and an update Job is already running, just return its ID.</p>
+<p>If true and an update Job is already running it starts another one and returns the ID of the new Job.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>int|false Job-ID on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
