@@ -207,7 +207,7 @@ class DB
   /**
    * Returns a picture of `$uri` by reading embedded pictures from binary tags.
    * @param string $uri Song URI.
-   * @return false|string binary-data `string` on success and `false` on failure.
+   * @return false|string `false` on failure otherwise `string` containing either the picture or an empty string in case the file does not contain a picture.
    */
   public function read_picture(string $uri)
   {
@@ -217,6 +217,7 @@ class DB
 
       $aa = $this->mphpd->cmd("readpicture", [$uri, $offset]);
       if($aa === false){ return false; }
+      if(!isset($aa["size"])){ return ""; }
 
       $binary_size = $aa["size"];
 
