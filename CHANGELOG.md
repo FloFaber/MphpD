@@ -8,6 +8,7 @@
 
 ### Fixes
 * `DB::count` and `DB::list` now return correct values when `$group` is set. This is probably a breaking change but it was broken before.
+* `DB::read_picture` does not throw a warning anymore if the requested file did not contain a picture. In that case an empty string is returned (as before). 
 
 
 ## v1.0.2
