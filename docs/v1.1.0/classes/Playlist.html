@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Playlist</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.1.0</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Playlist</h1>
+<p><p>Subclass to interact with stored Playlists.</p></p>
+
+<pre><code class="language-php">MphpD::playlist(string $name) : Playlist</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::playlist()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">Playlist::__construct(FloFaber\MphpD\MphpD $mphpd, string $name) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mphpd</h5></li>
+<li><h5>$name</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">exists</h3>
+<p>
+    <p>Function to determine if the specified playlist exists.</p>
+</p>
+
+<pre><code class="language-php">Playlist::exists() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> if it exists, otherwise <code>false</code>.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_songs</h3>
+<p>
+    <p>Returns a list of all songs in the specified playlist.</p>
+</p>
+
+<pre><code class="language-php">Playlist::get_songs(bool $metadata = ) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$metadata</h5><p>If set to <code>true</code> metadata like duration, last-modified,... will be included.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> of associative Arrays containing song information on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">load</h3>
+<p>
+    <p>Loads the specified playlist into the Queue.</p>
+</p>
+
+<pre><code class="language-php">Playlist::load(array $range = [],  $pos = '') : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$range</h5><p>Range. If specified only the requested portion of the playlist is loaded. Starts at 0.</p></li>
+<li><h5>$pos</h5><p>Specifies where the songs will be inserted into the queue.</p>
+<p>Can be relative if prefixed with + or -</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add</h3>
+<p>
+    <p>Adds <code>$uri</code> to the specified playlist at position <code>$pos</code>.</p>
+</p>
+
+<pre><code class="language-php">Playlist::add(string $uri,  $pos = '') : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$uri</h5><p>Relative file path or other supported URIs.</p></li>
+<li><h5>$pos</h5><p>Specifies where the songs will be inserted into the playlist.
+Can be relative if prefixed with + or -</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">add_search</h3>
+<p>
+    <p>Search for songs using Filter and add them into the Playlist at position <code>$pos</code>.</p>
+</p>
+
+<pre><code class="language-php">Playlist::add_search(FloFaber\MphpD\Filter $filter, string $sort = '', array $window = [], int $position = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$filter</h5></li>
+<li><h5>$sort</h5></li>
+<li><h5>$window</h5></li>
+<li><h5>$position</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">clear</h3>
+<p>
+    <p>Removes all songs from the specified playlist.</p>
+</p>
+
+<pre><code class="language-php">Playlist::clear() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">remove_song</h3>
+<p>
+    <p>Deletes <code>$songpos</code> from the specified playlist.</p>
+</p>
+
+<pre><code class="language-php">Playlist::remove_song( $songpos = -1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songpos</h5><p>Position of the song or Range</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">move_song</h3>
+<p>
+    <p>Moves the song at position <code>$from</code> in the specified playlist to the position <code>$to</code>.</p>
+</p>
+
+<pre><code class="language-php">Playlist::move_song(int $from, int $to) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$from</h5><p>Current song position</p></li>
+<li><h5>$to</h5><p>New song position</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">rename</h3>
+<p>
+    <p>Renames the specified playlist to <code>$new_name</code></p>
+</p>
+
+<pre><code class="language-php">Playlist::rename(string $new_name) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$new_name</h5><p>New playlist name</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">delete</h3>
+<p>
+    <p>Removes the specified playlist from the playlist directory.</p>
+</p>
+
+<pre><code class="language-php">Playlist::delete() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">save</h3>
+<p>
+    <p>Saves the queue to the specified playlist in the playlist directory</p>
+</p>
+
+<pre><code class="language-php">Playlist::save(int $mode = 1) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mode</h5><p>Optional. One of the following:</p>
+<ul>
+<li>
+<p>MPD_MODE_CREATE: The default. Create a new playlist. Fails if a playlist with name $name already exists.</p>
+</li>
+<li>
+<p>MPD_MODE_APPEND: Append an existing playlist. Fails if a playlist with name $name doesn't already exist.
+Only supported on MPD v0.24 and newer.</p>
+</li>
+<li>
+<p>MPD_MODE_REPLACE: Replace an existing playlist. Fails if a playlist with name $name doesn't already exist.
+Only supported on MPD v0.24 and newer.</p>
+</li>
+</ul></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
