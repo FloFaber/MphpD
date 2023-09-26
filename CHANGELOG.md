@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.1
+
+### Fixes
+
+* Fixed return type of `Queue::get`. Issue [#18](https://github.com/FloFaber/MphpD/issues/18).
+
+
 ## v1.1.0
 
 ### Fixes

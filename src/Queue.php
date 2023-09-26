@@ -195,9 +195,9 @@ class Queue
    * @param $p int|array Optional. Song Position or Range.
    *                     If omitted returns an array of associative arrays containing information about all songs in the Queue.
    *                     If specified returns an associative array containing the given songs information only.
-   * @return array|false `array` on success or `false` on failure.
+   * @return array|false `array` on success or `false` on failure. An empty `array` is returned if the queue is empty.
    */
-  public function get($p = -1) : array
+  public function get($p = -1)
   {
 
     $m = MPD_CMD_READ_LIST;
