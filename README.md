@@ -89,6 +89,9 @@ $mphpd->player()->play();
 
 For further information have a look at the [Documentation](https://mphpd.org/latest/overview.html).
 
+## Supported PHP versions
+
+* 7.4 and above
 
 ## Required PHP extensions
 * Only `sockets` which is included by default on most PHP installations.
