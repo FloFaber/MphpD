@@ -205,28 +205,55 @@ class DB
 
 
   /**
+   * Returns data and content of a picture embedded in `$uri`.
+   *
+   * If `$uri` is not found the function returns `false`.
+   *
+   * If `$uri` is found but does not contain a picture the function will return `[ "size" => 0, "type" => null, "binary" => null ]`.
+   *
+   * If `$uri` is found and contains a picture the returned array will contain information about the picture and
+   *
+   * if `$include_binary` is `true` the array also contains the picture itself.
+   * @param string $uri Song URI.
+   * @param bool $include_binary If `true` the array's `binary`-item will contain the picture. If `false` the array's `binary`-item is `null`.
+   * @return array|false Returns `false` on failure and an associative array containing `size`,`type` and (optionally) `binary` on success.
+   */
+  public function get_picture(string $uri, bool $include_binary = true)
+  {
+
+    $offset = 0;
+    $binary_data = "";
+    do{
+
+      $picture_data = $this->mphpd->cmd("readpicture", [$uri, $offset]);
+      if($picture_data === false){ return false; }
+      if(!isset($picture_data["size"])){ return [ "size" => 0, "type" => null, "binary" => null ]; }
+
+      $size = $picture_data["size"];
+      $type = $picture_data["type"];
+
+      $offset = $offset + $this->mphpd->get_binarylimit();
+      $binary_data .= $picture_data["binary_data"];
+
+    }while($offset < $size && $include_binary === true);
+
+    return [
+      "size" => $size,
+      "type" => $type,
+      "binary" => ($include_binary ? $binary_data : null)
+    ];
+
+  }
+
+
+  /**
    * Returns a picture of `$uri` by reading embedded pictures from binary tags.
    * @param string $uri Song URI.
    * @return false|string `false` on failure otherwise `string` containing either the picture or an empty string in case the file does not contain a picture.
    */
   public function read_picture(string $uri)
   {
-    $offset = 0;
-    $binary_data = "";
-    do{
-
-      $aa = $this->mphpd->cmd("readpicture", [$uri, $offset]);
-      if($aa === false){ return false; }
-      if(!isset($aa["size"])){ return ""; }
-
-      $binary_size = $aa["size"];
-
-      $offset = $offset + $this->mphpd->get_binarylimit();
-      $binary_data .= $aa["binary_data"];
-
-    }while($offset < $binary_size);
-
-    return $binary_data;
+    return $this->get_picture($uri, true)["binary"] ?? false;
   }
 
 

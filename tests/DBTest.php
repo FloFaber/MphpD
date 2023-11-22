@@ -82,6 +82,47 @@ class DBTest extends TestCase
   public function testRead_picture()
   {
     $this->assertNotEmpty($this->mphpd->db()->read_picture("test-song1.mp3"));
+    $this->assertEmpty($this->mphpd->db()->read_picture("test-song3.mp3"));
+    $this->assertFalse($this->mphpd->db()->read_picture("test-song-non-existent.mp3"));
+  }
+
+  public function testGet_picture()
+  {
+    $ret = $this->mphpd->db()->get_picture("test-song1.mp3", true);
+    $this->assertArrayHasKey("size", $ret);
+    $this->assertArrayHasKey("type", $ret);
+    $this->assertArrayHasKey("binary", $ret);
+
+    $this->assertNotEmpty($ret["size"]);
+    $this->assertNotEmpty($ret["type"]);
+    $this->assertNotEmpty($ret["binary"]);
+
+
+
+    $ret = $this->mphpd->db()->get_picture("test-song1.mp3", false);
+    $this->assertArrayHasKey("size", $ret);
+    $this->assertArrayHasKey("type", $ret);
+    $this->assertArrayHasKey("binary", $ret);
+
+    $this->assertNotEmpty($ret["size"]);
+    $this->assertNotEmpty($ret["type"]);
+    $this->assertNull($ret["binary"]);
+
+
+
+    $ret = $this->mphpd->db()->get_picture("test-song3.mp3", false);
+    $this->assertArrayHasKey("size", $ret);
+    $this->assertArrayHasKey("type", $ret);
+    $this->assertArrayHasKey("binary", $ret);
+
+    $this->assertEquals(0, $ret["size"]);
+    $this->assertEmpty($ret["type"]);
+    $this->assertNull($ret["binary"]);
+
+
+    $ret = $this->mphpd->db()->get_picture("test-song-non-existent.mp3", true);
+    $this->assertFalse($ret);
+
   }
 
   // ToDo
