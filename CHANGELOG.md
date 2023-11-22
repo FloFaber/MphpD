@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.0
+
+### Improvements
+* Added new `DB::get_picture` function.
+
+
 ## v1.1.1
 
 ### Fixes
