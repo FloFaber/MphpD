@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD Guides - Configuration.md</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.1</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <h1>Configuration</h1>
+<p>You can pass the following settings to MphpD when initializing it:</p>
+<pre><code class="language-php">use FloFaber\MphpD\MphpD;
+$mphpd = new MphpD([
+  "host" =&gt; "127.0.0.1",
+  "port" =&gt; 6600,
+  "timeout" =&gt; 5,
+  "password" =&gt; "beetlejuice",
+  "binarylimit" =&gt; 8192
+]);</code></pre>
+<p>All of those are optional. If one is not specified the default value is used. See below.</p>
+<h2>Host</h2>
+<p><code>String</code>. Specifies the IP to which MphpD should connect.</p>
+<p>If prefixed with <code>unix:</code> the path to MPD's Unix socket. Example: <code>unix:/var/run/mpd.sock</code></p>
+<p>Default: <code>127.0.0.1</code></p>
+<h2>Port</h2>
+<p><code>Int</code>. The port on which MPD is listening.</p>
+<p>Default: <code>6600</code></p>
+<h2>Timeout</h2>
+<p><code>Int</code>. Defines the connect-, read- and write-timeout in seconds.</p>
+<p>Default: <code>1</code></p>
+<h2>Password</h2>
+<p><code>String</code>. The plaintext password used for authentication on MPD.</p>
+<p>Default: <em>empty string</em></p>
+<h2>Binarylimit</h2>
+<p><code>Int</code>. The maximum number of bytes a binary chunk returned by MPD can have.</p>
+<p>A bigger value means less overhead. Don't change it if you don't experience any problems with the default value.</p>
+<p>Only supported on MPD v0.22.4 and newer. It's simply ignored and set to 8192 on older versions.</p>
+<p>Default: <code>8192</code></p>
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
