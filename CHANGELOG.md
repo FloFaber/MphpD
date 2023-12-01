@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.1
+
+### Fixes
+* Fixed DB::get_picture and DB::read_picture incorrectly returning false when file did not contain an image.
+
+
 ## v1.2.0
 
 ### Improvements
