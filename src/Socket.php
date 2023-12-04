@@ -530,6 +530,11 @@ class Socket
         $tmp[$k] = $v;
       }
 
+      // set the first encountered key if there isn't already one
+      if(($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE || $mode === MPD_CMD_READ_GROUP) && $first_key === NULL){
+        $first_key = $k;
+      }
+
       // omfg
       // ok,ok. If we read a list and the `key` of the next line is either in `$list_starts` or is equal to `$first_key` we push the list-item to the list of items.
       if($mode === MPD_CMD_READ_LIST &&
@@ -546,10 +551,7 @@ class Socket
         $b[] = $v;
       }
 
-      // set the first encountered key if there isn't already one
-      if(($mode === MPD_CMD_READ_LIST || $mode === MPD_CMD_READ_LIST_SINGLE || $mode === MPD_CMD_READ_GROUP) && $first_key === NULL){
-        $first_key = $k;
-      }
+
 
     }
 
