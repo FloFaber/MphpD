@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Channel</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.2</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Channel</h1>
+<p><p>This subclass is used for client-to-client communication over MPD</p></p>
+
+<pre><code class="language-php">MphpD::channel(string $name) : Channel</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::channel()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">Channel::__construct(FloFaber\MphpD\MphpD $mphpd, string $name) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mphpd</h5></li>
+<li><h5>$name</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">subscribe</h3>
+<p>
+    <p>Subscribe to the channel.</p>
+</p>
+
+<pre><code class="language-php">Channel::subscribe() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">unsubscribe</h3>
+<p>
+    <p>Unsubscribe the channel.</p>
+</p>
+
+<pre><code class="language-php">Channel::unsubscribe() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">read</h3>
+<p>
+    <p>Returns a list of the channel's messages.</p>
+</p>
+
+<pre><code class="language-php">Channel::read() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> containing the messages on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">send</h3>
+<p>
+    <p>Send a message to the channel.</p>
+</p>
+
+<pre><code class="language-php">Channel::send(string $message) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$message</h5><p>The message text.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

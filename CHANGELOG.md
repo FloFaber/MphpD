@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.2
+
+### Fixes
+* Fixed critical parsing bug when using `MPD_CMD_READ_LIST_SINGLE`.
+
+
 ## v1.2.1
 
 ### Fixes

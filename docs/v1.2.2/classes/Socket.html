@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Socket</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.2</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Socket</h1>
+<p><p>Class which is used for socket communication and extended by the MphpD class.
+Is and should only be used inside the library.</p></p>
+
+<pre><code class="language-php"></code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    
+</p>
+
+<pre><code class="language-php">Socket::__construct(array $options = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">cmd</h3>
+<p>
+    <p>Send <code>$command</code> with <code>$params</code> to the MPD server.
+You, the library's user, are not intended to ever
+need this method. If you ever need it because the library does not support
+a specific command please file a <a href="https://github.com/FloFaber/MphpD/issues">bug report</a>.
+This method also parses MPDs response depending on the chosen mode.</p>
+</p>
+
+<pre><code class="language-php">Socket::cmd(string $command, array $params = [], int $mode = 2, array $list_start = []) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$command</h5><p>The command</p></li>
+<li><h5>$params</h5><p>Parameters, automatically escaped</p></li>
+<li><h5>$mode</h5><p>One of the following constants:</p>
+<ul>
+<li>
+<p><b>MPD_CMD_READ_NONE</b>   - Do not read anything from the answer. Returns an empty array.</p>
+</li>
+<li>
+<p><b>MPD_CMD_READ_NORMAL</b> - Parses the answer as a one-dimensional &quot;key=&gt;value&quot; array.
+If a key already existed its value gets overwritten.
+Used for commands like &quot;status&quot; where only unique keys are given.</p>
+</li>
+<li>
+<p><b>MPD_CMD_READ_GROUP</b>  - Used for parsing grouped responses like <code>list album group albumartist</code>.
+Example:
+<code>
+Albumartist: Eternal Decision
+Album: E.D.III
+Album: Eternal Decision
+Album: Ghost in the machine
+Albumartist: Black Sabbath
+Album: Paranoid
+Album: Reunion
+</code>
+Will become<code>
+[
+&quot;Eternal Decision&quot; =&gt; [
+&quot;album&quot; =&gt; [ &quot;E.D.III&quot;, &quot;Eternal Decision&quot;, &quot;Ghost in the machine&quot; ]
+], &quot;Black Sabbath&quot; =&gt; [
+&quot;album&quot; =&gt; [ &quot;Paranoid&quot;, &quot;Reunion&quot; ]
+]
+]</code></p>
+</li>
+<li>
+<p><b>MPD_CMD_READ_LIST</b>   - Parses the answer as a list of &quot;key=&gt;value&quot; arrays.
+Used for commands like &quot;listplaylists&quot; where keys are not unique.</p>
+</li>
+<li>
+<p><b>MPD_CMD_READ_LIST_SINGLE</b> - Parses the answer into a simple &quot;list&quot;-array.
+Used for commands like &quot;idle&quot; where there is
+only a single possible &quot;key&quot;.</p>
+<pre><code>                     If used for commands where more than a single key is possible e.g. `listplaylists` only the value of the first seen key is added to the returned list.
+                     All other keys are ignored. In this case you probably want to use `MPD_CMD_READ_LIST`.</code></pre>
+</li>
+<li>
+<p><b>MPD_CMD_READ_BOOL</b>   - Parses the answer into <code>true</code> on OK and list_OK and <code>false</code> on <code>ACK</code>.
+Used for commands which do not return anything but OK or ACK.</p>
+</li>
+</ul></li>
+<li><h5>$list_start</h5><p>In combination with <code>$mode = MPD_CMD_READ_LIST</code> indicates on which <code>key</code> a new list starts.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|bool False on failure.
+Array on success.
+True on success if <code>$mode</code> is <code>MPD_CMD_READ_BOOL</code>.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_socket</h3>
+<p>
+    <p>Returns the socket resource.</p>
+</p>
+
+<pre><code class="language-php">Socket::get_socket() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>resource</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_version</h3>
+<p>
+    <p>Returns MPDs version as string</p>
+</p>
+
+<pre><code class="language-php">Socket::get_version() : string</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>string</code></h4>
+<p>
+    <p>string</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">version_bte</h3>
+<p>
+    <p>Function to compare a given version string with the current version of MPD</p>
+</p>
+
+<pre><code class="language-php">Socket::version_bte(string $version) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$version</h5><p>Version to compare to.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool Returns true if MPDs version is equal to or newer than the given version. False otherwise.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">idle</h3>
+<p>
+    <p>Waits until there is a noteworthy change in one or more of MPD’s subsystems.</p>
+</p>
+
+<pre><code class="language-php">Socket::idle(string $subsystem = '', int $timeout = 60) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$subsystem</h5></li>
+<li><h5>$timeout</h5><p>Specifies how long to wait for MPD to return an answer.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> of changed subsystems or <code>false</code> on timeout.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">close</h3>
+<p>
+    <p>Close the connection to the MPD socket</p>
+</p>
+
+<pre><code class="language-php">Socket::close() : void</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>void</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">kill</h3>
+<p>
+    <p>Kill MPD.</p>
+</p>
+
+<pre><code class="language-php">Socket::kill() : void</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>void</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_binarylimit</h3>
+<p>
+    <p>Returns the current binarylimit</p>
+</p>
+
+<pre><code class="language-php">Socket::get_binarylimit() : int</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>int</code></h4>
+<p>
+    <p>int The current binarylimit.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">set_error</h3>
+<p>
+    <p>Function to set the last occurred error.
+Should only be used inside the library!</p>
+</p>
+
+<pre><code class="language-php">Socket::set_error( $err) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$err</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>false</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">get_last_error</h3>
+<p>
+    <p>Return an array containing information about the last error.</p>
+</p>
+
+<pre><code class="language-php">Socket::get_last_error() : array</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>array</code></h4>
+<p>
+    <p>array associative array containing the following keys:
+<code>
+[
+&quot;code&quot; =&gt; (int),
+&quot;message&quot; =&gt; (string),
+&quot;command&quot; =&gt; (string),
+&quot;commandlistnum&quot; =&gt; (int)
+]
+</code></p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">connect</h3>
+<p>
+    <p>Initiate connection to MPD with the parameters given at instantiation.</p>
+</p>
+
+<pre><code class="language-php">Socket::connect() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">disconnect</h3>
+<p>
+    <p>Disconnect from MPD</p>
+</p>
+
+<pre><code class="language-php">Socket::disconnect() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>void</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
