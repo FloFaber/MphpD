@@ -46,7 +46,12 @@ class Filter
    */
   public function and(string $tag, string $operator, string $value): Filter
   {
-    $value = Utils::escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    if($value === ""){
+      $value = "''";
+    }else{
+      $value = Utils::escape_params([ $value ], MPD_ESCAPE_DOUBLE_QUOTES);
+    }
+
     $this->tags[] = $tag;
     $this->operators[] = $operator;
     $this->values[] = $value;
