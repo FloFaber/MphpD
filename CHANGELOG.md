@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.3
+
+### Fixes
+* You can now search for empty strings when using `Filter`s.
+
+
 ## v1.2.2
 
 ### Fixes
