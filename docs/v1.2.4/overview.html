@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Overview</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.4</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <script src="/js/versions.js"></script>
+<h1>Versions</h1>
+<ul id="versions"></ul>
+<script>
+    for(let i = 0; i < window.versions.length; i++){
+      let version = window.versions[i];
+      document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
+    }
+</script>
+
+
+<h2>Changelog</h2>
+<ul><li>
+<p><a href="https://raw.githubusercontent.com/FloFaber/MphpD/master/CHANGELOG.md">CHANGELOG.md</a></p>
+</li></ul>
+
+<h1>Guides</h1>
+<ul>
+<li><a href='guides/Commandlist.html'>Commandlist</a></li>
+<li><a href='guides/Configuration.html'>Configuration</a></li>
+<li><a href='guides/Range.html'>Range</a></li>
+
+</ul>
+
+<h1>Classes</h1>
+<ul>
+<li><a href='classes/Channel.html'>Channel</a></li>
+<li><a href='classes/DB.html'>DB</a></li>
+<li><a href='classes/Filter.html'>Filter</a></li>
+<li><a href='classes/MPDException.html'>MPDException</a></li>
+<li><a href='classes/MphpD.html'>MphpD</a></li>
+<li><a href='classes/Output.html'>Output</a></li>
+<li><a href='classes/Partition.html'>Partition</a></li>
+<li><a href='classes/Player.html'>Player</a></li>
+<li><a href='classes/Playlist.html'>Playlist</a></li>
+<li><a href='classes/Queue.html'>Queue</a></li>
+<li><a href='classes/Socket.html'>Socket</a></li>
+<li><a href='classes/Sticker.html'>Sticker</a></li>
+<li><a href='classes/Utils.html'>Utils</a></li>
+
+</ul>
+
+<h1>Methods</h1>
+<ul>
+    <li>
+<a href='classes/Channel.html#__construct'>Channel::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Channel.html#subscribe'>Channel::subscribe</a>
+ - Subscribe to the channel.</li>
+<li>
+<a href='classes/Channel.html#unsubscribe'>Channel::unsubscribe</a>
+ - Unsubscribe the channel.</li>
+<li>
+<a href='classes/Channel.html#read'>Channel::read</a>
+ - Returns a list of the channel's messages.</li>
+<li>
+<a href='classes/Channel.html#send'>Channel::send</a>
+ - Send a message to the channel.</li>
+<li>
+<a href='classes/DB.html#__construct'>DB::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/DB.html#albumart'>DB::albumart</a>
+ - Returns the albumart (binary!) for given song.</li>
+<li>
+<a href='classes/DB.html#count'>DB::count</a>
+ - Counts the number of songs and their playtime matching the specified Filter.</li>
+<li>
+<a href='classes/DB.html#fingerprint'>DB::fingerprint</a>
+ - Calculate the song's fingerprint</li>
+<li>
+<a href='classes/DB.html#find'>DB::find</a>
+ - Case-sensitive search for songs matching Filter and return an array of associative array of found songs.</li>
+<li>
+<a href='classes/DB.html#list'>DB::list</a>
+ - Lists unique tags values of the specified type. <code>$type</code> can be any tag supported by MPD.</li>
+<li>
+<a href='classes/DB.html#ls'>DB::ls</a>
+ - List files,directories and playlists in <code>$uri</code></li>
+<li>
+<a href='classes/DB.html#read_comments'>DB::read_comments</a>
+ - Read &quot;comments&quot; from the specified file.</li>
+<li>
+<a href='classes/DB.html#get_picture'>DB::get_picture</a>
+ - Returns data and content of a picture embedded in <code>$uri</code>.</li>
+<li>
+<a href='classes/DB.html#read_picture'>DB::read_picture</a>
+ - Returns a picture of <code>$uri</code> by reading embedded pictures from binary tags.</li>
+<li>
+<a href='classes/DB.html#search'>DB::search</a>
+ - Case-INsensitive search for matching songs and returns an array of associative arrays containing song information.</li>
+<li>
+<a href='classes/DB.html#update'>DB::update</a>
+ - Update the Database and return the Job-ID.</li>
+<li>
+<a href='classes/Filter.html#__construct'>Filter::__construct</a>
+ - Creates a new filter.</li>
+<li>
+<a href='classes/Filter.html#and'>Filter::and</a>
+ - Used to chain multiple filters together with a logical AND.</li>
+<li>
+<a href='classes/Filter.html#__toString'>Filter::__toString</a>
+ - Generate and return the Filter string.</li>
+<li>
+<a href='classes/MPDException.html#__construct'>MPDException::__construct</a>
+</li>
+<li>
+<a href='classes/MPDException.html#__toString'>MPDException::__toString</a>
+ - Returns all information as string</li>
+<li>
+<a href='classes/MPDException.html#getCommand'>MPDException::getCommand</a>
+ - Returns the command which caused the error.</li>
+<li>
+<a href='classes/MPDException.html#getCommandlistNum'>MPDException::getCommandlistNum</a>
+ - Returns the command's list-number in case a <a href="../guides/Commandlist.html">commandlist</a> was used.</li>
+<li>
+<a href='classes/MPDException.html#__wakeup'>MPDException::__wakeup</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getMessage'>MPDException::getMessage</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getCode'>MPDException::getCode</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getFile'>MPDException::getFile</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getLine'>MPDException::getLine</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getTrace'>MPDException::getTrace</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getPrevious'>MPDException::getPrevious</a>
+</li>
+<li>
+<a href='classes/MPDException.html#getTraceAsString'>MPDException::getTraceAsString</a>
+</li>
+<li>
+<a href='classes/MphpD.html#__construct'>MphpD::__construct</a>
+</li>
+<li>
+<a href='classes/MphpD.html#db'>MphpD::db</a>
+ - Return the DB instance</li>
+<li>
+<a href='classes/MphpD.html#player'>MphpD::player</a>
+ - Return the Player instance</li>
+<li>
+<a href='classes/MphpD.html#queue'>MphpD::queue</a>
+ - Return the Queue instance</li>
+<li>
+<a href='classes/MphpD.html#playlist'>MphpD::playlist</a>
+ - Returns a Playlist instance with the given name or null if the name is empty</li>
+<li>
+<a href='classes/MphpD.html#playlists'>MphpD::playlists</a>
+ - Returns a list of playlists.</li>
+<li>
+<a href='classes/MphpD.html#output'>MphpD::output</a>
+ - Return a new output instance</li>
+<li>
+<a href='classes/MphpD.html#outputs'>MphpD::outputs</a>
+ - Returns an Array of associative arrays containing all available outputs</li>
+<li>
+<a href='classes/MphpD.html#neighbors'>MphpD::neighbors</a>
+ - Return neighbors on the network like available SMB servers</li>
+<li>
+<a href='classes/MphpD.html#partition'>MphpD::partition</a>
+ - Return a new Partition instance</li>
+<li>
+<a href='classes/MphpD.html#partitions'>MphpD::partitions</a>
+ - Return a list of all available partitions</li>
+<li>
+<a href='classes/MphpD.html#channel'>MphpD::channel</a>
+ - Return a new Channel instance</li>
+<li>
+<a href='classes/MphpD.html#channels'>MphpD::channels</a>
+ - Return a list of available channels</li>
+<li>
+<a href='classes/MphpD.html#clear_error'>MphpD::clear_error</a>
+ - Clears the current error</li>
+<li>
+<a href='classes/MphpD.html#status'>MphpD::status</a>
+ - Returns the value of the specified key(s) from MPD's status.</li>
+<li>
+<a href='classes/MphpD.html#stats'>MphpD::stats</a>
+ - Returns the value of the specified key from MPD's stats.</li>
+<li>
+<a href='classes/MphpD.html#sticker'>MphpD::sticker</a>
+ - Returns a Sticker instance</li>
+<li>
+<a href='classes/MphpD.html#mounts'>MphpD::mounts</a>
+ - Return a list of all mounts.</li>
+<li>
+<a href='classes/MphpD.html#mount'>MphpD::mount</a>
+ - Mount <code>$uri</code> to path</li>
+<li>
+<a href='classes/MphpD.html#unmount'>MphpD::unmount</a>
+ - Unmount a path</li>
+<li>
+<a href='classes/MphpD.html#bulk_start'>MphpD::bulk_start</a>
+ - Function to start a command-list.</li>
+<li>
+<a href='classes/MphpD.html#bulk_end'>MphpD::bulk_end</a>
+ - Function to end a command-list and execute its commands.</li>
+<li>
+<a href='classes/MphpD.html#bulk_abort'>MphpD::bulk_abort</a>
+ - Function to abort the current command list.</li>
+<li>
+<a href='classes/MphpD.html#bulk_add'>MphpD::bulk_add</a>
+ - Function to add a command to the bulk_list.</li>
+<li>
+<a href='classes/MphpD.html#tagtypes'>MphpD::tagtypes</a>
+ - Return a list of all available tag types.</li>
+<li>
+<a href='classes/MphpD.html#tagtypes_disable'>MphpD::tagtypes_disable</a>
+ - Disable specified tag types.</li>
+<li>
+<a href='classes/MphpD.html#tagtypes_enable'>MphpD::tagtypes_enable</a>
+ - Enable specified tag types.</li>
+<li>
+<a href='classes/MphpD.html#tagtypes_clear'>MphpD::tagtypes_clear</a>
+ - Remove all tag types from responses.</li>
+<li>
+<a href='classes/MphpD.html#tagtypes_all'>MphpD::tagtypes_all</a>
+ - Enable all available tag types.</li>
+<li>
+<a href='classes/MphpD.html#ping'>MphpD::ping</a>
+ - Ping.</li>
+<li>
+<a href='classes/MphpD.html#config'>MphpD::config</a>
+ - Returns an associative array of configuration values.</li>
+<li>
+<a href='classes/MphpD.html#commands'>MphpD::commands</a>
+ - Returns a list of all available commands.</li>
+<li>
+<a href='classes/MphpD.html#notcommands'>MphpD::notcommands</a>
+ - Returns a list of all not-available commands.</li>
+<li>
+<a href='classes/MphpD.html#urlhandlers'>MphpD::urlhandlers</a>
+ - Returns a list of all available urlhandlers. Like smb://, sftp://, http://.</li>
+<li>
+<a href='classes/MphpD.html#decoders'>MphpD::decoders</a>
+ - Returns a list of available decoder plugins and their supported suffixes and mimetypes.</li>
+<li>
+<a href='classes/MphpD.html#cmd'>MphpD::cmd</a>
+ - Send <code>$command</code> with <code>$params</code> to the MPD server.</li>
+<li>
+<a href='classes/MphpD.html#get_socket'>MphpD::get_socket</a>
+ - Returns the socket resource.</li>
+<li>
+<a href='classes/MphpD.html#get_version'>MphpD::get_version</a>
+ - Returns MPDs version as string</li>
+<li>
+<a href='classes/MphpD.html#version_bte'>MphpD::version_bte</a>
+ - Function to compare a given version string with the current version of MPD</li>
+<li>
+<a href='classes/MphpD.html#idle'>MphpD::idle</a>
+ - Waits until there is a noteworthy change in one or more of MPD’s subsystems.</li>
+<li>
+<a href='classes/MphpD.html#close'>MphpD::close</a>
+ - Close the connection to the MPD socket</li>
+<li>
+<a href='classes/MphpD.html#kill'>MphpD::kill</a>
+ - Kill MPD.</li>
+<li>
+<a href='classes/MphpD.html#get_binarylimit'>MphpD::get_binarylimit</a>
+ - Returns the current binarylimit</li>
+<li>
+<a href='classes/MphpD.html#set_error'>MphpD::set_error</a>
+ - Function to set the last occurred error.</li>
+<li>
+<a href='classes/MphpD.html#get_last_error'>MphpD::get_last_error</a>
+ - Return an array containing information about the last error.</li>
+<li>
+<a href='classes/MphpD.html#connect'>MphpD::connect</a>
+ - Initiate connection to MPD with the parameters given at instantiation.</li>
+<li>
+<a href='classes/MphpD.html#disconnect'>MphpD::disconnect</a>
+ - Disconnect from MPD</li>
+<li>
+<a href='classes/Output.html#__construct'>Output::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Output.html#disable'>Output::disable</a>
+ - Disable the given output</li>
+<li>
+<a href='classes/Output.html#enable'>Output::enable</a>
+ - Enable the given output</li>
+<li>
+<a href='classes/Output.html#toggle'>Output::toggle</a>
+ - Enable/Disable the given output depending on the current state.</li>
+<li>
+<a href='classes/Output.html#set'>Output::set</a>
+ - Set a runtime attribute. Supported values can be retrieved from the <code>MphpD::outputs()</code> method.</li>
+<li>
+<a href='classes/Partition.html#__construct'>Partition::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Partition.html#switch'>Partition::switch</a>
+ - Switch the client to the given partition</li>
+<li>
+<a href='classes/Partition.html#create'>Partition::create</a>
+ - Create a new partition with the given name.</li>
+<li>
+<a href='classes/Partition.html#delete'>Partition::delete</a>
+ - Delete the given partition</li>
+<li>
+<a href='classes/Partition.html#move_output'>Partition::move_output</a>
+ - Move a specific output to the current partition</li>
+<li>
+<a href='classes/Player.html#__construct'>Player::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Player.html#consume'>Player::consume</a>
+ - Enables/Disables the consume mode</li>
+<li>
+<a href='classes/Player.html#crossfade'>Player::crossfade</a>
+ - Sets crossfade to <code>$seconds</code> seconds.</li>
+<li>
+<a href='classes/Player.html#mixramp_db'>Player::mixramp_db</a>
+ - Sets the threshold at which songs will be overlapped.</li>
+<li>
+<a href='classes/Player.html#mixramp_delay'>Player::mixramp_delay</a>
+ - Additional time subtracted from the overlap calculated by mixrampdb.</li>
+<li>
+<a href='classes/Player.html#random'>Player::random</a>
+ - Specified if MPD should play the queue in random order</li>
+<li>
+<a href='classes/Player.html#repeat'>Player::repeat</a>
+ - Specifies if MPD should start from the top again when reaching the end of the queue.</li>
+<li>
+<a href='classes/Player.html#volume'>Player::volume</a>
+ - Sets volume to <code>$volume</code> or returns the current volume if <code>$volume</code> is omitted.</li>
+<li>
+<a href='classes/Player.html#single'>Player::single</a>
+ - Enables/Disables the single-mode. If enabled MPD will play the same song over and over.</li>
+<li>
+<a href='classes/Player.html#replay_gain_mode'>Player::replay_gain_mode</a>
+ - Specifies whether MPD shall adjust the volume of songs played using ReplayGain tags.</li>
+<li>
+<a href='classes/Player.html#replay_gain_status'>Player::replay_gain_status</a>
+ - Get the current replay gain. Currently only the variable <code>replay_gain_mode</code> is returned by MPD.</li>
+<li>
+<a href='classes/Player.html#current_song'>Player::current_song</a>
+ - Returns an associative <code>array</code> containing information about the currently playing song.</li>
+<li>
+<a href='classes/Player.html#next'>Player::next</a>
+ - Plays the next song in the Queue</li>
+<li>
+<a href='classes/Player.html#pause'>Player::pause</a>
+ - Pause or resume playback.</li>
+<li>
+<a href='classes/Player.html#play'>Player::play</a>
+ - Plays the song position <code>$pos</code> in the Queue</li>
+<li>
+<a href='classes/Player.html#play_id'>Player::play_id</a>
+ - Begins playing the playlist at song <code>$id</code></li>
+<li>
+<a href='classes/Player.html#previous'>Player::previous</a>
+ - Plays the previous song in the Queue</li>
+<li>
+<a href='classes/Player.html#seek'>Player::seek</a>
+ - Seeks to <code>$seconds</code> of song <code>$songpos</code> in the Queue.</li>
+<li>
+<a href='classes/Player.html#seek_id'>Player::seek_id</a>
+ - Seeks to <code>$seconds</code> of song <code>$songid</code>. Same as <code>Player::seek()</code> but with a song ID instead of a position.</li>
+<li>
+<a href='classes/Player.html#seek_cur'>Player::seek_cur</a>
+ - Seeks to <code>$seconds</code> of the current song.</li>
+<li>
+<a href='classes/Player.html#stop'>Player::stop</a>
+ - Stops playing.</li>
+<li>
+<a href='classes/Playlist.html#__construct'>Playlist::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Playlist.html#exists'>Playlist::exists</a>
+ - Function to determine if the specified playlist exists.</li>
+<li>
+<a href='classes/Playlist.html#get_songs'>Playlist::get_songs</a>
+ - Returns a list of all songs in the specified playlist.</li>
+<li>
+<a href='classes/Playlist.html#load'>Playlist::load</a>
+ - Loads the specified playlist into the Queue.</li>
+<li>
+<a href='classes/Playlist.html#add'>Playlist::add</a>
+ - Adds <code>$uri</code> to the specified playlist at position <code>$pos</code>.</li>
+<li>
+<a href='classes/Playlist.html#add_search'>Playlist::add_search</a>
+ - Search for songs using Filter and add them into the Playlist at position <code>$pos</code>.</li>
+<li>
+<a href='classes/Playlist.html#clear'>Playlist::clear</a>
+ - Removes all songs from the specified playlist.</li>
+<li>
+<a href='classes/Playlist.html#remove_song'>Playlist::remove_song</a>
+ - Deletes <code>$songpos</code> from the specified playlist.</li>
+<li>
+<a href='classes/Playlist.html#move_song'>Playlist::move_song</a>
+ - Moves the song at position <code>$from</code> in the specified playlist to the position <code>$to</code>.</li>
+<li>
+<a href='classes/Playlist.html#rename'>Playlist::rename</a>
+ - Renames the specified playlist to <code>$new_name</code></li>
+<li>
+<a href='classes/Playlist.html#delete'>Playlist::delete</a>
+ - Removes the specified playlist from the playlist directory.</li>
+<li>
+<a href='classes/Playlist.html#save'>Playlist::save</a>
+ - Saves the queue to the specified playlist in the playlist directory</li>
+<li>
+<a href='classes/Queue.html#__construct'>Queue::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Queue.html#add'>Queue::add</a>
+ - Adds the file <code>$uri</code> to the queue (directories add recursively). <code>$uri</code> can also be a single file.</li>
+<li>
+<a href='classes/Queue.html#add_id'>Queue::add_id</a>
+ - Adds a song to the playlist (non-recursive) and returns the song id.</li>
+<li>
+<a href='classes/Queue.html#add_search'>Queue::add_search</a>
+ - Same as <code>search()</code> but adds the songs into the Queue at position <code>$pos</code>.</li>
+<li>
+<a href='classes/Queue.html#add_find'>Queue::add_find</a>
+ - Same as <code>find()</code> but this adds the matching song to the Queue.</li>
+<li>
+<a href='classes/Queue.html#clear'>Queue::clear</a>
+ - Clears the queue</li>
+<li>
+<a href='classes/Queue.html#delete'>Queue::delete</a>
+ - Deletes a song or a range of songs from the queue</li>
+<li>
+<a href='classes/Queue.html#delete_id'>Queue::delete_id</a>
+ - Deletes the song with ID <code>$songid</code> from the Queue</li>
+<li>
+<a href='classes/Queue.html#move'>Queue::move</a>
+ - Moves the song at <code>$from</code> to <code>$to</code> in the queue</li>
+<li>
+<a href='classes/Queue.html#move_id'>Queue::move_id</a>
+ - Moves the song with <code>$from</code> (songid) to <code>$to</code> (playlist index) in the queue.</li>
+<li>
+<a href='classes/Queue.html#find'>Queue::find</a>
+ - Same as Queue::search but case-sensitive</li>
+<li>
+<a href='classes/Queue.html#get_id'>Queue::get_id</a>
+ - Returns an associative arrays containing information about the song with ID <code>$songid</code>.</li>
+<li>
+<a href='classes/Queue.html#get'>Queue::get</a>
+ - Returns information about all or specific songs in the Queue.</li>
+<li>
+<a href='classes/Queue.html#search'>Queue::search</a>
+ - Search the queue for matching songs.</li>
+<li>
+<a href='classes/Queue.html#changes'>Queue::changes</a>
+ - Returns an array of changed songs currently in the playlist since <code>$version</code>.</li>
+<li>
+<a href='classes/Queue.html#prio'>Queue::prio</a>
+ - Sets the priority of given songs to <code>$priority</code>.</li>
+<li>
+<a href='classes/Queue.html#prio_id'>Queue::prio_id</a>
+ - Sets the priority of Song ID <code>$id</code> to $priority.</li>
+<li>
+<a href='classes/Queue.html#range_id'>Queue::range_id</a>
+ - Set's the portion of the song that should be played.</li>
+<li>
+<a href='classes/Queue.html#shuffle'>Queue::shuffle</a>
+ - Shuffle the Queue.</li>
+<li>
+<a href='classes/Queue.html#swap'>Queue::swap</a>
+ - Swap two songs in Queue. By Position.</li>
+<li>
+<a href='classes/Queue.html#swap_id'>Queue::swap_id</a>
+ - Swap two songs in Queue. By ID.</li>
+<li>
+<a href='classes/Queue.html#add_tag_id'>Queue::add_tag_id</a>
+ - Adds a tag to the specified song</li>
+<li>
+<a href='classes/Queue.html#clear_tag_id'>Queue::clear_tag_id</a>
+ - Removes a tag from the specified song</li>
+<li>
+<a href='classes/Socket.html#__construct'>Socket::__construct</a>
+</li>
+<li>
+<a href='classes/Socket.html#cmd'>Socket::cmd</a>
+ - Send <code>$command</code> with <code>$params</code> to the MPD server.</li>
+<li>
+<a href='classes/Socket.html#get_socket'>Socket::get_socket</a>
+ - Returns the socket resource.</li>
+<li>
+<a href='classes/Socket.html#get_version'>Socket::get_version</a>
+ - Returns MPDs version as string</li>
+<li>
+<a href='classes/Socket.html#version_bte'>Socket::version_bte</a>
+ - Function to compare a given version string with the current version of MPD</li>
+<li>
+<a href='classes/Socket.html#idle'>Socket::idle</a>
+ - Waits until there is a noteworthy change in one or more of MPD’s subsystems.</li>
+<li>
+<a href='classes/Socket.html#close'>Socket::close</a>
+ - Close the connection to the MPD socket</li>
+<li>
+<a href='classes/Socket.html#kill'>Socket::kill</a>
+ - Kill MPD.</li>
+<li>
+<a href='classes/Socket.html#get_binarylimit'>Socket::get_binarylimit</a>
+ - Returns the current binarylimit</li>
+<li>
+<a href='classes/Socket.html#set_error'>Socket::set_error</a>
+ - Function to set the last occurred error.</li>
+<li>
+<a href='classes/Socket.html#get_last_error'>Socket::get_last_error</a>
+ - Return an array containing information about the last error.</li>
+<li>
+<a href='classes/Socket.html#connect'>Socket::connect</a>
+ - Initiate connection to MPD with the parameters given at instantiation.</li>
+<li>
+<a href='classes/Socket.html#disconnect'>Socket::disconnect</a>
+ - Disconnect from MPD</li>
+<li>
+<a href='classes/Sticker.html#__construct'>Sticker::__construct</a>
+ - This class is not intended for direct usage.</li>
+<li>
+<a href='classes/Sticker.html#get'>Sticker::get</a>
+ - Returns the value of the specified sticker</li>
+<li>
+<a href='classes/Sticker.html#set'>Sticker::set</a>
+ - Add a value to the specified sticker.</li>
+<li>
+<a href='classes/Sticker.html#delete'>Sticker::delete</a>
+ - Deletes the value from the specified sticker.</li>
+<li>
+<a href='classes/Sticker.html#list'>Sticker::list</a>
+ - Returns an associative array containing sticker names and values of the specified object.</li>
+<li>
+<a href='classes/Sticker.html#find'>Sticker::find</a>
+ - Search the sticker database for sticker with the specified name and/or value in the specified <code>$uri</code></li>
+<li>
+<a href='classes/Utils.html#escape_params'>Utils::escape_params</a>
+ - Function to parse an array of given parameters.</li>
+<li>
+<a href='classes/Utils.html#pos_or_range'>Utils::pos_or_range</a>
+ - Function to &quot;convert&quot; int or array to a pos or range argument</li>
+<li>
+<a href='classes/Utils.html#parse_error'>Utils::parse_error</a>
+ - Function to parse an MPD error string to an array</li>
+
+</ul>
+
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

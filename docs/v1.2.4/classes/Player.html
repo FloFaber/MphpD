@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD - Player</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.4</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <!-- class template start -->
+<h1 class="method-name">Player</h1>
+<p><p>This subclass is used to control MPDs playback.
+You may also want to have a look at the <a href="https://mpd.readthedocs.io/en/latest/protocol.html#playback-options">MPD documentation</a>.</p></p>
+
+<pre><code class="language-php">MphpD::player() : Player</code></pre>
+
+<h2>Methods</h2>
+
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">__construct</h3>
+<p>
+    <p>This class is not intended for direct usage.
+Use <code>MphpD::player()</code> instead to retrieve an instance of this class.</p>
+</p>
+
+<pre><code class="language-php">Player::__construct(FloFaber\MphpD\MphpD $mphpd) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mphpd</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">consume</h3>
+<p>
+    <p>Enables/Disables the consume mode</p>
+</p>
+
+<pre><code class="language-php">Player::consume(int $state) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$state</h5><p>One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Enables consume mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Disables consume mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_ONESHOT</code> - Enables consume mode for a single song.
+This is only supported on MPD version 0.24 and newer.</p>
+</li>
+</ul></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">crossfade</h3>
+<p>
+    <p>Sets crossfade to <code>$seconds</code> seconds.</p>
+</p>
+
+<pre><code class="language-php">Player::crossfade(int $seconds) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$seconds</h5><p>Crossfade duration in seconds.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">mixramp_db</h3>
+<p>
+    <p>Sets the threshold at which songs will be overlapped.
+See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">https://mpd.readthedocs.io/en/latest/user.html#mixramp</a> for more information</p>
+</p>
+
+<pre><code class="language-php">Player::mixramp_db(int $dB) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$dB</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">mixramp_delay</h3>
+<p>
+    <p>Additional time subtracted from the overlap calculated by mixrampdb.
+A value of <code>nan</code> disables MixRamp overlapping and falls back to crossfading. See <a href="https://mpd.readthedocs.io/en/latest/user.html#mixramp">MixRamp</a>.</p>
+</p>
+
+<pre><code class="language-php">Player::mixramp_delay(float $seconds) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$seconds</h5></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">random</h3>
+<p>
+    <p>Specified if MPD should play the queue in random order</p>
+</p>
+
+<pre><code class="language-php">Player::random(int $state) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$state</h5><p>Either <code>MPD_STATE_OFF</code> or <code>MPD_STATE_ON</code></p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">repeat</h3>
+<p>
+    <p>Specifies if MPD should start from the top again when reaching the end of the queue.</p>
+</p>
+
+<pre><code class="language-php">Player::repeat(int $state) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$state</h5><p>Either <code>MPD_STATE_OFF</code> or <code>MPD_STATE_ON</code></p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">volume</h3>
+<p>
+    <p>Sets volume to <code>$volume</code> or returns the current volume if <code>$volume</code> is omitted.</p>
+</p>
+
+<pre><code class="language-php">Player::volume(int $volume = -1) : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$volume</h5><p>If specified the current volume is set to <code>$volume</code>.</p>
+<p>If omitted the current volume is returned.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>int|bool <code>true</code> on success, <code>false</code> on failure and <code>int</code> if <code>$volume</code> was omitted.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">single</h3>
+<p>
+    <p>Enables/Disables the single-mode. If enabled MPD will play the same song over and over.</p>
+</p>
+
+<pre><code class="language-php">Player::single(int $state) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$state</h5><p>One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Enables single mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Disables single mode</p>
+</li>
+<li>
+<p><code>MPD_STATE_ONESHOT</code> - Enables single mode for only a single time.
+This is only supported on MPD version 0.21 and newer.</p>
+</li>
+</ul></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">replay_gain_mode</h3>
+<p>
+    <p>Specifies whether MPD shall adjust the volume of songs played using ReplayGain tags.</p>
+</p>
+
+<pre><code class="language-php">Player::replay_gain_mode(string $mode) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$mode</h5><p>One of <code>off</code>, <code>track</code>, <code>album</code>, <code>auto</code></p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">replay_gain_status</h3>
+<p>
+    <p>Get the current replay gain. Currently only the variable <code>replay_gain_mode</code> is returned by MPD.</p>
+</p>
+
+<pre><code class="language-php">Player::replay_gain_status() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">current_song</h3>
+<p>
+    <p>Returns an associative <code>array</code> containing information about the currently playing song.</p>
+</p>
+
+<pre><code class="language-php">Player::current_song() : mixed</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>mixed</code></h4>
+<p>
+    <p>array|false <code>array</code> containing song information on success or <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">next</h3>
+<p>
+    <p>Plays the next song in the Queue</p>
+</p>
+
+<pre><code class="language-php">Player::next() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">pause</h3>
+<p>
+    <p>Pause or resume playback.</p>
+</p>
+
+<pre><code class="language-php">Player::pause(?int $state = null) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$state</h5><p>Optional. One of the following:</p>
+<ul>
+<li>
+<p><code>MPD_STATE_ON</code> - Pause</p>
+</li>
+<li>
+<p><code>MPD_STATE_OFF</code> - Resume</p>
+</li>
+</ul>
+<p>If omitted or <code>null</code> the pause state is toggled.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">play</h3>
+<p>
+    <p>Plays the song position <code>$pos</code> in the Queue</p>
+</p>
+
+<pre><code class="language-php">Player::play(int $pos) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$pos</h5><p>Song position starting at 0.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">play_id</h3>
+<p>
+    <p>Begins playing the playlist at song <code>$id</code></p>
+</p>
+
+<pre><code class="language-php">Player::play_id(int $id) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$id</h5><p>ID of the song.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">previous</h3>
+<p>
+    <p>Plays the previous song in the Queue</p>
+</p>
+
+<pre><code class="language-php">Player::previous() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">seek</h3>
+<p>
+    <p>Seeks to <code>$seconds</code> of song <code>$songpos</code> in the Queue.</p>
+</p>
+
+<pre><code class="language-php">Player::seek(int $songpos, float $time) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songpos</h5><p>Queue-position of the song.</p></li>
+<li><h5>$time</h5><p>Seconds to seek to.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">seek_id</h3>
+<p>
+    <p>Seeks to <code>$seconds</code> of song <code>$songid</code>. Same as <code>Player::seek()</code> but with a song ID instead of a position.</p>
+</p>
+
+<pre><code class="language-php">Player::seek_id(int $songid, float $time) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$songid</h5><p>ID of the song.</p></li>
+<li><h5>$time</h5><p>Seconds to seek to.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">seek_cur</h3>
+<p>
+    <p>Seeks to <code>$seconds</code> of the current song.</p>
+</p>
+
+<pre><code class="language-php">Player::seek_cur( $time) : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <li><h5>$time</h5><p>If prefixed with <code>+</code> or <code>-</code> the time is relative to the current playing position.</p></li>
+
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+<!-- method template start -->
+<div class="method">
+<h3 class="method-name">stop</h3>
+<p>
+    <p>Stops playing.</p>
+</p>
+
+<pre><code class="language-php">Player::stop() : bool</code></pre>
+
+<h4 style="margin-top: 35px;">Parameters</h4>
+    <ul>
+        <i>None.</i>
+    </ul>
+
+<h4 style="margin-top: 35px;">Returns <code>bool</code></h4>
+<p>
+    <p>bool <code>true</code> on success and <code>false</code> on failure.</p>
+</p>
+</div>
+<!-- method template end -->
+
+<!-- class template end -->
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.4
+
+### Fixes
+
+* Fixed [#17](https://github.com/FloFaber/MphpD/issues/17) (again)
+
+
 ## v1.2.3
 
 ### Fixes
