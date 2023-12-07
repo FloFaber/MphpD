@@ -226,7 +226,8 @@ class DB
     do{
 
       $picture_data = $this->mphpd->cmd("readpicture", [$uri, $offset]);
-      if($picture_data === false || $picture_data === []){ return [ "size" => 0, "type" => null, "binary" => null ]; }
+      if($picture_data === false){ return false; }
+      if($picture_data === []){ return [ "size" => 0, "type" => null, "binary" => null ]; }
 
       $size = $picture_data["size"];
       $type = $picture_data["type"];
