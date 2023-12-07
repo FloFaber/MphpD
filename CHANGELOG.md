@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.5
+
+### Fixes
+
+* Fixed `DB::get_picture` not returning `false` on error.
+
+
 ## v1.2.4
 
 ### Fixes

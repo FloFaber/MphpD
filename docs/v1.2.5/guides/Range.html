@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MphpD Guides - Range.md</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/highlight/styles/atom-one-dark-reasonable.min.css">
+    <link rel="icon" href="/favicon.png" type="image/png"/>
+    <script src="/highlight/highlight.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="MphpD - A fully-featured, dependency-free PHP library for MPD.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <div>
+        <a href="/">MphpD</a>
+    </div>
+    <div id="header-right">
+        <span>v1.2.5</span>
+        <a href="/latest/overview.html">Documentation</a>
+        <a href="https://github.com/FloFaber/MphpD">GitHub</a>
+    </div>
+</div>
+<div id="body">
+    <h1>Ranges</h1>
+<p>Some methods, like <a href="../classes/Queue#delete">Queue::delete</a> allow specifying a <code>Range</code> of songs instead of a single position.</p>
+<p>Here they are implemented by simple arrays containing two <code>ints</code>.
+The first one is the <code>start</code> and the seconds one is the <code>end</code>.</p>
+<p>The <code>end</code> is excluded like in Python Ranges.
+If you specify <code>[10,20]</code> the first song will be <code>10</code> but the last song will be <code>19</code>.
+Keep that in mind.</p>
+<p>If <code>end</code> is omitted (an array containing only a single item), it's interpreted as an open end.
+So all songs from <code>start</code> are affected.</p>
+<h2>Usage</h2>
+<p>For example, if you wanted to remove songs 5-20 from the Queue you want to do the following:</p>
+<pre><code class="language-php">use FloFaber\MphpD\MphpD;
+$mphpd = new MphpD(...);
+$mphpd-&gt;queue()-&gt;delete([5,21]);</code></pre>
+<p>Or if you want load all songs from a playlist starting at 30 until the end:</p>
+<pre><code class="language-php">$mphpd-&gt;playlist("keygen")-&gt;load([30,]);</code></pre>
+</div>
+<div style="text-align: center; padding: 30px;">&copy; 2023 Florian Faber</div>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
