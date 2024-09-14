@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.6
+
+### Improvements
+
+* `Filter` may now have empty `$tag` and `$operator` in constructor.
+
+
 ## v1.2.5
 
 ### Fixes
