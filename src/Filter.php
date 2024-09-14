@@ -26,19 +26,19 @@ class Filter
 
 
   /**
-   * Creates a new filter.
+   * Creates a new filter. If $tag or $operator is empty, an empty Filter is returned.
    * @param string $tag Tag to be searched for. Like artist, title,...
    * @param string $operator Comparison operator. Like ==, contains, ~=,...
    * @param string $value The value to search for. Unescaped.
    */
-  public function __construct(string $tag, string $operator, string $value)
+  public function __construct(string $tag = "", string $operator = "", string $value = "")
   {
     $this->and($tag, $operator, $value);
   }
 
 
   /**
-   * Used to chain multiple filters together with a logical AND.
+   * Used to chain multiple filters together with a logical AND. If $tag or $operator is empty, the condition is not added to the Filter.
    * @param string $tag
    * @param string $operator
    * @param string $value
@@ -46,6 +46,9 @@ class Filter
    */
   public function and(string $tag, string $operator, string $value): Filter
   {
+
+    if($tag === "" || $operator === ""){ return $this; }
+
     if($value === ""){
       $value = "''";
     }else{
