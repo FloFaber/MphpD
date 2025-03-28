@@ -142,13 +142,13 @@ class Playlist
 
   /**
    * Moves the song at position `$from` in the specified playlist to the position `$to`.
-   * @param int $from Current song position
+   * @param int|array $from Current song position or range
    * @param int $to New song position
    * @return bool `true` on success and `false` on failure.
    */
-  public function move_song(int $from, int $to) : bool
+  public function move_song($from, int $to) : bool
   {
-    return $this->mphpd->cmd("playlistmove", [$this->name, $from, $to], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("playlistmove", [$this->name, Utils::pos_or_range($from), $to], MPD_CMD_READ_BOOL);
   }
 
 
