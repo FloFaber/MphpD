@@ -25,8 +25,9 @@ class Socket
    */
   private $socket;
   private MPDException $last_error;
-
+  private string $last_cmd;
   private string $version;
+
   public bool $connected = false;
   protected string $socket_type = "";
   protected string $host = "127.0.0.1";
@@ -132,6 +133,8 @@ class Socket
     }
 
     $cmd = $command.Utils::escape_params($params);
+
+    $this->last_cmd = $cmd;
 
     if (fputs($this->socket, "$cmd\n") === false) {
       $this->set_error("Unable to write to socket!");
@@ -304,6 +307,7 @@ class Socket
     return [
       "code" => $this->last_error->getCode(),
       "message" => $this->last_error->getMessage(),
+      "lastcmd" => $this->last_cmd,
       "command" => $this->last_error->getCommand(),
       "commandlistnum" => $this->last_error->getCommandlistNum()
     ];
