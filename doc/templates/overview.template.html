@@ -1,10 +1,21 @@
 <script src="/js/versions.js"></script>
 <h1>Versions</h1>
-<ul id="versions"></ul>
+
+<ul id="new-versions"></ul>
+<details>
+  <summary>Older versions</summary>
+  <ul id="old-versions"></ul>
+</details>
+
+
 <script>
-    for(let i = 0; i < window.versions.length; i++){
+    for(let i = 0; i < 3; i++){
       let version = window.versions[i];
-      document.getElementById("versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
+      document.getElementById("new-versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
+    }
+    for(let i = 3; i < window.versions.length; i++){
+      let version = window.versions[i];
+      document.getElementById("old-versions").innerHTML += "<li><a href='/"+version+"/overview.html'>"+version+"</a></li>";
     }
 </script>
 
