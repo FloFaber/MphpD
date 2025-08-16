@@ -51,7 +51,6 @@ class Utils
     foreach($params as $param){
       if($param === null){ continue; }
       $param = (string)$param;
-      // @ToDo make sure this works aka. test this
       if(strlen($param) === 0 && !($flags & MPD_ESCAPE_ALLOW_EMPTY_PARAM)){ continue; }
       //$param = str_replace("\\", "\\\\", $param);
       $param = escapeshellcmd($param);
@@ -66,14 +65,14 @@ class Utils
    * @param int|array|null $p
    * @return int|string|null
    */
-  public static function pos_or_range($p): int|string|null
+  public static function pos_or_range(int|array|null $p): int|string|null
   {
     if($p === null){ return null; }
 
     // range
     if(is_array($p) && count($p) === 2){
       return ($p[0]).":".($p[1]);
-    }elseif(is_numeric($p) && $p !== -1){ // pos, @todo: why -1?
+    }elseif(is_numeric($p)){
       return $p;
     }
     return null;
