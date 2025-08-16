@@ -132,7 +132,7 @@ class Socket
       return false;
     }
 
-    $cmd = $command.Utils::escape_params($params);
+    $cmd = $command.Utils::escape_params($params, MPD_ESCAPE_ALLOW_EMPTY_PARAM|MPD_ESCAPE_PREFIX_SPACE);
 
     $this->last_cmd = $cmd;
 

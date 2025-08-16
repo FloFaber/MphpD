@@ -33,6 +33,7 @@ class Utils
    *                  * MPD_ESCAPE_DOUBLE_QUOTES - "beetle's juice" becomes "\\\"beetle\'s juice\\\""
    *                  * MPD_ESCAPE_PREFIX_SPACE  - Adds a space at the params beginning
    *                  * MPD_ESCAPE_SUFFIX_SPACE  - Adds a space at the params ending
+   *                  * MPD_ESCAPE_ALLOW_EMPTY_PARAM - Allows empty parameters
    * @return string
    */
   public static function escape_params(array $params, int $flags = MPD_ESCAPE_PREFIX_SPACE): string
@@ -48,9 +49,10 @@ class Utils
 
     $parsed = "";
     foreach($params as $param){
+      if($param === null){ continue; }
       $param = (string)$param;
       // @ToDo make sure this works aka. test this
-      if(strlen($param) === 0){ continue; }
+      if(strlen($param) === 0 && !($flags & MPD_ESCAPE_ALLOW_EMPTY_PARAM)){ continue; }
       //$param = str_replace("\\", "\\\\", $param);
       $param = escapeshellcmd($param);
       $parsed .= $prefix.$quote.$param.$quote.$suffix;
