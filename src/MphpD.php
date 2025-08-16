@@ -304,6 +304,27 @@ class MphpD extends Socket
 
 
   /**
+   * Return a list of unique sticker names and types
+   * @return array|false Returns array containing the requested sticker names and types or false on failure.
+   */
+  public function stickers() : false|array
+  {
+
+    $names = $this->cmd("stickernames", [], MPD_CMD_READ_LIST_SINGLE);
+    $types = $this->cmd("stickertypes", [], MPD_CMD_READ_LIST_SINGLE);
+
+    if($names !== false AND $types !== false){
+      return [
+        "names" => $names,
+        "types" => $types
+      ];
+    }
+
+    return false;
+  }
+
+
+  /**
    * Return a list of all mounts.
    * @return array|false
    */
