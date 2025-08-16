@@ -2,7 +2,7 @@
   "name": "flofaber/mphpd",
   "description": "A PHP library for the Music Player Daemon",
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.2",
     "ext-sockets": "*"
   },
   "require-dev": {

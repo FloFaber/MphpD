@@ -8,10 +8,8 @@ painful stuff.
 
 The whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is supported!
 
-> **Warning**
->
-> This Library as well as it's documentation is rather young and therefore not perfect.
->
+> **Bug Reporting**
+> 
 > Please report any bugs or issues you encounter [here](https://github.com/FloFaber/MphpD/issues). Thanks.
 
 ## Installation
@@ -91,7 +89,7 @@ For further information have a look at the [Documentation](https://mphpd.org/lat
 
 ## Supported PHP versions
 
-* 7.4 and above
+* 8.2 and above
 
 ## Required PHP extensions
 * Only `sockets` which is included by default on most PHP installations.
