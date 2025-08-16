@@ -1,5 +1,30 @@
 # Changelog
 
+## v2.0.0
+
+This version doesn't have fundamental changes but will break enough existing code to justify a new major version. 
+
+### Breaking Changes
+
+* Removed support for PHP7.4, now only supporting PHP8.0 and newer
+* Introduced more strict typing
+* Changed argument types:
+  * All `$pos` (position) arguments now only accept `int` or `null`
+  * All `$range` arguments now accept `array` or `null`
+
+### Improvements
+
+* Implemented new commands:
+  * `sticker inc` via `Sticker::increment`
+  * `sticker dec` via `Sticker::decrement`
+  * `stickertypes` and `stickernames` via `MphpD::stickers`
+* Wrote new tests for pretty much everything
+
+### Fixes
+
+* Fixed empty `$uri` in `Sticker::find`
+
+
 ## v1.2.6
 
 ### Improvements
