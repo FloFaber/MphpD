@@ -3,6 +3,8 @@ tmp/
 vendor/
 composer.lock
 .phpunit.result.cache
+.phpunit.cache
 tests/mpd/mpd.conf
 tests/config.php
+tests/mpd/sticker.sql
 /docs/test
