@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * MphpD
  * http://mphpd.org
@@ -46,7 +46,7 @@ class Sticker
    * @param string $name Name of the sticker.
    * @return false|string `string` on success or `false` on failure.
    */
-  public function get(string $name)
+  public function get(string $name) : false|string
   {
     // stickers are returned like this from MPD:
     // sticker: name=value
@@ -65,10 +65,10 @@ class Sticker
   /**
    * Add a value to the specified sticker.
    * @param string $name Name of the value.
-   * @param string $value Value of the value.
+   * @param mixed $value Value of the value.
    * @return bool `true` on success or `false` on failure.
    */
-  public function set(string $name, string $value) : bool
+  public function set(string $name, mixed $value) : bool
   {
     return $this->mphpd->cmd("sticker set", [ $this->type, $this->uri, $name, $value ], MPD_CMD_READ_BOOL);
   }
@@ -86,10 +86,34 @@ class Sticker
 
 
   /**
-   * Returns an associative array containing sticker names and values of the specified object.
-   * @return array|false `array` on success or `false` on failure.
+   * Adds a sticker value to the specified object. If a sticker item with that name already exists, it is incremented by supplied value.
+   * @param string $name Name of the sticker.
+   * @param int|float $value Increase the sticker's value by this value.
+   * @return bool `true` on success or `false` on failure.
    */
-  public function list()
+  public function increment(string $name, int|float $value): bool
+  {
+    return $this->mphpd->cmd("sticker inc", [ $this->type, $this->uri, $name, $value ], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Adds a sticker value to the specified object. If a sticker item with that name already exists, it is decremented by supplied value.
+   * @param string $name Name of the value.
+   * @param int|float $value Value of the value.
+   * @return bool `true` on success or `false` on failure.
+   */
+  public function decrement(string $name, int|float $value): bool
+  {
+    return $this->mphpd->cmd("sticker dec", [ $this->type, $this->uri, $name, $value ], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Returns an associative array containing sticker names and values of the specified object.
+   * @return false|array `array` on success or `false` on failure.
+   */
+  public function list() : false|array
   {
     // stickers are returned like this from MPD:
     // sticker: name=value
@@ -112,11 +136,11 @@ class Sticker
   /**
    * Search the sticker database for sticker with the specified name and/or value in the specified `$uri`
    * @param string $name The sticker name
-   * @param string $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
-   * @param string $value Optional. The value to search for. Only in combination with $operator.
+   * @param string|null $operator Optional. Can be one of `=`, `<` or `>`. Only in combination with $value.
+   * @param string|null $value Optional. The value to search for. Only in combination with $operator.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function find(string $name, string $operator = "", string $value = "")
+  public function find(string $name, ?string $operator = null, ?string $value = null) : false|array
   {
     // stickers are returned like this from MPD:
     // sticker: name=value
@@ -126,9 +150,9 @@ class Sticker
 
     // we need a little cheat here
     $uri = $this->uri;
-    if($this->uri === ""){
+    /*if($this->uri === ""){
       $uri = "''";
-    }
+    }*/
 
     $ss = $this->mphpd->cmd("sticker find", [ $this->type, $uri, $name, $operator, $value ], MPD_CMD_READ_LIST);
     if($ss === false){ return false; }
