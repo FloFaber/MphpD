@@ -63,18 +63,20 @@ class Utils
 
   /**
    * Function to "convert" int or array to a pos or range argument
-   * @param int|array $p
-   * @return int|string
+   * @param int|array|null $p
+   * @return int|string|null
    */
-  public static function pos_or_range($p)
+  public static function pos_or_range($p): int|string|null
   {
-    if(is_array($p)){
-      if(!$p){ return ""; }
-      return ($p[0] ?? "").":".($p[1] ?? "");
-    }elseif($p !== -1){
+    if($p === null){ return null; }
+
+    // range
+    if(is_array($p) && count($p) === 2){
+      return ($p[0]).":".($p[1]);
+    }elseif(is_numeric($p) && $p !== -1){ // pos, @todo: why -1?
       return $p;
     }
-    return "";
+    return null;
   }
 
 
