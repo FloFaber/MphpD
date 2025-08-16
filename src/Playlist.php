@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * MphpD
  * http://mphpd.org
@@ -66,7 +66,7 @@ class Playlist
    * @param bool $metadata If set to `true` metadata like duration, last-modified,... will be included.
    * @return array|false `array` of associative Arrays containing song information on success or `false` on failure.
    */
-  public function get_songs(bool $metadata = false)
+  public function get_songs(bool $metadata = false) : array|false
   {
     return $this->mphpd->cmd("listplaylist".($metadata ? "info" : ""), [$this->name], MPD_CMD_READ_LIST);
   }
@@ -74,13 +74,12 @@ class Playlist
 
   /**
    * Loads the specified playlist into the Queue.
-   * @param array $range Range. If specified only the requested portion of the playlist is loaded. Starts at 0.
-   * @param int|string $pos Specifies where the songs will be inserted into the queue.
-   *
+   * @param array|null $range Range. If specified only the requested portion of the playlist is loaded. Starts at 0.
+   * @param int|null $pos Specifies where the songs will be inserted into the queue.
    *                    Can be relative if prefixed with + or -
    * @return bool `true` on success and `false` on failure.
    */
-  public function load(array $range = [], $pos = "") : bool
+  public function load(?array $range = null, ?int $pos = null) : bool
   {
     return $this->mphpd->cmd("load", [ $this->name, Utils::pos_or_range($range), $pos ], MPD_CMD_READ_BOOL);
   }
@@ -89,11 +88,11 @@ class Playlist
   /**
    * Adds `$uri` to the specified playlist at position `$pos`.
    * @param string $uri Relative file path or other supported URIs.
-   * @param int|string $pos Specifies where the songs will be inserted into the playlist.
+   * @param int|null $pos Specifies where the songs will be inserted into the playlist.
    *                    Can be relative if prefixed with + or -
    * @return bool `true` on success and `false` on failure.
    */
-  public function add(string $uri, $pos = "") : bool
+  public function add(string $uri, ?int $pos = null) : bool
   {
     return $this->mphpd->cmd("playlistadd", [$this->name, $uri, $pos], MPD_CMD_READ_BOOL);
   }
@@ -101,20 +100,20 @@ class Playlist
 
   /**
    * Search for songs using Filter and add them into the Playlist at position `$pos`.
-   * @see DB::search()
    * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $position
+   * @param string|null $sort
+   * @param array|null $window
+   * @param int|null $position
    * @return bool
+   * @see DB::search()
    */
-  public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
+  public function add_search(Filter $filter, ?string $sort = null, ?array $window = null, ?int $position = null) : bool
   {
     $name = Utils::escape_params([ $this->name ]);
     return $this->mphpd->cmd("searchaddpl $name $filter", [
-        ($sort ? "sort" : ""), ($sort ?: ""),
-        ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
-        ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
+        ($sort ? "sort" : null), ($sort ?: null),
+        ($window ? "window" : null), ($window ? Utils::pos_or_range($window) : null),
+        ($position !== null ? "position" : null), ($position !== null ? $position : null)
       ], MPD_CMD_READ_BOOL);
   }
 
@@ -131,10 +130,10 @@ class Playlist
 
   /**
    * Deletes `$songpos` from the specified playlist.
-   * @param int|array $songpos Position of the song or Range
+   * @param array|int|null $songpos Position of the song or Range
    * @return bool `true` on success and `false` on failure.
    */
-  public function remove_song($songpos = -1) : bool
+  public function remove_song(array|int|null $songpos = null) : bool
   {
     return $this->mphpd->cmd("playlistdelete", [ $this->name, Utils::pos_or_range($songpos) ], MPD_CMD_READ_BOOL);
   }
@@ -146,7 +145,7 @@ class Playlist
    * @param int $to New song position
    * @return bool `true` on success and `false` on failure.
    */
-  public function move_song($from, int $to) : bool
+  public function move_song(int|array $from, int $to) : bool
   {
     return $this->mphpd->cmd("playlistmove", [$this->name, Utils::pos_or_range($from), $to], MPD_CMD_READ_BOOL);
   }
@@ -190,14 +189,11 @@ class Playlist
   public function save(int $mode = MPD_MODE_CREATE) : bool
   {
 
-    switch ($mode){
-      case MPD_MODE_APPEND:
-        $m = "append"; break;
-      case MPD_MODE_REPLACE:
-        $m = "replace"; break;
-      default:
-        $m = "create"; break;
-    }
+    $m = match ($mode) {
+      MPD_MODE_APPEND => "append",
+      MPD_MODE_REPLACE => "replace",
+      default => "create",
+    };
 
     // ignore the mode parameter on version older than 0.24
     if(!$this->mphpd->version_bte("0.24") && $mode !== MPD_MODE_CREATE){
@@ -207,6 +203,16 @@ class Playlist
     }
 
     return $this->mphpd->cmd("save", [$this->name, $m], MPD_CMD_READ_BOOL);
+  }
+
+
+  /**
+   * Count the number of songs and their total playtime (seconds) in the playlist.
+   * @return bool|array 
+   */
+  public function length() : bool|array
+  {
+    return $this->mphpd->cmd("playlistlength", [$this->name]);
   }
 
 }
