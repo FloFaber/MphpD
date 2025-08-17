@@ -97,7 +97,7 @@ foreach($docparser->getClasses() as $class){
     $method_info["text"] = $pd->text($method_info["summary"]."\n".$method_info["description"]);
     $method_info["template_file"] = __DIR__ . "/templates/method.template.html";
     $method_info["return_text"] = $pd->text($method_info["docblock"]?->getTagsByName("return")[0] ?? "");
-    $method_info["return_type"] = $method->hasReturnType() ? $method->getReturnType()->getName() : "mixed";
+    $method_info["return_type"] = $method->hasReturnType() ? (string)$method->getReturnType() : "mixed";
 
     $template_method = file_get_contents($method_info["template_file"]);
 
@@ -118,7 +118,7 @@ foreach($docparser->getClasses() as $class){
     // www "usage"-line
     $usage = $class_info["name"]."::".$method_info["name"]."(";
     foreach ($method_info["params"] as $param) {
-      $usage .= $param->getType()." ";
+      $usage .= $param->getType() ." ";
       $usage .= '$'.$param->getName();
       try{
         $default = $param->getDefaultValue();
