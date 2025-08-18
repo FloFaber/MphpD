@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * MphpD
  * http://mphpd.org
@@ -8,7 +8,7 @@
 
 namespace FloFaber\MphpD;
 
-require_once __DIR__ . "/Filter.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * Subclass to control the Queue.
@@ -33,68 +33,74 @@ class Queue
    * Adds the file `$uri` to the queue (directories add recursively). `$uri` can also be a single file.
    * @param string $uri Can be a single file or folder.
    *                    If connected via Unix socket you may add arbitrary local files (absolute paths)
-   * @param int|string $pos If set the song is inserted at the specified position.
+   * @param int|string|null $pos If set the song is inserted at the specified position.
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
    * @return bool `true` on success and `false` on failure.
    */
-  public function add(string $uri, $pos = -1) : bool
+  public function add(string $uri, int|string|null $pos = null) : bool
   {
-    return $this->mphpd->cmd("add", [ $uri, ($pos !== -1 ? $pos : "") ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("add", [ $uri, ($pos !== null ? $pos : null) ], MPD_CMD_READ_BOOL);
   }
 
 
   /**
    * Adds a song to the playlist (non-recursive) and returns the song id.
    * @param string $uri Is always a single file or URL
-   * @param int|string $pos If set the song is inserted at the specified position.
+   * @param int|string|null $pos If set the song is inserted at the specified position.
    *                 If the parameter starts with + or -, then it is relative to the current song.
    *                 e.g. +0 inserts right after the current song and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
    * @return int|false The song ID on success or `false` on failure.
    */
-  public function add_id(string $uri, $pos = -1)
+  public function add_id(string $uri, int|string|null $pos = null): false|int
   {
-    $add_id = $this->mphpd->cmd("addid", [ $uri, ($pos !== -1 ? $pos : "") ]);
+    $add_id = $this->mphpd->cmd("addid", [ $uri, ($pos !== null ? $pos : null) ]);
     if(!$add_id){ return false; }
     return $add_id["id"] ?? false;
   }
 
 
   /**
-   * Same as `search()` but adds the songs into the Queue at position `$pos`.
-   * @see DB::search()
+   * Same as `Queue::search()` but adds the songs into the Queue at position `$pos`.
    * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $position
+   * @param string|null $sort Optional
+   * @param array|null $window Optional
+   * @param int|null $position Optional. If specified the matched songs will be added to this position in the Queue.
+   * @param bool $case_sensitive Specifies if the search should be performed case-sensitive or not.
    * @return bool `true` on success and `false` on failure.
+   * @see DB::search()
    */
-  public function add_search(Filter $filter, string $sort = "", array $window = [], int $position = -1) : bool
+  public function add_search(Filter $filter, ?string $sort = null, ?array $window = null, ?int $position = null, bool $case_sensitive = false) : bool
   {
-    return $this->mphpd->cmd("searchadd $filter", [
-        ($sort ? "sort" : ""), ($sort ?: ""),
-        ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
-        ($position !== -1 ? "position" : ""), ($position !== -1 ? $position : "")
+
+    if($case_sensitive){
+      $cmd = "findadd";
+    }else{
+      $cmd = "searchadd";
+    }
+
+    return $this->mphpd->cmd("$cmd $filter", [
+        ($sort ? "sort" : null), ($sort ?: null),
+        ($window ? "window" : null), ($window ? Utils::pos_or_range($window) : null),
+        ($position !== null ? "position" : null), ($position !== null ? $position : null)
       ], MPD_CMD_READ_BOOL);
   }
 
 
   /**
-   * Same as `find()` but this adds the matching song to the Queue.
-   * @see DB::find()
+   * Kept for backward-compatibility. Consider using Queue::add_search instead.
+   * Same as `Queue::find()` but adds the songs into the Queue at position `$pos`.
    * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @param int $pos Optional. If specified the matched songs will be added to this position in the Queue.
+   * @param string|null $sort Optional
+   * @param array|null $window Optional
+   * @param int|null $position Optional. If specified the matched songs will be added to this position in the Queue.
    * @return bool `true` on success and `false` on failure.
+   * @see DB::search()
+   * @deprecated As of v2.0.0
    */
-  public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1): bool
+  public function add_find(Filter $filter, ?string $sort = null, ?array $window = null, ?int $position = null): bool
   {
-    return $this->mphpd->cmd("find $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
-      ($pos !== -1 ? "position" : ""), ($pos !== -1 ? $pos : "")
-    ], MPD_CMD_READ_BOOL);
+    return $this->add_search($filter, $sort, $window, $position, true);
   }
 
 
@@ -113,7 +119,7 @@ class Queue
    * @param int|array $p The song position or Range
    * @return bool `true` on success and `false` on failure.
    */
-  public function delete($p) : bool
+  public function delete(int|array $p) : bool
   {
     return $this->mphpd->cmd("delete", [ Utils::pos_or_range($p) ], MPD_CMD_READ_BOOL);
   }
@@ -133,15 +139,16 @@ class Queue
   /**
    * Moves the song at `$from` to `$to` in the queue
    * @param int|array $from Song position or Range
-   * @param string $to If starting with + or -, then it is relative to the current song
+   * @param int|string $to If starting with + or -, then it is relative to the current song
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved range).
    * @return bool `true` on success and `false` on failure.
    */
-  public function move($from, string $to) : bool
+  public function move(int|array $from, int|string $to) : bool
   {
-    if(!is_numeric($to))
+    if(!is_numeric($to)){
       $this->mphpd->set_error(new MPDException("\$to is not numeric.", 400));
+    }
 
     return $this->mphpd->cmd("move", [ Utils::pos_or_range($from), $to ], MPD_CMD_READ_BOOL);
   }
@@ -150,32 +157,33 @@ class Queue
   /**
    * Moves the song with `$from` (songid) to `$to` (playlist index) in the queue.
    * @param int $from Song ID
-   * @param string $to Playlist Index. If starting with + or -, then it is relative to the current song
+   * @param int|string $to Playlist Index. If starting with + or -, then it is relative to the current song
    *                   e.g. +0 moves to right after the current song and -0 moves to right before the current song
    *                   (i.e. zero songs between the current song and the moved song).
    * @return bool `true` on success and `false` on failure.
    */
-  public function move_id(int $from, string $to) : bool
+  public function move_id(int $from, int|string $to) : bool
   {
-    if(!is_numeric($to))
+    if(!is_numeric($to)){
       $this->mphpd->set_error(new MPDException("\$to is not numeric.", 400));
+    }
+
     return $this->mphpd->cmd("moveid", [$from, $to], MPD_CMD_READ_BOOL);
   }
 
 
   /**
+   * Kept for backward-compatibility. Consider using Queue::search instead.
    * Same as Queue::search but case-sensitive
    * @param Filter $filter
-   * @param string $sort
-   * @param array $window
+   * @param string|null $sort
+   * @param array|null $window
    * @return array|false `array` on success or `false` on failure.
+   * @deprecated As of v2.0.0
    */
-  public function find(Filter $filter, string $sort = "", array $window = [])
+  public function find(Filter $filter, ?string $sort = null, ?array $window = null): false|array
   {
-    return $this->mphpd->cmd("playlistfind $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
-    ], MPD_CMD_READ_LIST);
+    return $this->search($filter, $sort, $window, true);
   }
 
 
@@ -184,45 +192,65 @@ class Queue
    * @param int $songid Song ID
    * @return array|false Associative `array` containing song information or `false` on failure.
    */
-  public function get_id(int $songid)
+  public function get_id(int $songid): false|array
   {
-    return $this->mphpd->cmd("playlistid", [ $songid ], MPD_CMD_READ_NORMAL);
+    return $this->mphpd->cmd("playlistid", [ $songid ]);
   }
 
 
   /**
    * Returns information about all or specific songs in the Queue.
-   * @param $p int|array Optional. Song Position or Range.
+   * @param $pos int|array|null Optional. Song Position or Range.
    *                     If omitted returns an array of associative arrays containing information about all songs in the Queue.
    *                     If specified returns an associative array containing the given songs information only.
+   * @param bool $metadata If `false` only file-URIs will be returned
    * @return array|false `array` on success or `false` on failure. An empty `array` is returned if the queue is empty.
    */
-  public function get($p = -1)
+  public function get(int|array|null $pos = null, bool $metadata = true): false|array
   {
-
     $m = MPD_CMD_READ_LIST;
-    if(!is_array($p)){
+    if(!is_array($pos)){
       $m = MPD_CMD_READ_NORMAL;
     }
-    if($p === -1){
+    if($pos === null){
       $m = MPD_CMD_READ_LIST;
     }
-    return $this->mphpd->cmd("playlistinfo", [ Utils::pos_or_range($p) ], $m);
+    
+    $queue = $this->mphpd->cmd("playlistinfo", [ Utils::pos_or_range($pos) ], $m);
+
+    if($metadata){
+      return $queue;
+    }
+
+    // remove all metadata but "file"
+    $queue_ = [];
+    foreach ($queue as $item) {
+      $queue_[] = [ "file" => $item["file"]];
+    }
+    return $queue_;
   }
 
 
   /**
    * Search the queue for matching songs.
    * @param Filter $filter The Filter.
-   * @param string $sort If specified the results are sorted by the specified tag.
-   * @param array $window If specified returns only the given portion.
+   * @param string|null $sort If specified the results are sorted by the specified tag.
+   * @param array|null $window If specified returns only the given portion.
+   * @param bool $case_sensitive Specified if the search should be performed case-sensitive
    * @return array|false `array` on success or `false` on failure.
    */
-  public function search(Filter $filter, string $sort = "", array $window = [])
+  public function search(Filter $filter, ?string $sort = null, ?array $window = null, bool $case_sensitive = false): false|array
   {
-    return $this->mphpd->cmd("playlistsearch $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
+
+    if($case_sensitive){
+      $cmd = "playlistfind";
+    }else{
+      $cmd = "playlistsearch";
+    }
+
+    return $this->mphpd->cmd("$cmd $filter", [
+      ($sort ? "sort" : null), ($sort ?: null),
+      ($window ? "window" : null), ($window ? Utils::pos_or_range($window) : null)
     ], MPD_CMD_READ_LIST);
   }
 
@@ -230,13 +258,13 @@ class Queue
   /**
    * Returns an array of changed songs currently in the playlist since `$version`.
    * @param int $version The current version can be retrieved with `MphpD::status([ "playlist" ])`.
-   * @param int|array $range Position of song or Range
+   * @param int|array|null $range Position of song or Range
    * @param bool $metadata If set to true the metadata will be included.
    *
    *                       If set to false only the position and ID of the changed songs will be returned.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function changes(int $version, $range = -1, bool $metadata = false)
+  public function changes(int $version, int|array|null $range = null, bool $metadata = false): false|array
   {
     $cmd = "plchangesposid";
     if($metadata === true){
@@ -251,10 +279,10 @@ class Queue
    * This only has effect when the `random`-mode is enabled.
    * A higher priority means that it will be played first when `random` is enabled.
    * @param int $priority Priority 0-255.
-   * @param int|array $range Position of song or Range
+   * @param array|int|null $range Position of song or Range
    * @return bool `true` on success or `false` on failure.
    */
-  public function prio(int $priority, $range = -1) : bool
+  public function prio(int $priority, array|int|null $range = null) : bool
   {
     return $this->mphpd->cmd("prio", [ $priority, Utils::pos_or_range($range) ], MPD_CMD_READ_BOOL);
   }
@@ -283,7 +311,11 @@ class Queue
    */
   public function range_id(int $songid, array $range = []) : bool
   {
+
+    // we misuse the pos_or_range here as it works the same here
     $pos = Utils::pos_or_range($range);
+
+    // sending just ":" means "remove the range, play everything"
     if(!$range){
       $pos = ":";
     }
@@ -327,7 +359,7 @@ class Queue
 
 
   /**
-   * Adds a tag to the specified song
+   * Adds a tag to the specified song. Editing song tags is only possible for remote songs. Also this change is volatile.
    * @param int $songid Song ID
    * @param string $tag Tag name
    * @param string $value Tag value
