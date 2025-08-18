@@ -5,16 +5,16 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use FloFaber\MphpD\MphpD;
 use FloFaber\MphpD\Filter;
+use FloFaber\MphpD\Queue;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\FloFaber\MphpD\Queue::class)]
+#[CoversClass(Queue::class)]
 class QueueTest extends TestCase
 {
 
   protected MphpD $mphpd;
   private int $version;
-  private array $random_song;
 
   public function setUp(): void
   {
@@ -111,7 +111,6 @@ class QueueTest extends TestCase
   public function testDeleteId()
   {
     $queue = $this->mphpd->queue()->get();
-    $song_id = $queue[array_rand($queue)]["id"];
 
     $song_id = $this->pick_random_queue_id($queue);
 
@@ -184,7 +183,7 @@ class QueueTest extends TestCase
     $this->assertArrayNotHasKey("id", $queue[0]);
     $this->assertArrayHasKey("file", $queue[0]);
 
-    $queue = $this->mphpd->queue()->get(metadata: true);
+    $queue = $this->mphpd->queue()->get();
     $this->assertArrayHasKey("id", $queue[0]);
   }
 
