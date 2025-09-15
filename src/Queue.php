@@ -90,7 +90,7 @@ class Queue
    */
   public function add_find(Filter $filter, string $sort = "", array $window = [], int $pos = -1): bool
   {
-    return $this->mphpd->cmd("find $filter", [
+    return $this->mphpd->cmd("findadd $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
       ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : ""),
       ($pos !== -1 ? "position" : ""), ($pos !== -1 ? $pos : "")
