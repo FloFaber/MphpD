@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/config/config.php";
-require_once __DIR__ . "/../src/MphpD.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use FloFaber\MphpD\MphpD;
 use FloFaber\MphpD\Channel;
@@ -12,19 +12,24 @@ use FloFaber\MphpD\Player;
 use FloFaber\MphpD\Playlist;
 use FloFaber\MphpD\Queue;
 use FloFaber\MphpD\Sticker;
-
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(MphpD::class)]
 class MphpDTest extends TestCase
 {
 
   private MphpD $mphpd;
 
-  public function __construct(?string $name = null, array $data = [], $dataName = '')
+  public function setUp(): void
   {
-    parent::__construct($name, $data, $dataName);
     $this->mphpd = new MphpD(MPD_CONFIG);
     $this->mphpd->connect();
+  }
+
+  public function tearDown(): void
+  {
+    $this->mphpd->disconnect();
   }
 
   public function testInstance()

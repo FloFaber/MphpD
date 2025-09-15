@@ -10,6 +10,12 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Queue::class)]
+#[UsesClass(\FloFaber\MphpD\DB::class)]
+#[UsesClass(\FloFaber\MphpD\Player::class)]
+#[UsesClass(\FloFaber\MphpD\Playlist::class)]
+#[UsesClass(\FloFaber\MphpD\MphpD::class)]
+#[UsesClass(\FloFaber\MphpD\Socket::class)]
+#[UsesClass(\FloFaber\MphpD\Utils::class)]
 class QueueTest extends TestCase
 {
 
