@@ -23,6 +23,7 @@ This version doesn't have fundamental changes but will break enough existing cod
   * `sticker inc` via `Sticker::increment`
   * `sticker dec` via `Sticker::decrement`
   * `stickertypes` and `stickernames` via `MphpD::stickers`
+  * `playlistlength` via `Playlist::length`
 * Wrote new tests for pretty much everything
 
 ### Fixes
