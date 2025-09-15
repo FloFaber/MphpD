@@ -6,11 +6,15 @@ This version doesn't have fundamental changes but will break enough existing cod
 
 ### Breaking Changes
 
-* Removed support for PHP7.4, now only supporting PHP8.0 and newer
+* Removed support for PHP7.4. MphpD v2 only supports PHP8.2 and newer.
 * Introduced more strict typing
 * Changed argument types:
   * All `$pos` (position) arguments now only accept `int` or `null`
   * All `$range` arguments now accept `array` or `null`
+* Deprecated `Queue::find` and `Queue::add_find`.
+* `Queue::search` and `Queue::add_search` now have a `$case_sensitive` parameter.
+* 
+
 
 ### Improvements
 
