@@ -17,7 +17,7 @@ The whole MPD [protocol](https://mpd.readthedocs.io/en/latest/protocol.html) is 
 
 You can either install this library by using composer:
 ```
-composer require flofaber/mphpd
+composer require flofaber/mphpd --prefer-dist
 ```
 and then autoload it:
 ```PHP
