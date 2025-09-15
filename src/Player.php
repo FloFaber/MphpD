@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * MphpD
  * http://mphpd.org
@@ -115,15 +115,15 @@ class Player
 
   /**
    * Sets volume to `$volume` or returns the current volume if `$volume` is omitted.
-   * @param int $volume If specified the current volume is set to `$volume`.
+   * @param int|null $volume If specified the current volume is set to `$volume`.
    *
    *                    If omitted the current volume is returned.
    * @return int|bool `true` on success, `false` on failure and `int` if `$volume` was omitted.
    */
-  public function volume(int $volume = -1)
+  public function volume(?int $volume = null): bool|int
   {
     // if no volume is specified return the current volume
-    if($volume === -1){
+    if($volume === null){
       // on version 0.23 or higher use the new `getvol` command. Otherwise, get the volume from `status`.
       if($this->mphpd->version_bte("0.23")){
         $v = $this->mphpd->cmd("getvol");
@@ -132,8 +132,8 @@ class Player
         $v = $this->mphpd->status([ "volume" ]);
       }
 
-      // return volume if valid and -1 otherwise.
-      return ($v !== false AND $v !== NULL) ? $v : -1;
+      // return volume if valid and false otherwise.
+      return ($v !== false AND $v !== NULL) ? $v : false;
     }
     return $this->mphpd->cmd("setvol", [$volume], MPD_CMD_READ_BOOL);
   }
@@ -180,7 +180,7 @@ class Player
    * Get the current replay gain. Currently only the variable `replay_gain_mode` is returned by MPD.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function replay_gain_status()
+  public function replay_gain_status(): false|array
   {
     return $this->mphpd->cmd("replay_gain_status");
   }
@@ -197,7 +197,7 @@ class Player
    * Returns an associative `array` containing information about the currently playing song.
    * @return array|false `array` containing song information on success or `false` on failure.
    */
-  public function current_song()
+  public function current_song(): false|array
   {
     return $this->mphpd->cmd("currentsong");
   }
@@ -224,9 +224,9 @@ class Player
    *                   If omitted or `null` the pause state is toggled.
    * @return bool `true` on success and `false` on failure.
    */
-  public function pause(int $state = null) : bool
+  public function pause(?int $state = null) : bool
   {
-    return $this->mphpd->cmd("pause", [($state !== null ? $state : "")], MPD_CMD_READ_BOOL);
+    return $this->mphpd->cmd("pause", [ $state ], MPD_CMD_READ_BOOL);
   }
 
 
@@ -265,10 +265,10 @@ class Player
   /**
    * Seeks to `$seconds` of song `$songpos` in the Queue.
    * @param int $songpos Queue-position of the song.
-   * @param float $time Seconds to seek to.
+   * @param int|float $time Seconds to seek to.
    * @return bool `true` on success and `false` on failure.
    */
-  public function seek(int $songpos, float $time) : bool
+  public function seek(int $songpos, int|float $time) : bool
   {
     return $this->mphpd->cmd("seek", [ $songpos, $time ], MPD_CMD_READ_BOOL);
   }
@@ -277,10 +277,10 @@ class Player
   /**
    * Seeks to `$seconds` of song `$songid`. Same as `Player::seek()` but with a song ID instead of a position.
    * @param int $songid ID of the song.
-   * @param float $time Seconds to seek to.
+   * @param int|float $time Seconds to seek to.
    * @return bool `true` on success and `false` on failure.
    */
-  public function seek_id(int $songid, float $time) : bool
+  public function seek_id(int $songid, int|float $time) : bool
   {
     return $this->mphpd->cmd("seekid", [ $songid, $time ], MPD_CMD_READ_BOOL);
   }
@@ -288,10 +288,10 @@ class Player
 
   /**
    * Seeks to `$seconds` of the current song.
-   * @param string|int|float $time If prefixed with `+` or `-` the time is relative to the current playing position.
+   * @param float|int|string $time If prefixed with `+` or `-` the time is relative to the current playing position.
    * @return bool `true` on success and `false` on failure.
    */
-  public function seek_cur($time) : bool
+  public function seek_cur(float|int|string $time) : bool
   {
     return $this->mphpd->cmd("seekcur", [$time], MPD_CMD_READ_BOOL);
   }
