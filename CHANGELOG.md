@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.0
+
+### Fixes
+
+* Fixed `Queue::add_find` not adding songs to queue
+
+
 ## v1.2.6
 
 ### Improvements
