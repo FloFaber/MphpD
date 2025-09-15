@@ -278,6 +278,17 @@ final class PlaylistTest extends TestCase
   }
 
 
+  public function testSearch(){
+    // @ToDo, dont be so lazy
+    $r = $this->mphpd->playlist("test")->search(new Filter("album", "==", "test songs"));
+    $this->assertSame(3, count($r));
+    $this->assertSame(11, count($r[0]));
+
+    $r = $this->mphpd->playlist("test")->search(new Filter("album", "==", "test songs"), [0,2]);
+    $this->assertSame(2, count($r));
+  }
+
+
   public function testPlaylistlength(){
     $x = $this->mphpd->playlist("test")->length();
     $this->assertSame([

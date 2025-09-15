@@ -207,6 +207,19 @@ class Playlist
 
 
   /**
+   * Search the playlist for songs matching `$filter`
+   *
+   */
+  public function search(Filter $filter, ?array $window = null) : array|false
+  {
+    $name = Utils::escape_params([ $this->name ]);
+    return $this->mphpd->cmd("searchplaylist $name $filter", [
+      ($window ? "window" : null), ($window ? Utils::pos_or_range($window) : null),
+    ], MPD_CMD_READ_LIST);
+  }
+
+
+  /**
    * Count the number of songs and their total playtime (seconds) in the playlist.
    * `[ "songs" => 3, "playtime" => 5598 ]`
    * @return false|array
