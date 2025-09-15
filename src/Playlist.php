@@ -208,9 +208,10 @@ class Playlist
 
   /**
    * Count the number of songs and their total playtime (seconds) in the playlist.
-   * @return bool|array 
+   * `[ "songs" => 3, "playtime" => 5598 ]`
+   * @return false|array
    */
-  public function length() : bool|array
+  public function length() : false|array
   {
     return $this->mphpd->cmd("playlistlength", [$this->name]);
   }
