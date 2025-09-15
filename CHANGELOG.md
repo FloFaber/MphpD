@@ -1,32 +1,10 @@
 # Changelog
 
-## v2.0.0
-
-This version doesn't have fundamental changes but will break enough existing code to justify a new major version. 
-
-### Breaking Changes
-
-* Removed support for PHP7.4. MphpD v2 only supports PHP8.2 and newer.
-* Introduced more strict typing
-* Changed argument types:
-  * All `$pos` (position) arguments now only accept `int` or `null`
-  * All `$range` arguments now accept `array` or `null`
-* Deprecated `Queue::find` and `Queue::add_find`.
-* `Queue::search` and `Queue::add_search` now have a `$case_sensitive` parameter.
-* 
-
-
-### Improvements
-
-* Implemented new commands:
-  * `sticker inc` via `Sticker::increment`
-  * `sticker dec` via `Sticker::decrement`
-  * `stickertypes` and `stickernames` via `MphpD::stickers`
-* Wrote new tests for pretty much everything
+## v1.3.0
 
 ### Fixes
 
-* Fixed empty `$uri` in `Sticker::find`
+* Fixed `Queue::add_find` not adding songs to queue
 
 
 ## v1.2.6
