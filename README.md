@@ -89,7 +89,8 @@ For further information have a look at the [Documentation](https://mphpd.org/lat
 
 ## Supported PHP versions
 
-* 8.2 and above
+* MphpD v2 requires PHP8.2 and above
+* MphpD v1 requires PHP7.4
 
 ## Required PHP extensions
 * Only `sockets` which is included by default on most PHP installations.
