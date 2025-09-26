@@ -15,8 +15,7 @@ use FloFaber\MphpD\MphpD;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\FloFaber\MphpD\Player::class)]
-
+#[CoversClass(\FloFaber\MphpD\Protocol::class)]
 class ProtocolTest extends TestCase
 {
 
