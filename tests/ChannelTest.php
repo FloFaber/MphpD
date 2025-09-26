@@ -10,24 +10,34 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
+use FloFaber\MphpD\MPDException;
 use FloFaber\MphpD\MphpD;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(\FloFaber\MphpD\Channel::class)]
 class ChannelTest extends TestCase
 {
 
   protected MphpD $client1, $client2;
 
-  public function __construct(?string $name = null, array $data = [], $dataName = '')
+  protected function setUp(): void
   {
-    parent::__construct($name, $data, $dataName);
-
+    parent::setUp();
     $this->client1 = new MphpD(MPD_CONFIG);
     $this->client2 = new MphpD(MPD_CONFIG);
-
     $this->client1->connect();
     $this->client2->connect();
   }
+
+
+  protected function tearDown(): void
+  {
+    parent::tearDown();
+    $this->client1->disconnect();
+    $this->client2->disconnect();
+  }
+
 
   public function testSendmessage()
   {
@@ -111,12 +121,6 @@ class ChannelTest extends TestCase
     $ret = $this->client1->channels();
 
     $this->assertEquals([ "ct1", "ct2", "ct3" ], $ret);
-  }
-
-  public function tearDown(): void
-  {
-    $this->client1->disconnect();
-    $this->client2->disconnect();
   }
 
 }
