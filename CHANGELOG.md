@@ -13,6 +13,7 @@ This version doesn't have fundamental changes but will break enough existing cod
   * All `$pos` (position) arguments now only accept `int` or `null`
   * All `$range` arguments now accept `array` or `null`
 * Deprecated `Queue::find` and `Queue::add_find`.
+* Deprecated `Playlist::get_songs` in favor of `Playlist::get`
 * `Queue::search` and `Queue::add_search` now have a `$case_sensitive` parameter.
 * 
 
@@ -26,6 +27,7 @@ This version doesn't have fundamental changes but will break enough existing cod
   * `playlistlength` via `Playlist::length`
   * `playlistfind` via `Playlist::find`
   * `protocol` via `Protocol`-Class
+  * Implement `$range` for `listplaylist` and `listplaylistinfo` via new `Playlist::get`
 * Wrote new tests for pretty much everything
 
 ### Fixes

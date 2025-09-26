@@ -91,6 +91,61 @@ final class PlaylistTest extends TestCase
   }
 
 
+  public function testGet(){
+    $a = $this->mphpd->playlist("test")->get();
+    $b = $this->mphpd->playlist("test")->get(true);
+    $c = $this->mphpd->playlist("test")->get(range: [0,2]);
+    $d = $this->mphpd->playlist("test")->get(true, [0,2]);
+
+    $this->assertSame([
+      "test-song1.mp3",
+      "test-song2.mp3",
+      "test-song3.mp3"
+    ], $this->mphpd->playlist("test")->get());
+
+    $this->assertSame([
+      [
+        "file" => "test-song1.mp3",
+        "last-modified" => "2025-03-17T17:04:36Z",
+        "added" => "2025-03-17T17:04:36Z",
+        "format" => "8000:16:1",
+        "artist" => "fictional artist",
+        "albumartist" => "Anar Software LLC",
+        "title" => "test song 1",
+        "album" => "test songs",
+        "time" => 1899,
+        "duration" => 1898.611,
+      ],[
+        "file" => "test-song2.mp3",
+        "last-modified" => "2025-03-17T17:04:36Z",
+        "added" => "2025-03-17T17:04:36Z",
+        "format" => "8000:16:1",
+        "artist" => "fictional artist",
+        "albumartist" => "Anar Software LLC",
+        "title" => "test song 2",
+        "album" => "test songs",
+        "time" => 1899,
+        "duration" => 1898.611,
+      ],[
+        "file" => "test-song3.mp3",
+        "last-modified" => "2025-03-17T17:04:36Z",
+        "added" => "2025-03-17T17:04:36Z",
+        "format" => "8000:16:1",
+        "artist" => "fictional artist",
+        "albumartist" => "Anar Software LLC",
+        "title" => "test song 3",
+        "album" => "test songs",
+        "time" => 1801,
+        "duration" => 1800.664,
+      ]
+    ], $this->mphpd->playlist("test")->get(true));
+
+    $this->assertSame(2, count($c));
+    $this->assertSame(2, count($d));
+
+  }
+
+
   public function testLoad(){
 
     $this->mphpd->queue()->clear();

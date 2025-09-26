@@ -65,10 +65,30 @@ class Playlist
    * Returns a list of all songs in the specified playlist.
    * @param bool $metadata If set to `true` metadata like duration, last-modified,... will be included.
    * @return array|false `array` of associative Arrays containing song information on success or `false` on failure.
+   * @deprecated Use Playlist::get() instead.
    */
   public function get_songs(bool $metadata = false) : array|false
   {
     return $this->mphpd->cmd("listplaylist".($metadata ? "info" : ""), [$this->name], MPD_CMD_READ_LIST);
+  }
+
+
+  /**
+   * Returns song contained in the playlist
+   * @param bool $metadata If `true`, songs will be returned in an array of associative arrays containing additional metadata.
+   *                       If `false`, songs will be returned in a simple list containing only their URI.
+   * @param array|null $range If specified, only the specified range of songs will be returned. e.G. the first 10 songs.
+   * @return array|false `false` on failure, `array` on success.
+   */
+  public function get(bool $metadata = false, ?array $range = null) : array|false
+  {
+    $cmd = "listplaylist";
+    $mode = MPD_CMD_READ_LIST_SINGLE;
+    if($metadata === true){
+      $cmd = "listplaylistinfo";
+      $mode = MPD_CMD_READ_LIST;
+    }
+    return $this->mphpd->cmd($cmd, [$this->name, Utils::pos_or_range($range)], $mode);
   }
 
 
