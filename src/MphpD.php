@@ -27,6 +27,7 @@ require_once __DIR__ . "/Player.php"; // MphpD::player
 require_once __DIR__ . "/Playlist.php"; // MphpD::playlist()
 require_once __DIR__ . "/Queue.php"; // MphpD::queue
 require_once __DIR__ . "/Sticker.php"; // Mphpd::sticker()
+require_once __DIR__ . "/Protocol.php"; // Mphpd::protocol()
 
 
 /**
@@ -39,6 +40,7 @@ class MphpD extends Socket
   private DB $db;
   private Player $player;
   private Queue $queue;
+  private Protocol $protocol;
 
   private bool $in_bulk = false;
   private array $bulk_list = [];
@@ -52,6 +54,7 @@ class MphpD extends Socket
     $this->db = new DB($this);
     $this->player = new Player($this);
     $this->queue = new Queue($this);
+    $this->protocol = new Protocol($this);
 
     parent::__construct($options);
   }
@@ -580,6 +583,12 @@ class MphpD extends Socket
   public function decoders()
   {
     return $this->cmd("decoders", [], MPD_CMD_READ_LIST);
+  }
+
+
+  public function protocol()
+  {
+    return $this->protocol;
   }
 
 

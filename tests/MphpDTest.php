@@ -222,6 +222,11 @@ class MphpDTest extends TestCase
     $this->assertTrue($this->mphpd->tagtypes_clear());
   }
 
+  public function testProtocolInstance()
+  {
+    $this->assertInstanceof(\FloFaber\MphpD\Protocol::class, $this->mphpd->protocol());
+  }
+
 
   /*
    * @ToDo

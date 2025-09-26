@@ -25,6 +25,7 @@ This version doesn't have fundamental changes but will break enough existing cod
   * `stickertypes` and `stickernames` via `MphpD::stickers`
   * `playlistlength` via `Playlist::length`
   * `playlistfind` via `Playlist::find`
+  * `protocol` via `Protocol`-Class
 * Wrote new tests for pretty much everything
 
 ### Fixes
