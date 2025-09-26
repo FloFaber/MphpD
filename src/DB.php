@@ -37,7 +37,7 @@ class DB
    * @param string $songuri
    * @return false|string binary `string` on success or `false` on failure.
    */
-  public function albumart(string $songuri)
+  public function albumart(string $songuri): false|string
   {
     $offset = 0;
     $binary_data = "";
@@ -68,7 +68,7 @@ class DB
    * @param bool $case_sensitive If `true` the search will be case-sensitive, If `false` the search will be case-insensitive.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function count(Filter $filter, string $group = "", bool $case_sensitive = true)
+  public function count(Filter $filter, string $group = "", bool $case_sensitive = true): false|array
   {
     $m = MPD_CMD_READ_NORMAL;
     if(!empty($group)){
@@ -91,7 +91,7 @@ class DB
    * @param string $uri URI to the file.
    * @return string|false fingerprint on success or `false` on failure.
    */
-  public function fingerprint(string $uri)
+  public function fingerprint(string $uri): false|string
   {
     $fp = $this->mphpd->cmd("getfingerprint", [$uri]);
     if($fp === false){ return false; }
@@ -108,7 +108,7 @@ class DB
    * @param array $window Retrieve only a given portion
    * @return array|false `array` on success and `false` on failure.
    */
-  public function find(Filter $filter, string $sort = "", array $window = [])
+  public function find(Filter $filter, string $sort = "", array $window = []): false|array
   {
     return $this->mphpd->cmd("find $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
@@ -129,7 +129,7 @@ class DB
    *                      If specified returns an array of associative arrays containing the grouped result.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function list(string $type, Filter $filter = null, string $group = "")
+  public function list(string $type, Filter $filter = null, string $group = ""): false|array
   {
     $m = MPD_CMD_READ_LIST_SINGLE;
     if(!empty($group)){
@@ -150,7 +150,7 @@ class DB
    * @param bool $recursive Specified if files and directories should be listed recursively.
    * @return array|false `array` containing the keys `files`, `directories` and `playlists` on success or `false` on failure.
    */
-  public function ls(string $uri, bool $metadata = false, bool $recursive = false)
+  public function ls(string $uri, bool $metadata = false, bool $recursive = false): array|false
   {
 
     if($metadata && $recursive){
@@ -198,7 +198,7 @@ class DB
    * @param string $uri Song URI.
    * @return array|false `array` on success or `false` on failure.
    */
-  public function read_comments(string $uri)
+  public function read_comments(string $uri): false|array
   {
     return $this->mphpd->cmd("readcomments", [$uri], MPD_CMD_READ_LIST);
   }
@@ -218,7 +218,7 @@ class DB
    * @param bool $include_binary If `true` the array's `binary`-item will contain the picture. If `false` the array's `binary`-item is `null`.
    * @return array|false Returns `false` on failure and an associative array containing `size`,`type` and (optionally) `binary` on success.
    */
-  public function get_picture(string $uri, bool $include_binary = true)
+  public function get_picture(string $uri, bool $include_binary = true): false|array
   {
 
     $offset = 0;
@@ -251,7 +251,7 @@ class DB
    * @param string $uri Song URI.
    * @return false|string `false` on failure otherwise `string` containing either the picture or an empty string in case the file does not contain a picture.
    */
-  public function read_picture(string $uri)
+  public function read_picture(string $uri): false|string
   {
     $gp = $this->get_picture($uri, true);
     if($gp === false){ return false; }
@@ -268,7 +268,7 @@ class DB
    * @param array $window
    * @return array|false `array` on success or `false` on failure.
    */
-  public function search(Filter $filter, string $sort = "", array $window = [])
+  public function search(Filter $filter, string $sort = "", array $window = []): false|array
   {
     return $this->mphpd->cmd("search $filter", [
       ($sort ? "sort" : ""), ($sort ?: ""),
@@ -286,7 +286,7 @@ class DB
    *                    If true and an update Job is already running it starts another one and returns the ID of the new Job.
    * @return int|false Job-ID on success or `false` on failure.
    */
-  public function update(string $uri = "", bool $rescan = false, bool $force = false)
+  public function update(string $uri = "", bool $rescan = false, bool $force = false): false|int
   {
 
     $cmd = "update";
