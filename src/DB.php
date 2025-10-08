@@ -80,9 +80,9 @@ class DB
       $cmd = "searchcount";
     }
 
-    return $this->mphpd->cmd("$cmd $filter", [
-      ($group ? "group" : ""), ($group ?: "")
-    ], $m);
+    return $this->mphpd->cmd("$cmd $filter", Utils::make_cmd_args([
+      [ "group", $group ],
+    ]), $m);
   }
 
 
@@ -107,13 +107,62 @@ class DB
    *                     If omitted the order is undefined.
    * @param array $window Retrieve only a given portion
    * @return array|false `array` on success and `false` on failure.
+   * @deprecated Deprecated in favor of DB::search
+   * @see DB::search
    */
   public function find(Filter $filter, string $sort = "", array $window = []): false|array
   {
-    return $this->mphpd->cmd("find $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
-    ], MPD_CMD_READ_LIST);
+    return $this->search($filter, $sort, $window, true);
+  }
+
+
+  /**
+   * Search for matching songs and return an array of associative arrays containing song information.
+   * @param Filter $filter
+   * @param string|null $sort Tag name to sort by. Like artist. If omitted the order is undefined. If prefixed with `-` it will be sorted descending.
+   * @param array|null $window Retrieve only a given portion. See "Ranges" in the documentation.
+   * @param bool $case_sensitive
+   * @return array|true|false `false` on failure. `array` containing song information if `$queue_pos` is omitted, otherwise `true` on success.
+   */
+  public function search(Filter $filter, ?string $sort = null, ?array $window = null, bool $case_sensitive = false): array|bool
+  {
+
+    if($case_sensitive === true){
+      $cmd = "find";
+    }else{
+      $cmd = "search";
+    }
+
+    return $this->mphpd->cmd("$cmd $filter", Utils::make_cmd_args([
+      [ "sort", $sort ],
+      [ "window", Utils::pos_or_range($window) ],
+    ]), MPD_CMD_READ_LIST);
+
+  }
+
+  /**
+   * @param Filter $filter
+   * @param string|null $sort
+   * @param array|null $window
+   * @param bool $case_sensitive
+   * @param int|null $queue_pos If set, songs will be added to the queue at `$queue_pos`. Otherwise, found songs will simply be appended to the queue.
+   * @return bool
+   * @see DB::search
+   */
+  public function search_add(Filter $filter, ?string $sort = null, ?array $window = null, bool $case_sensitive = false, ?int $queue_pos = null): bool
+  {
+
+    if($case_sensitive === true){
+      $cmd = "findadd";
+    }else {
+      $cmd = "searchadd";
+    }
+
+    return $this->mphpd->cmd("$cmd $filter", Utils::make_cmd_args([
+      [ "sort", $sort ],
+      [ "window", Utils::pos_or_range($window) ],
+      [ "position", $queue_pos ],
+    ]), MPD_CMD_READ_BOOL);
   }
 
 
@@ -137,9 +186,9 @@ class DB
     }
 
     $type = Utils::escape_params([ $type ]);
-    return $this->mphpd->cmd("list $type $filter", [
-      ($group ? "group" : ""), ($group ?: "")
-    ], $m);
+    return $this->mphpd->cmd("list $type $filter", Utils::make_cmd_args([
+      [ "group", $group ],
+    ]), $m);
   }
 
 
@@ -257,23 +306,6 @@ class DB
     if($gp === false){ return false; }
     if($gp["binary"] === null){ return ""; }
     return $gp["binary"];
-  }
-
-
-  /**
-   * Case-INsensitive search for matching songs and returns an array of associative arrays containing song information.
-   * @see DB::find()
-   * @param Filter $filter
-   * @param string $sort
-   * @param array $window
-   * @return array|false `array` on success or `false` on failure.
-   */
-  public function search(Filter $filter, string $sort = "", array $window = []): false|array
-  {
-    return $this->mphpd->cmd("search $filter", [
-      ($sort ? "sort" : ""), ($sort ?: ""),
-      ($window ? "window" : ""), ($window ? Utils::pos_or_range($window) : "")
-    ], MPD_CMD_READ_LIST);
   }
 
 

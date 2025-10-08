@@ -65,25 +65,14 @@ class Queue
    * @param Filter $filter
    * @param string|null $sort Optional
    * @param array|null $window Optional
-   * @param int|null $position Optional. If specified the matched songs will be added to this position in the Queue.
+   * @param int|null $position Songs will be added to this position in the Queue.
    * @param bool $case_sensitive Specifies if the search should be performed case-sensitive or not.
    * @return bool `true` on success and `false` on failure.
-   * @see DB::search()
+   * @deprecated DB::search_add
    */
   public function add_search(Filter $filter, ?string $sort = null, ?array $window = null, ?int $position = null, bool $case_sensitive = false) : bool
   {
-
-    if($case_sensitive){
-      $cmd = "findadd";
-    }else{
-      $cmd = "searchadd";
-    }
-
-    return $this->mphpd->cmd("$cmd $filter", [
-        ($sort ? "sort" : null), ($sort ?: null),
-        ($window ? "window" : null), ($window ? Utils::pos_or_range($window) : null),
-        ($position !== null ? "position" : null), ($position !== null ? $position : null)
-      ], MPD_CMD_READ_BOOL);
+    return $this->mphpd->db()->search_add($filter, $sort, $window, $case_sensitive, $position);
   }
 
 
@@ -95,12 +84,11 @@ class Queue
    * @param array|null $window Optional
    * @param int|null $position Optional. If specified the matched songs will be added to this position in the Queue.
    * @return bool `true` on success and `false` on failure.
-   * @see DB::search()
-   * @deprecated As of v2.0.0
+   * @deprecated DB::search_add
    */
   public function add_find(Filter $filter, ?string $sort = null, ?array $window = null, ?int $position = null): bool
   {
-    return $this->add_search($filter, $sort, $window, $position, true);
+    return $this->mphpd->db()->search_add($filter, $sort, $window, true, $position);
   }
 
 

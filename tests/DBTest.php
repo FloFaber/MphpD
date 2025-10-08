@@ -3,20 +3,31 @@
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/../src/MphpD.php";
 
+use FloFaber\MphpD\MPDException;
 use FloFaber\MphpD\MphpD;
 use FloFaber\MphpD\Filter;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(\FloFaber\MphpD\DB::class)]
 class DBTest extends TestCase
 {
 
   private MphpD $mphpd;
 
-  public function __construct(?string $name = null, array $data = [], $dataName = '')
+
+  protected function setUp(): void
   {
-    parent::__construct($name, $data, $dataName);
+    parent::setUp();
     $this->mphpd = new MphpD(MPD_CONFIG);
     $this->mphpd->connect();
+  }
+
+
+  protected function tearDown(): void
+  {
+    parent::tearDown();
+    $this->mphpd->disconnect();
   }
 
   public function testSearch()
@@ -28,6 +39,25 @@ class DBTest extends TestCase
     $r2 = $this->mphpd->db()->search(new Filter("album", "==", "Test songs"), "title");
     $this->assertIsArray($r2);
     $this->assertSame($r1, $r2);
+
+
+    $r = $this->mphpd->db()->search(new Filter("album", "==", "Test songs"), "title", case_sensitive: true);
+    $this->assertIsArray($r);
+    $this->assertEmpty($r);
+  }
+
+
+  public function testSearchAdd()
+  {
+    $this->mphpd->queue()->clear();
+
+    $r = $this->mphpd->db()->search_add(new Filter("album", "==", "Test songs"), "title", queue_pos: 0);
+    $this->assertTrue($r);
+    $this->assertSame(3, count($this->mphpd->queue()->get()));
+
+    $r = $this->mphpd->db()->search_add(new Filter("album", "==", "Test songs"), "title", case_sensitive: true, queue_pos: 0);
+    $this->assertTrue($r);
+    $this->assertSame(3, count($this->mphpd->queue()->get()));
   }
 
   public function testFind()
@@ -41,10 +71,12 @@ class DBTest extends TestCase
     $this->assertEmpty($r);
   }
 
+
   public function testRead_comments()
   {
     $this->assertIsArray($this->mphpd->db()->read_comments("test-song1.mp3"));
   }
+
 
   public function testUpdate()
   {

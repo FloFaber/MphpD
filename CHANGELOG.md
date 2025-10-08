@@ -12,10 +12,12 @@ This version doesn't have fundamental changes but will break enough existing cod
 * Changed argument types:
   * All `$pos` (position) arguments now only accept `int` or `null`
   * All `$range` arguments now accept `array` or `null`
-* Deprecated `Queue::find` and `Queue::add_find`.
+* Deprecated `DB::find` in favor of `DB::search`
 * Deprecated `Playlist::get_songs` in favor of `Playlist::get`
-* `Queue::search` and `Queue::add_search` now have a `$case_sensitive` parameter.
-* 
+* Deprecated `Queue::find`, `Queue::add_find` and `Queue::add_search`
+* Moved `Queue::add_search` functionality to `DB::search_add`
+* `Queue::search` now has a `$case_sensitive` parameter.
+* `DB::search` now has `$case_sensitive` parameters.
 
 
 ### Improvements
