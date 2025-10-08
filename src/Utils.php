@@ -79,6 +79,26 @@ class Utils
   }
 
 
+  public static function make_cmd_args(array $args): array
+  {
+    $a = [];
+    foreach($args as $arg){
+
+      $name = $arg[0];
+      $val = $arg[1];
+
+      if($val === null){ continue; }
+
+      if($name){
+        $a[] = $name;
+      }
+      $a[] = $val;
+
+    }
+    return $a;
+  }
+
+
   /** Function to parse an MPD error string to an array
    * @param string $error The error string. For example "ACK [error@command_listNum] {current_command} message_text"
    * @return MPDException
