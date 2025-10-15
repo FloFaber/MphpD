@@ -1,3 +1,9 @@
+# Moved
+
+> [!WARNING]  
+> This project has been moved to [codeberg.org/FloFaber/MphpD](https://codeberg.org/FloFaber/MphpD).
+
+
 # A fully-featured, dependency-free PHP library for MPD
 
 MphpD is a library for the Music Player Daemon.
